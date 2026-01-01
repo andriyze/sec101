@@ -1,0 +1,104 @@
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import Card from '../components/Card';
+import { Shield, Lock, Smartphone, Globe, KeyRound } from 'lucide-react';
+import NextTopicCard from '../components/NextTopicCard';
+import { useProgress } from '../hooks/useProgress';
+
+const Tools = () => {
+    const { t } = useTranslation();
+    const { markTopicComplete } = useProgress();
+
+    useEffect(() => {
+        markTopicComplete('tools', 'visit');
+    }, [markTopicComplete]);
+
+    const sections = [
+        {
+            title: t('tools.messengers.title'),
+            icon: <Smartphone size={22} color="var(--primary)" />,
+            items: t('tools.messengers.items', { returnObjects: true })
+        },
+        {
+            title: t('tools.passwords.title'),
+            icon: <KeyRound size={22} color="var(--primary)" />,
+            items: t('tools.passwords.items', { returnObjects: true })
+        },
+        {
+            title: t('tools.mfa.title'),
+            icon: <Lock size={22} color="var(--primary)" />,
+            items: t('tools.mfa.items', { returnObjects: true })
+        },
+        {
+            title: t('tools.os.title'),
+            icon: <Shield size={22} color="var(--primary)" />,
+            items: t('tools.os.items', { returnObjects: true })
+        },
+        {
+            title: t('tools.browsers.title'),
+            icon: <Globe size={22} color="var(--primary)" />,
+            items: t('tools.browsers.items', { returnObjects: true })
+        },
+        {
+            title: t('tools.encryption.title'),
+            icon: <Lock size={22} color="var(--primary)" />,
+            intro: t('tools.encryption.intro'),
+            items: t('tools.encryption.items', { returnObjects: true }),
+            takeaways: t('tools.encryption.takeaways', { returnObjects: true })
+        }
+    ];
+
+    return (
+        <div className="animate-fade-in">
+            <div className="section-header">
+                <div className="section-title">
+                    <Shield color="var(--primary)" size={40} />
+                    <h2 style={{ margin: 0 }}>{t('tools.title')}</h2>
+                </div>
+                <p className="section-subtitle">{t('tools.subtitle')}</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+                {sections.map((section, idx) => (
+                    <div key={idx} className="card panel-solid">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                            {section.icon}
+                            <h3 style={{ margin: 0 }}>{section.title}</h3>
+                        </div>
+                        {section.intro && (
+                            <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                                {section.intro}
+                            </p>
+                        )}
+                        <div className="grid grid-cols-1 gap-4">
+                            {section.items.map((tool, i) => (
+                                <Card
+                                    key={i}
+                                    title={tool.name}
+                                    icon={tool.emoji}
+                                    description={tool.desc}
+                                    link={tool.link}
+                                    linkText={tool.link ? t('common.get') + ` ${tool.name}` : undefined}
+                                />
+                            ))}
+                        </div>
+                        {section.takeaways && (
+                            <div style={{ marginTop: '0.75rem' }}>
+                                <h4 style={{ marginBottom: '0.35rem' }}>{t('tools.encryption.takeaways_title')}</h4>
+                                <ul style={{ paddingLeft: '1.2rem' }}>
+                                    {section.takeaways.map((item, i) => (
+                                        <li key={i} style={{ marginBottom: '0.3rem' }}>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+
+            <NextTopicCard currentTopic="tools" />
+        </div>
+    );
+};
+
+export default Tools;

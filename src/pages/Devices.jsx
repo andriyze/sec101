@@ -1,0 +1,185 @@
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import Card from '../components/Card';
+import { Smartphone, Laptop, ShieldCheck } from 'lucide-react';
+import Quiz from '../components/Quiz';
+import NextTopicCard from '../components/NextTopicCard';
+import { useProgress } from '../hooks/useProgress';
+
+const Devices = () => {
+    const { t } = useTranslation();
+    const { markTopicComplete } = useProgress();
+    const checklistItems = t('devices.checklist_items', { returnObjects: true });
+
+    const handleQuizComplete = () => {
+        markTopicComplete('devices', 'quiz');
+    };
+    const [completed, setCompleted] = useState(() => {
+        if (typeof window === 'undefined') return Array(checklistItems.length).fill(false);
+        const cached = window.localStorage.getItem('devices-checklist');
+        if (cached) {
+            try {
+                const parsed = JSON.parse(cached);
+                return Array.isArray(parsed) ? parsed : Array(checklistItems.length).fill(false);
+            } catch {
+                return Array(checklistItems.length).fill(false);
+            }
+        }
+        return Array(checklistItems.length).fill(false);
+    });
+
+    const toggleItem = (index) => {
+        setCompleted((prev) => {
+            const next = [...prev];
+            next[index] = !next[index];
+            return next;
+        });
+    };
+
+    useEffect(() => {
+        window.localStorage.setItem('devices-checklist', JSON.stringify(completed));
+    }, [completed]);
+
+    return (
+        <div className="animate-fade-in">
+            <div className="section-header">
+                <div className="section-title">
+                    <Smartphone color="var(--primary)" size={40} />
+                    <h2 style={{ margin: 0 }}>{t('nav.devices')}</h2>
+                </div>
+                <p className="section-subtitle">{t('devices.subtitle')}</p>
+            </div>
+
+            {/* Mobile Security Checklist */}
+            <section className="section">
+                <div className="section-title" style={{ marginBottom: '1rem' }}>
+                    <ShieldCheck size={24} color="#00ff9d" /> <h3 style={{ margin: 0 }}>{t('devices.mobile_checklist')}</h3>
+                </div>
+                <div className="checklist">
+                    {checklistItems.map((item, i) => (
+                        <button
+                            key={i}
+                            className={`checklist-item ${completed[i] ? 'completed' : ''}`}
+                            onClick={() => toggleItem(i)}
+                            aria-pressed={completed[i]}
+                        >
+                            <span className="circle">{completed[i] ? '✓' : ''}</span>
+                            <span style={{ fontWeight: 600 }}>{item}</span>
+                        </button>
+                    ))}
+                </div>
+            </section>
+
+            <section className="section">
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="card panel-solid">
+                        <h4 style={{ marginBottom: '0.5rem' }}>{t('devices.resilience.title')}</h4>
+                        <ul style={{ paddingLeft: '1.2rem' }}>
+                            {t('devices.resilience.items', { returnObjects: true }).map((item, i) => (
+                                <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="card panel-solid">
+                        <h4 style={{ marginBottom: '0.5rem' }}>{t('devices.lost_device.title')}</h4>
+                        <ol style={{ paddingLeft: '1.2rem' }}>
+                            {t('devices.lost_device.steps', { returnObjects: true }).map((item, i) => (
+                                <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
+                            ))}
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            {/* iOS Apps */}
+            <section className="section">
+                <h3 style={{ marginBottom: '1.5rem' }}>{t('devices.ios_apps.title')}</h3>
+                <div className="grid grid-cols-3 gap-6">
+                    <Card
+                        title="Lockdown"
+                        icon="🛡️"
+                        description={t('devices.ios_apps.lockdown')}
+                        link="https://apps.apple.com/app/lockdown-apps/id1469783711"
+                    />
+                    <Card
+                        title="Signal"
+                        icon="💬"
+                        description={t('devices.ios_apps.signal')}
+                        link="https://apps.apple.com/app/signal-private-messenger/id874139669"
+                    />
+                    <Card
+                        title="Onion Browser"
+                        icon="🧅"
+                        description={t('devices.ios_apps.onion')}
+                        link="https://apps.apple.com/app/onion-browser/id519296448"
+                    />
+                </div>
+            </section>
+
+            {/* Android Apps */}
+            <section className="section">
+                <h3 style={{ marginBottom: '1.5rem' }}>{t('devices.android_apps.title')}</h3>
+                <div className="grid grid-cols-3 gap-6">
+                    <Card
+                        title="NetGuard"
+                        icon="🛡️"
+                        description={t('devices.android_apps.netguard')}
+                        link="https://play.google.com/store/apps/details?id=eu.faircode.netguard"
+                    />
+                    <Card
+                        title="Orbot"
+                        icon="🧅"
+                        description={t('devices.android_apps.orbot')}
+                        link="https://play.google.com/store/apps/details?id=org.torproject.android"
+                    />
+                    <Card
+                        title="F-Droid"
+                        icon="🤖"
+                        description={t('devices.android_apps.fdroid')}
+                        link="https://f-droid.org"
+                    />
+                </div>
+            </section>
+
+            {/* Desktop Software */}
+            <section className="section">
+                <div className="section-title" style={{ marginBottom: '1rem' }}>
+                    <Laptop size={24} color="var(--primary)" /> <h3 style={{ margin: 0 }}>{t('devices.desktop_tools.title')}</h3>
+                </div>
+                <div className="grid grid-cols-3 gap-6">
+                    <Card
+                        title="Thunderbird"
+                        icon="📧"
+                        description={t('devices.desktop_tools.thunderbird')}
+                        link="https://www.thunderbird.net"
+                    />
+                    <Card
+                        title="VeraCrypt"
+                        icon="🔒"
+                        description={t('devices.desktop_tools.veracrypt')}
+                        link="https://www.veracrypt.fr"
+                    />
+                    <Card
+                        title="Dangerzone"
+                        icon="☢️"
+                        description={t('devices.desktop_tools.dangerzone')}
+                        link="https://dangerzone.rocks"
+                    />
+                </div>
+            </section>
+
+            <section className="section">
+                <Quiz
+                    title={t('devices.quiz.title')}
+                    questions={t('devices.quiz.questions', { returnObjects: true })}
+                    storageKey="quiz-devices"
+                    onComplete={handleQuizComplete}
+                />
+            </section>
+
+            <NextTopicCard currentTopic="devices" />
+        </div>
+    );
+};
+
+export default Devices;

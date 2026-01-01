@@ -1,0 +1,631 @@
+{
+    "app": {
+        "title": "SEC101 · Everyday Security",
+        "subtitle": "A simple guide to personal cybersecurity",
+        "start": "Start Presentation",
+        "role_student": "Student",
+        "role_parent": "Parent"
+    },
+    "nav": {
+        "home": "Home",
+        "passwords": "Accounts & Auth",
+        "phishing": "Phishing",
+        "browsing": "Safe Browsing",
+        "social": "Social Media",
+        "devices": "Device Security",
+        "tools": "Secure Tools",
+        "open_menu": "Open menu",
+        "close_menu": "Close menu",
+        "language_toggle": "Toggle language"
+    },
+    "home": {
+        "badges": {
+            "time": "5–15 min per topic",
+            "actionable": "Actionable steps only"
+        },
+        "quiz": {
+            "title": "Browsing safety quiz",
+            "questions": [
+                {
+                    "prompt": "Why enable HTTPS-Only mode?",
+                    "options": ["It blocks all images", "It forces encrypted connections to prevent snooping", "It makes sites load faster"],
+                    "answer": 1,
+                    "correct": "Encrypted-by-default stops many passive snooping attempts.",
+                    "explainer": "HTTPS protects against interception on public networks."
+                },
+                {
+                    "prompt": "Best way to install extensions?",
+                    "options": ["From random sites", "From official stores and only trusted publishers", "Download .zip files and drag in"],
+                    "answer": 1,
+                    "correct": "Use official stores; fewer chances of tampering.",
+                    "explainer": "Random sources can ship malware or spyware."
+                },
+                {
+                    "prompt": "When to use Tor Browser?",
+                    "options": ["Daily banking", "Streaming video", "Sensitive browsing where anonymity matters"],
+                    "answer": 2,
+                    "correct": "Use Tor for sensitive or anonymity needs; avoid personal logins.",
+                    "explainer": "Tor hides IP but can break logins/streaming."
+                }
+            ]
+        },
+        "preview_title": "Explore the essentials",
+        "preview_subtitle": "Short guides with checklists and links you can act on now.",
+        "cta": {
+            "quickstart": "Start with phishing"
+        },
+        "cards": {
+            "passwords": { "desc": "Managers, MFA, and passkeys set up in minutes." },
+            "phishing": { "desc": "Spot red flags fast and recover safely if you clicked." },
+            "browsing": { "desc": "Harden your browser and block trackers by default." },
+            "social": { "desc": "Choose private messengers and stay safe on public Wi‑Fi." },
+            "devices": { "desc": "Lock down phones and laptops, plan for loss or theft." }
+        },
+        "security_vs_privacy": {
+            "security": {
+                "title": "Security",
+                "desc": "Protection from hackers and attackers. Strong passwords, 2FA, and avoiding phishing keep your accounts safe from criminals."
+            },
+            "privacy": {
+                "title": "Privacy",
+                "desc": "Protection from tracking and surveillance. Private email, encrypted messaging, and tracker-blocking hide your data from companies."
+            }
+        },
+        "stack": {
+            "title": "Your Security Stack",
+            "subtitle": "Just use these. No research needed.",
+            "bitwarden": "Free, open-source password manager. Works everywhere.",
+            "brave": "Blocks ads & trackers by default. Fast daily browser.",
+            "protonmail": "Encrypted email. They can't read your messages.",
+            "signal": "Encrypted chat. Even Signal can't see your messages.",
+            "mfa_reminder": {
+                "title": "Enable 2FA everywhere!",
+                "desc": "Use an authenticator app (not SMS). This stops 99% of account hacks."
+            }
+        }
+    },
+    "passwords": {
+        "title": "Accounts & Authentication",
+        "subtitle": "Secure your digital identity with Managers, MFA, and Passkeys.",
+        "quick": {
+            "title": "If you only do one thing today",
+            "actions": [
+                "Install a password manager and import your top 5 accounts.",
+                "Enable MFA on email + bank (avoid SMS; use an app).",
+                "Download and store backup codes offline (photo or print)."
+            ]
+        },
+        "why_manager": {
+            "title": "Why use a Password Manager?",
+            "desc": "Humans are bad at creating random passwords. Computers are great at it. A password manager generates and stores unique, complex passwords for every account."
+        },
+        "managers": {
+            "title": "Password Managers",
+            "bitwarden": {
+                "desc": "USE THIS. Free, open-source, works on all devices. The gold standard."
+            },
+            "proton": {
+                "desc": "Alternative if you're already in the Proton ecosystem."
+            },
+            "apple": {
+                "desc": "Apple-only fallback. Limited to Safari and Apple devices."
+            }
+        },
+        "bitwarden_setup": {
+            "title": "How to Setup Bitwarden",
+            "time": "10 minutes",
+            "device": "Do this on phone + laptop",
+            "desktop": {
+                "title": "Desktop (Windows / Mac)",
+                "steps": [
+                    "1. Go to bitwarden.com and create a free account.",
+                    "2. Install the Bitwarden browser extension for Chrome, Edge, or Firefox.",
+                    "3. Log in to the extension.",
+                    "4. Turn off your browser's built-in password saving to avoid confusion."
+                ]
+            },
+            "mobile": {
+                "title": "Mobile (iOS / Android)",
+                "steps": [
+                    "1. Download the Bitwarden app from the App Store or Play Store.",
+                    "2. Log in with your account.",
+                    "3. CRITICAL: Go to Phone Settings -> Passwords (or Auto-fill Service) -> Select Bitwarden.",
+                    "4. Now Bitwarden can automatically type passwords into your apps."
+                ]
+            }
+        },
+        "recovery": {
+            "title": "Recovery & backup codes",
+            "items": [
+                "Download and store MFA backup codes offline (print or password manager secure note).",
+                "Keep a second authenticator app/device enrolled when possible.",
+                "Set a unique recovery email that also has MFA."
+            ],
+            "note": "Lose the backup codes? Turn off MFA, re-enable it, and save the new codes immediately."
+        },
+        "bad_passwords": {
+            "title": "Stop Using These Passwords",
+            "desc": "If you use any of these, change them immediately:",
+            "examples": ["123456", "password", "qwerty", "iloveyou", "welcome1"]
+        },
+        "good_passwords": {
+            "title": "What \"good\" looks like",
+            "desc": "Long, unique, and generated by your manager. For passphrases, combine 4–5 random words.",
+            "examples": ["spoon-lab-rail-sea-83", "tall lamp orbit mango 42"]
+        },
+        "quiz": {
+            "title": "MFA & passwords quiz",
+            "questions": [
+                {
+                    "prompt": "What’s the biggest risk of using SMS for MFA?",
+                    "options": ["SIM swap attacks can steal your number", "Too slow to receive codes", "Works offline"],
+                    "answer": 0,
+                    "correct": "SIM swaps are common; use app or hardware MFA instead.",
+                    "explainer": "SMS relies on carriers; attackers can hijack your number."
+                },
+                {
+                    "prompt": "Best place to store backup codes?",
+                    "options": ["Email inbox", "Password manager secure note or printed offline", "Photo roll"],
+                    "answer": 1,
+                    "correct": "Store them offline or in a secure note, not in plain email/photos.",
+                    "explainer": "Email/photos are easy targets if the account is compromised."
+                },
+                {
+                    "prompt": "How many accounts should share the same password?",
+                    "options": ["Only 2-3", "All of them", "Zero—each must be unique"],
+                    "answer": 2,
+                    "correct": "Reuse = chain breach. Use unique, manager-generated passwords.",
+                    "explainer": "One breach shouldn’t open every other account."
+                }
+            ]
+        },
+        "mfa": {
+            "title": "Multi-Factor Authentication (MFA)",
+            "subtitle": "The single most important setting to enable.",
+            "intro": "MFA adds a second lock to your account. Even if a hacker steals your password, they can't get in without the second key.",
+            "time": "5 minutes per account",
+            "backup": "Always save recovery/backup codes",
+            "factors": {
+                "title": "The 3 Factors of Authentication",
+                "knowledge": "1. What you KNOW (Password)",
+                "possession": "2. What you HAVE (Phone, YubiKey)",
+                "inherence": "3. What you ARE (Fingerprint, FaceID)"
+            },
+            "methods": {
+                "sms": {
+                    "title": "SMS (Text Messages)",
+                    "desc": "AVOID. Vulnerable to SIM swapping attacks where hackers steal your phone number."
+                },
+                "apps": {
+                    "title": "Authenticator Apps",
+                    "desc": "USE THIS. Scan a QR code, get a new 6-digit code every 30 seconds. Works offline. See 2FAS below."
+                },
+                "hardware": {
+                    "title": "Hardware Keys (YubiKey)",
+                    "desc": "Maximum Security. A physical USB key you plug in. Phishing-proof but costs $50+."
+                },
+                "biometrics": {
+                    "title": "Biometrics",
+                    "desc": "Fingerprint or FaceID. Convenient, often used as a second factor on mobile devices."
+                }
+            },
+            "app_recommendation": {
+                "badge": "Use this app",
+                "desc": "2FAS is free, open-source, works on iOS and Android. No account needed. Syncs between devices via iCloud/Google backup. Simple, no bloat."
+            },
+            "bitwarden_advanced": {
+                "title": "Advanced Bitwarden Features",
+                "otp": "Bitwarden Premium can generate MFA codes (TOTP) just like Authy. This makes logging in faster (auto-fill everything).",
+                "passkeys": "Bitwarden can now store Passkeys, allowing you to sync them across all your devices, not just Apple or Google ones."
+            },
+            "quick_actions": {
+                "title": "Fast wins",
+                "items": [
+                    "Email, bank, and cloud storage should always have MFA with an app or hardware key.",
+                    "Avoid SMS unless no other option. If forced to use SMS, set a PIN with your carrier to reduce SIM-swap risk.",
+                    "Store backup codes offline and label them by service."
+                ]
+            },
+            "gmail": {
+                "title": "Gmail MFA Setup",
+                "steps": [
+                    "Go to 'Manage your Google Account' -> 'Security'.",
+                    "Click '2-Step Verification' -> 'Get Started'.",
+                    "Choose 'Authenticator App' (Recommended). Avoid SMS.",
+                    "Scan the QR code with your 2FA app (2FAS, Raivo).",
+                    "Enter the 6-digit code to verify.",
+                    "CRITICAL: Download Backup Codes and store them offline."
+                ]
+            },
+            "proton": {
+                "title": "Proton Mail MFA Setup",
+                "steps": [
+                    "Go to Settings -> 'Account and password'.",
+                    "Click 'Enable two-factor authentication'.",
+                    "Scan QR code with your authenticator app.",
+                    "Enter the 6-digit code.",
+                    "SAVE the recovery codes shown. This is mandatory."
+                ]
+            }
+        },
+        "passkeys": {
+            "title": "Passkeys: The Future",
+            "desc": "Passkeys replace passwords with cryptographic keys stored on your device. You login with FaceID or TouchID.",
+            "setup": "To setup on Google: Go to g.co/passkeys and click 'Use passkeys'.",
+            "notes": [
+                "Passkeys work best when you’re signed into the same account on phone + laptop (Apple ID, Google, or Microsoft).",
+                "On shared computers, stick to passwords + MFA instead of passkeys.",
+                "You can export passkeys to move between ecosystems (e.g., to Bitwarden)."
+            ]
+        }
+    },
+    "browsing": {
+        "title": "Safe Browsing",
+        "subtitle": "Take back your privacy. Block trackers and ads.",
+        "extensions": {
+            "title": "Essential Extensions",
+            "intro": "Install these on every browser you use.",
+            "ublock": {
+                "title": "uBlock Origin",
+                "desc": "The best ad and tracker blocker. Uses very little memory."
+            },
+            "privacy_badger": {
+                "title": "Privacy Badger",
+                "desc": "Learns to block invisible trackers automatically. By EFF."
+            }
+        },
+        "quick_settings": {
+            "title": "Copy/paste settings to harden any browser",
+            "items": [
+                "Disable third-party cookies.",
+                "Turn on HTTPS-Only mode.",
+                "Block pop-ups and auto-play media.",
+                "Turn off telemetry/usage reporting."
+            ]
+        },
+        "browsers": {
+            "title": "Secure Browsers",
+            "brave": "USE THIS for daily browsing. Blocks ads & trackers out of the box. Fast.",
+            "firefox": "Good alternative. Requires manual hardening for best privacy.",
+            "tor": "For maximum anonymity only. Slow. Don't use for regular browsing."
+        },
+        "hardening": {
+            "brave": {
+                "title": "Brave setup (2 min)",
+                "steps": [
+                    "Settings -> Privacy & security: enable aggressive tracker/ad blocking.",
+                    "Turn on \"Forget me when closing\" for third-party cookies.",
+                    "Disable Google services (autofill, web services you don’t need)."
+                ]
+            },
+            "firefox": {
+                "title": "Firefox setup (3 min)",
+                "steps": [
+                    "Settings -> Privacy: choose \"Strict\".",
+                    "Enable HTTPS-Only mode in all windows.",
+                    "about:config -> set telemetry to false (toolkit.telemetry.enabled)."
+                ]
+            },
+            "tor": {
+                "title": "Tor basics (2 min)",
+                "steps": [
+                    "Use for sensitive browsing only; avoid logging into personal accounts.",
+                    "Keep Security Level at \"Safer\" or \"Safest\" for less fingerprinting.",
+                    "Do not resize the window or install extensions."
+                ]
+            }
+        }
+    },
+    "social": {
+        "title": "Social Media & Messaging",
+        "subtitle": "Secure your communications and protect your data on public networks.",
+        "messaging": {
+            "title": "Encrypted Messaging",
+            "e2e_explanation": {
+                "title": "What is End-to-End Encryption (E2EE)?",
+                "desc": "Imagine sending a letter in a locked steel box. You have the key, and only the recipient has the key. The mailman (the app server) delivers the box but cannot open it. That is E2EE. Standard messaging is like a postcard—anyone handling it can read it."
+            },
+            "signal": {
+                "title": "Signal - The Gold Standard",
+                "desc": "USE THIS. End-to-end encrypted, open source, non-profit. Even Signal cannot see your messages or who you talk to."
+            },
+            "whatsapp": {
+                "desc": "Encrypted messages, but owned by Meta. Collects metadata (who you talk to, when, how often). Use Signal instead."
+            }
+        },
+        "metadata": {
+            "title": "Metadata that apps keep",
+            "points": [
+                "Signal: minimal (who you contact and when is protected).",
+                "WhatsApp/iMessage: metadata like who/when can be collected.",
+                "SMS: no encryption; assume everything is visible to carrier."
+            ]
+        },
+        "verification": {
+            "title": "Verify safety numbers/keys (Signal)",
+            "steps": [
+                "Open chat -> tap name -> \"View safety number\".",
+                "Scan or compare digits with the person in real time.",
+                "Tap \"Verified\" so you get alerts if it changes (possible hijack)."
+            ]
+        },
+        "vpn": {
+            "title": "VPN Services",
+            "intro": "Use a VPN on public WiFi to encrypt your traffic and hide your IP address.",
+            "mullvad": "USE THIS. Maximum privacy. No email needed—account is just a number. Flat €5/month. No tracking.",
+            "proton": "Good free tier if you're in the Proton ecosystem. Swiss-based, no-logs.",
+            "ivpn": "Privacy-focused alternative. No email required. Transparent company.",
+            "explanation": {
+                "title": "How does a VPN work?",
+                "desc": "A VPN (Virtual Private Network) creates a secure 'tunnel' between your device and the internet. It hides your location (IP address) and encrypts your data so WiFi hackers or your ISP cannot see what websites you visit."
+            }
+        },
+        "wifi": {
+            "title": "Do this on public Wi‑Fi",
+            "donts_title": "Avoid doing this on public Wi‑Fi",
+            "items": [
+                "Use a VPN before opening apps or sites.",
+                "Turn on HTTPS-Only in your browser.",
+                "Forget the network when done; turn off auto-join."
+            ],
+            "donts": [
+                "No banking on unknown Wi‑Fi without a VPN.",
+                "Avoid installing apps/updates while on public Wi‑Fi.",
+                "Don't share files over AirDrop/Bluetooth unless needed."
+            ]
+        },
+        "email": {
+            "title": "Private Email",
+            "why": "Gmail scans your emails for ads and shares data with Google. With Proton Mail, your emails are encrypted—even Proton can't read them.",
+            "proton": {
+                "desc": "USE THIS. Encrypted email based in Switzerland. Free tier available. Even Proton cannot read your emails."
+            },
+            "gmail": {
+                "desc": "Google reads your emails to show you ads. Your data is used for profiling. Keep it for spam signups only."
+            }
+        }
+    },
+    "devices": {
+        "title": "Device Security",
+        "subtitle": "Secure your mobile devices and desktop computers.",
+        "mobile_checklist": "Mobile Security Checklist",
+        "checklist_items": [
+            "Enable screen lock (6-digit PIN or biometric)",
+            "Keep OS and apps updated (auto-update)",
+            "Review app permissions regularly",
+            "Disable lock screen notifications for sensitive apps",
+            "Enable 'Find My Device'",
+            "Back up your device regularly"
+        ],
+        "ios_apps": {
+            "title": "iOS Apps",
+            "lockdown": "Lockdown: Open source firewall and tracker blocker.",
+            "signal": "Signal: Encrypted messaging.",
+            "onion": "Onion Browser: Tor for iOS."
+        },
+        "android_apps": {
+            "title": "Android Apps",
+            "netguard": "NetGuard: No-root firewall.",
+            "orbot": "Orbot: Tor proxy.",
+            "fdroid": "F-Droid: Open source app store."
+        },
+        "desktop_tools": {
+            "title": "Desktop Tools",
+            "thunderbird": "Thunderbird: Open source email client with PGP support.",
+            "veracrypt": "VeraCrypt: File encryption.",
+            "protonvpn": "Proton VPN: Free/Paid VPN.",
+            "dangerzone": "Dangerzone: Sanitize suspicious PDFs."
+        },
+        "resilience": {
+            "title": "Resilience checklist",
+            "items": [
+                "Full-disk encryption on (FileVault, BitLocker, Android/iOS default).",
+                "Automatic cloud backups enabled (iCloud/Google Drive/OneDrive).",
+                "Set updates to automatic for OS and browser."
+            ]
+        },
+        "lost_device": {
+            "title": "If your device is lost/stolen",
+            "steps": [
+                "Use Find My / Find My Device to lock and locate, then erase if unrecoverable.",
+                "Change passwords for email + banking first; revoke old sessions.",
+                "Notify your carrier (SIM swap risk) and your bank if applicable."
+            ]
+        },
+        "quiz": {
+            "title": "Devices quiz",
+            "questions": [
+                {
+                    "prompt": "Why enable full-disk encryption?",
+                    "options": ["It makes the device faster", "Protects data if the device is lost/stolen", "It blocks app installs"],
+                    "answer": 1,
+                    "correct": "Encryption keeps data unreadable without your key/PIN.",
+                    "explainer": "Physical loss is common; encryption limits damage."
+                },
+                {
+                    "prompt": "What to do first if a phone is stolen?",
+                    "options": ["Wait a day", "Buy a new one", "Use Find My to lock/erase and change passwords for email/bank"],
+                    "answer": 2,
+                    "correct": "Lock/erase remotely and secure key accounts immediately.",
+                    "explainer": "Fast action reduces account takeovers."
+                },
+                {
+                    "prompt": "Where should backups live?",
+                    "options": ["Only on the same device", "Automatic cloud or external drive", "Nowhere—they’re risky"],
+                    "answer": 1,
+                    "correct": "Off-device backups protect against loss, theft, or ransomware.",
+                    "explainer": "Local-only backups are lost with the device."
+                }
+            ]
+        }
+    },
+    "phishing": {
+        "subtitle": "Don't take the bait. Learn to spot fake emails and scams.",
+        "red_flags": {
+            "title": "Phishing Red Flags",
+            "urgency": {
+                "title": "Urgency",
+                "desc": "Claims you must act immediately (e.g., 'Account suspended')."
+            },
+            "url": {
+                "title": "Mismatched URL",
+                "desc": "Link says 'paypal.com' but goes to 'paypal-secure-login.com'."
+            },
+            "greeting": {
+                "title": "Generic Greeting",
+                "desc": "Uses 'Dear Customer' instead of your name."
+            },
+            "attachment": {
+                "title": "Unexpected Attachment",
+                "desc": "Invoices or receipts you didn't ask for."
+            }
+        },
+        "checklist": {
+            "title": "Email Security Checklist",
+            "items": [
+                "Enable Multi-Factor Authentication (MFA) on your email account.",
+                "Use a unique, strong password (generated by a password manager).",
+                "Never click links in suspicious emails. Go to the site directly.",
+                "Check the sender's actual email address, not just the display name."
+            ]
+        },
+        "tips": {
+            "title": "Micro-tips to stay safe",
+            "items": [
+                "Hover or long-press links to reveal the real URL before clicking.",
+                "When in doubt, open a new tab and type the site yourself.",
+                "Unexpected invoices/attachments? Call the sender on a known number first."
+            ]
+        },
+        "sample": {
+            "title": "Example phishing email (what to notice)",
+            "from": "From: \"Support\" <security@paypa1-billing.com>",
+            "subject": "Subject: URGENT - Account Suspended",
+            "body": "Hi, your account will be closed in 12 hours. Download the attached invoice or log in here.",
+            "highlights": ["Urgency", "Mismatched URL", "Unexpected attachment"]
+        },
+        "after_click": {
+            "title": "If you already clicked",
+            "steps": [
+                "Disconnect from Wi‑Fi; run an antivirus scan (desktop).",
+                "Change the password for the impacted site and enable MFA.",
+                "Revoke sessions/devices on that account; check recent activity.",
+                "If you entered credit card info, call the bank to block/replace the card."
+            ]
+        },
+        "quiz": {
+            "title": "Quick quiz",
+            "questions": [
+                {
+                    "prompt": "An email says your account will be closed in 1 hour and the button opens paypa1-support.com. What is the best action?",
+                    "options": ["Click and log in fast", "Hover, spot the fake domain, delete, then go directly to paypal.com", "Reply asking if it’s real"],
+                    "answer": 1,
+                    "correct": "Right—never click, use a trusted URL you type yourself.",
+                    "explainer": "Avoid engaging. Go direct to the real site or app."
+                },
+                {
+                    "prompt": "A coworker sends an unexpected invoice attachment. What’s safest?",
+                    "options": ["Open it, it’s internal", "Call/message them on a known channel to confirm before opening", "Forward to others to check"],
+                    "answer": 1,
+                    "correct": "Verification on a separate channel stops most phish attempts.",
+                    "explainer": "Never open surprise attachments before confirming."
+                },
+                {
+                    "prompt": "You clicked a phishing link and entered credentials. What first?",
+                    "options": ["Do nothing", "Change that account’s password and enable MFA immediately", "Run Disk Cleanup"],
+                    "answer": 1,
+                    "correct": "Resetting access + MFA is the most urgent step.",
+                    "explainer": "Contain the account right away; then review activity."
+                }
+            ]
+        },
+        "annotated": {
+            "title": "Annotated example (no-click walkthrough)",
+            "callouts": [
+                "Mismatched domain (paypa1 vs paypal).",
+                "Urgency language to rush you.",
+                "Unexpected attachment: treat as malicious."
+            ]
+        }
+    },
+    "tools": {
+        "title": "Secure Tools List",
+        "subtitle": "Trusted, privacy-respecting options to install quickly.",
+        "messengers": {
+            "title": "Private messengers",
+            "items": [
+                { "name": "Signal", "emoji": "💬", "desc": "Open source, end-to-end encrypted, minimal metadata.", "link": "https://signal.org" },
+                { "name": "Session", "emoji": "🧅", "desc": "Decentralized, onion-routed messaging without phone number.", "link": "https://getsession.org" }
+            ]
+        },
+        "passwords": {
+            "title": "Password managers",
+            "items": [
+                { "name": "Bitwarden", "emoji": "🛡️", "desc": "Open source, cross-platform, strong free tier.", "link": "https://bitwarden.com/download" },
+                { "name": "Proton Pass", "emoji": "🟣", "desc": "Great if you already use Proton services; passkey support.", "link": "https://proton.me/pass" }
+            ]
+        },
+        "mfa": {
+            "title": "MFA / OTP apps",
+            "items": [
+                { "name": "Aegis (Android)", "emoji": "🔐", "desc": "Encrypted TOTP vault with export; open source.", "link": "https://getaegis.app" },
+                { "name": "Raivo (iOS)", "emoji": "📱", "desc": "Lightweight, open-source TOTP app for iOS.", "link": "https://raivo-otp.com" },
+                { "name": "YubiKey", "emoji": "🗝️", "desc": "Hardware security keys that resist phishing (FIDO2/U2F).", "link": "https://www.yubico.com/products/" }
+            ]
+        },
+        "os": {
+            "title": "Hardened operating systems",
+            "items": [
+                { "name": "GrapheneOS", "emoji": "📱", "desc": "Hardened Android for Pixel devices; strong sandboxing.", "link": "https://grapheneos.org" },
+                { "name": "Tails", "emoji": "🧅", "desc": "Live OS focused on anonymity; routes traffic over Tor.", "link": "https://tails.net" }
+            ]
+        },
+        "browsers": {
+            "title": "Secure browsers",
+            "items": [
+                { "name": "Brave", "emoji": "🦁", "desc": "Built-in tracker/ad blocking, Chromium-based.", "link": "https://brave.com/download" },
+                { "name": "Firefox", "emoji": "🦊", "desc": "Independent, customizable privacy controls.", "link": "https://www.mozilla.org/firefox/new/" },
+                { "name": "Tor Browser", "emoji": "🧅", "desc": "Maximum anonymity; uses Tor network by default.", "link": "https://www.torproject.org/download/" }
+            ]
+        },
+        "encryption": {
+            "title": "How encryption protects you",
+            "intro": "Think of encryption as a lock on your data. Without the key, it's unreadable gibberish.",
+            "items": [
+                { "name": "One key (symmetric)", "emoji": "🔐", "desc": "Like a safe with one key. You lock your data, and only someone with the same key can open it. Your phone uses this to protect everything when locked." },
+                { "name": "Two keys (asymmetric)", "emoji": "📬", "desc": "Like a mailbox: anyone can drop a letter in (public key), but only you have the key to open it (private key). This is how secure websites work." },
+                { "name": "Hashing (fingerprints)", "emoji": "👆", "desc": "Creates a unique 'fingerprint' of data. Used to check if files are tampered with, and to store passwords safely—websites store the fingerprint, not your actual password." },
+                { "name": "E2E vs regular encryption", "emoji": "✉️", "desc": "Regular: like a sealed bag—the mail carrier can't read it in transit, but the post office (server) can open it. E2E: like a locked box inside the bag—only you and the recipient have keys." }
+            ],
+            "takeaways_title": "What you need to remember",
+            "takeaways": [
+                "The tools we recommend (Signal, Bitwarden, Proton) handle encryption for you—just use them.",
+                "Never share recovery phrases or backup codes. Treat them like cash.",
+                "If your device is lost/stolen, change your passwords. The encryption key may be compromised.",
+                "Green padlock in browser = encrypted connection. Red warning = stop and don't proceed."
+            ]
+        }
+    },
+    "progress": {
+        "title": "Your Progress",
+        "completed": "{{count}} of {{total}} topics completed",
+        "all_complete": "All topics completed!",
+        "continue": "Continue: {{topic}}",
+        "continue_learning": "Continue Learning",
+        "start": "Start Learning",
+        "review": "Review Topics",
+        "topic_complete": "Topic Complete!",
+        "next_topic": "Next: {{topic}}"
+    },
+    "common": {
+        "get": "Get",
+        "visit": "Visit Website",
+        "quiz_next": "Next",
+        "quiz_finish": "Finish",
+        "quiz_score": "Score",
+        "quiz_best": "Best",
+        "created_by": "Created with 🔒 by ",
+        "recommended": "Recommended",
+        "alternative": "Alternative"
+    }
+}
