@@ -1,6 +1,6 @@
 # SEC101 — Everyday Security
 
-Interactive security fundamentals course for non-technical users. Covers passwords, MFA, phishing, safe browsing, social engineering, and device security.
+Interactive security fundamentals course for non-technical users. Covers passwords, MFA, phishing, safe browsing, messaging privacy, and device security.
 
 ## Features
 

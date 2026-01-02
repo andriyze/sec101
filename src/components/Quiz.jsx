@@ -69,7 +69,7 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
                 <div>
                     <h4 style={{ margin: 0 }}>{title}</h4>
                     <p style={{ margin: '0.2rem 0', color: 'var(--text-muted)' }}>
-                        Question {current + 1} / {shuffled.length}
+                        {t('common.quiz_question')} {current + 1} / {shuffled.length}
                     </p>
                 </div>
                 <span className="pill">{Math.round((score / shuffled.length) * 100)}%</span>
@@ -95,7 +95,7 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
                 <div className="alert" style={{ marginTop: '0.75rem', borderColor: selected === question.answer ? '#00ff9d' : 'var(--accent)' }}>
                     <div className="alert-content">
                         <p style={{ marginBottom: 0 }}>
-                            {selected === question.answer ? question.correct || 'Correct!' : question.explainer || 'Not quite. Review the tips above.'}
+                            {selected === question.answer ? question.correct || t('common.quiz_correct_fallback') : question.explainer || t('common.quiz_wrong_fallback')}
                         </p>
                     </div>
                 </div>

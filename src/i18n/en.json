@@ -59,7 +59,8 @@
             "phishing": { "desc": "Spot red flags fast and recover safely if you clicked." },
             "browsing": { "desc": "Harden your browser and block trackers by default." },
             "social": { "desc": "Choose private messengers and stay safe on public Wi‑Fi." },
-            "devices": { "desc": "Lock down phones and laptops, plan for loss or theft." }
+            "devices": { "desc": "Lock down phones and laptops, plan for loss or theft." },
+            "tools": { "desc": "Curated list of privacy-respecting apps and encryption basics." }
         },
         "security_vs_privacy": {
             "security": {
@@ -76,11 +77,11 @@
             "subtitle": "Just use these. No research needed.",
             "bitwarden": "Free, open-source password manager. Works everywhere.",
             "brave": "Blocks ads & trackers by default. Fast daily browser.",
-            "protonmail": "Encrypted email. Messages between Proton users are end-to-end encrypted.",
-            "signal": "Encrypted chat with minimal metadata collection.",
+            "protonmail": "Encrypted email. Unlike Gmail, Proton can't read your messages and doesn't profile you.",
+            "signal": "Encrypted chat. Unlike WhatsApp, Signal doesn't share data with Meta or build profiles on you.",
             "mfa_reminder": {
                 "title": "Enable 2FA everywhere!",
-                "desc": "Use an authenticator app (not SMS). This dramatically reduces account compromise risk."
+                "desc": "Use an authenticator app (not SMS). This stops the vast majority of account hacks. Enable it everywhere."
             }
         }
     },
@@ -141,7 +142,7 @@
                 "Keep a second authenticator app/device enrolled when possible.",
                 "Set a unique recovery email that also has MFA."
             ],
-            "note": "Lose the backup codes? Turn off MFA, re-enable it, and save the new codes immediately."
+            "note": "Lose the backup codes? You may need to contact support with identity verification—some services won't let you disable MFA without codes. This is why storing them safely matters."
         },
         "bad_passwords": {
             "title": "Stop Using These Passwords",
@@ -250,7 +251,7 @@
         },
         "passkeys": {
             "title": "Passkeys: The Future",
-            "desc": "Passkeys replace passwords with cryptographic keys stored on your device. You login with FaceID or TouchID.",
+            "desc": "Passkeys replace passwords with cryptographic keys stored on your device. You login with biometrics (fingerprint, face) or your device PIN.",
             "setup": "To setup on Google: Go to g.co/passkeys and click 'Use passkeys'.",
             "notes": [
                 "Passkeys work best when you’re signed into the same account on phone + laptop (Apple ID, Google, or Microsoft).",
@@ -320,7 +321,7 @@
                 "title": "Brave setup (2 min)",
                 "steps": [
                     "Settings -> Privacy & security: enable aggressive tracker/ad blocking.",
-                    "Turn on \"Forget me when closing\" for third-party cookies.",
+                    "Settings -> Privacy: enable \"Clear browsing data on exit\" for cookies.",
                     "Disable Google services (autofill, web services you don’t need)."
                 ]
             },
@@ -353,7 +354,7 @@
             },
             "signal": {
                 "title": "Signal - The Gold Standard",
-                "desc": "USE THIS. End-to-end encrypted, open source, non-profit. Signal collects minimal metadata and cannot see your message content."
+                "desc": "USE THIS. End-to-end encrypted, open source, non-profit. Unlike WhatsApp, Signal doesn't share data with Meta or build profiles on you."
             },
             "whatsapp": {
                 "desc": "Encrypted messages, but owned by Meta. Collects metadata (who you talk to, when, how often). Use Signal instead."
@@ -362,7 +363,7 @@
         "metadata": {
             "title": "Metadata that apps keep",
             "points": [
-                "Signal: minimal (who you contact and when is protected).",
+                "Signal: minimal metadata stored (message content and contacts protected; only registration date and last connection may be disclosed if legally compelled).",
                 "WhatsApp/iMessage: metadata like who/when can be collected.",
                 "SMS: no encryption; assume everything is visible to carrier."
             ]
@@ -377,7 +378,7 @@
         },
         "vpn": {
             "title": "VPN Services",
-            "intro": "A VPN can add privacy on public WiFi, but note: HTTPS already encrypts most traffic. A VPN shifts trust from the WiFi operator to the VPN provider—choose reputable, audited providers.",
+            "intro": "A VPN hides your browsing from your ISP and protects against mass surveillance. Your ISP logs every site you visit—a VPN prevents this. Choose reputable, audited providers.",
             "mullvad": "USE THIS. Maximum privacy. No email needed—account is just a number. Flat €5/month. No tracking.",
             "proton": "Good free tier if you're in the Proton ecosystem. Swiss-based, no-logs.",
             "ivpn": "Privacy-focused alternative. No email required. Transparent company.",
@@ -390,13 +391,13 @@
             "title": "Do this on public Wi‑Fi",
             "donts_title": "Avoid doing this on public Wi‑Fi",
             "items": [
-                "Use a VPN before opening apps or sites.",
+                "Use a VPN to hide your browsing from your ISP and mask your IP address.",
                 "Turn on HTTPS-Only in your browser.",
                 "Forget the network when done; turn off auto-join."
             ],
             "donts": [
-                "No banking on unknown Wi‑Fi without a VPN.",
-                "Avoid installing apps/updates while on public Wi‑Fi.",
+                "Don't browse without a VPN—your ISP and network operator can see which sites you visit.",
+                "Avoid logging into sensitive accounts without HTTPS or a VPN.",
                 "Don't share files over AirDrop/Bluetooth unless needed."
             ]
         },
@@ -404,10 +405,10 @@
             "title": "Private Email",
             "why": "Gmail integrates with Google's ecosystem and your emails are not end-to-end encrypted. With Proton Mail, emails between Proton users are end-to-end encrypted.",
             "proton": {
-                "desc": "USE THIS. Encrypted email based in Switzerland. Free tier available. Messages between Proton users are end-to-end encrypted."
+                "desc": "USE THIS. Encrypted email based in Switzerland. Free tier available. Unlike Gmail, Proton can't read your messages and doesn't profile you."
             },
             "gmail": {
-                "desc": "Your emails are not end-to-end encrypted and Google uses your data for profiling. Keep it for spam signups only."
+                "desc": "Gmail is part of Google's surveillance ecosystem. Your emails feed into profiling across all Google services. Use for spam signups only."
             }
         }
     },
@@ -533,10 +534,10 @@
         "after_click": {
             "title": "If you already clicked",
             "steps": [
-                "Disconnect from Wi‑Fi; run an antivirus scan (desktop).",
-                "Change the password for the impacted site and enable MFA.",
-                "Revoke sessions/devices on that account; check recent activity.",
-                "If you entered credit card info, call the bank to block/replace the card."
+                "If you entered credentials: Change the password immediately and enable MFA. This is the most urgent step.",
+                "Revoke sessions/devices on that account; check recent activity for unauthorized access.",
+                "If you entered credit card info, call the bank to block/replace the card.",
+                "If you downloaded a file: Disconnect from Wi-Fi and run an antivirus scan."
             ]
         },
         "quiz": {
@@ -666,6 +667,9 @@
         "quiz_finish": "Finish",
         "quiz_score": "Score",
         "quiz_best": "Best",
+        "quiz_question": "Question",
+        "quiz_correct_fallback": "Correct!",
+        "quiz_wrong_fallback": "Not quite. Review the tips above.",
         "created_by": "Created with 🔒 by ",
         "recommended": "Recommended",
         "alternative": "Alternative"

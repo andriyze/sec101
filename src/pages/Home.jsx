@@ -19,6 +19,7 @@ const Home = () => {
         { path: '/browsing', icon: '🛡️', label: t('nav.browsing'), desc: t('home.cards.browsing.desc'), time: '7 min' },
         { path: '/social', icon: '💬', label: t('nav.social'), desc: t('home.cards.social.desc'), time: '6 min' },
         { path: '/devices', icon: '📱', label: t('nav.devices'), desc: t('home.cards.devices.desc'), time: '8 min' },
+        { path: '/tools', icon: '🔧', label: t('nav.tools'), desc: t('home.cards.tools.desc'), time: '5 min' },
     ];
 
     return (
