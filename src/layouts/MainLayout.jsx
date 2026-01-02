@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, Shield, ChevronRight, CheckCircle, Circle } from 'lucide-react';
+import { Menu, X, Shield, ChevronRight, CheckCircle, Circle, RotateCcw, Github } from 'lucide-react';
 import clsx from 'clsx';
 import { useProgress } from '../hooks/useProgress';
 
 const MainLayout = () => {
     const { t, i18n } = useTranslation();
     const location = useLocation();
-    const { isTopicCompleted } = useProgress();
+    const { isTopicCompleted, resetProgress } = useProgress();
     const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
         typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
     );
@@ -19,6 +19,20 @@ const MainLayout = () => {
     const toggleLanguage = () => {
         const newLang = i18n.language === 'en' ? 'ua' : 'en';
         i18n.changeLanguage(newLang);
+    };
+
+    const handleResetProgress = () => {
+        if (window.confirm(t('common.reset_confirm', { defaultValue: 'Are you sure you want to reset all progress? This cannot be undone.' }))) {
+            resetProgress();
+            // Clear quiz scores
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('quiz-')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            // Clear checklists
+            localStorage.removeItem('devices-checklist');
+        }
     };
 
     const navItems = [
@@ -114,6 +128,14 @@ const MainLayout = () => {
                     </div>
 
                     <div className="topbar-actions">
+                        <button
+                            onClick={handleResetProgress}
+                            className="icon-btn"
+                            title={t('common.reset_progress', { defaultValue: 'Reset Progress' })}
+                            aria-label={t('common.reset_progress', { defaultValue: 'Reset Progress' })}
+                        >
+                            <RotateCcw size={18} />
+                        </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <span style={{ fontWeight: 600, fontSize: '0.9rem', color: i18n.language === 'en' ? 'var(--primary)' : 'var(--text-muted)' }}>EN</span>
                             <label className="toggle-switch">
@@ -131,10 +153,22 @@ const MainLayout = () => {
                 </header>
                 <div className="container">
                     <Outlet />
-                    <footer style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-                        {t('common.created_by', { defaultValue: 'Created with 🔒 by ' })}
-                        <a href="https://a3sec.net" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>
-                            a3sec.net
+                    <footer style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.95rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+                        <div>
+                            {t('common.created_by', { defaultValue: 'Created with 🔒 by ' })}
+                            <a href="https://a3sec.net" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>
+                                a3sec.net
+                            </a>
+                        </div>
+                        <a
+                            href="https://github.com/andriyze/sec101"
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }}
+                            title="View on GitHub"
+                            aria-label="View on GitHub"
+                        >
+                            <Github size={20} />
                         </a>
                     </footer>
                 </div>

@@ -2185,6 +2185,12 @@ input:checked+.toggle-slider:before {
   min-width: 0;
 }
 
+.osi-layer-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
 .osi-layer-name {
   font-size: 0.85rem;
   font-weight: 600;
