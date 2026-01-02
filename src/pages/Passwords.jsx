@@ -5,6 +5,7 @@ import { KeyRound, ShieldCheck, Lock, Smartphone, Fingerprint, Key, AlertTriangl
 import Quiz from '../components/Quiz';
 import NextTopicCard from '../components/NextTopicCard';
 import { useProgress } from '../hooks/useProgress';
+import MfaFactorsViz from '../components/visualizations/MfaFactorsViz';
 
 const Passwords = () => {
     const { t } = useTranslation();
@@ -156,20 +157,8 @@ const Passwords = () => {
                     <div className="pill pill-accent">{t('passwords.mfa.backup')}</div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-                    <div className="card" style={{ flex: 1, textAlign: 'center', borderColor: 'var(--primary)' }}>
-                        <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🧠</div>
-                        <h4>{t('passwords.mfa.factors.knowledge')}</h4>
-                    </div>
-                    <div className="card" style={{ flex: 1, textAlign: 'center', borderColor: 'var(--secondary)' }}>
-                        <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔑</div>
-                        <h4>{t('passwords.mfa.factors.possession')}</h4>
-                    </div>
-                    <div className="card" style={{ flex: 1, textAlign: 'center', borderColor: 'var(--accent)' }}>
-                        <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👆</div>
-                        <h4>{t('passwords.mfa.factors.inherence')}</h4>
-                    </div>
-                </div>
+                {/* MFA Visualization */}
+                <MfaFactorsViz />
 
                 <div className="grid grid-cols-2 gap-6" style={{ marginBottom: '2rem' }}>
                     <div className="card card-recommended">

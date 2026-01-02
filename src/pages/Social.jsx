@@ -4,6 +4,8 @@ import Card from '../components/Card';
 import { MessageCircle, Shield, Globe, Lock, Info, Mail } from 'lucide-react';
 import NextTopicCard from '../components/NextTopicCard';
 import { useProgress } from '../hooks/useProgress';
+import VpnTunnelViz from '../components/visualizations/VpnTunnelViz';
+import E2eEncryptionViz from '../components/visualizations/E2eEncryptionViz';
 
 const Social = () => {
     const { t } = useTranslation();
@@ -37,6 +39,9 @@ const Social = () => {
                         <p>{t('social.messaging.e2e_explanation.desc')}</p>
                     </div>
                 </div>
+
+                {/* E2E Visualization */}
+                <E2eEncryptionViz />
 
                 <div className="grid grid-cols-2 gap-6">
                     <div className="card card-recommended">
@@ -86,13 +91,16 @@ const Social = () => {
                 </div>
 
                 {/* VPN Explanation */}
-                <div className="alert alert-warning" style={{ marginBottom: '2rem' }}>
+                <div className="alert alert-warning" style={{ marginBottom: '1.5rem' }}>
                     <Shield size={24} color="#ffcc00" style={{ flexShrink: 0 }} />
                     <div className="alert-content">
                         <h3>{t('social.vpn.explanation.title')}</h3>
                         <p>{t('social.vpn.explanation.desc')}</p>
                     </div>
                 </div>
+
+                {/* VPN Visualization */}
+                <VpnTunnelViz />
 
                 <p style={{ marginBottom: '1.5rem' }}>
                     {t('social.vpn.intro')}

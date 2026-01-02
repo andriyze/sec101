@@ -673,5 +673,44 @@
         "created_by": "Created with 🔒 by ",
         "recommended": "Recommended",
         "alternative": "Alternative"
+    },
+    "visualizations": {
+        "vpn": {
+            "title": "How a VPN Protects You",
+            "without": "Without VPN",
+            "with": "With VPN",
+            "you": "You",
+            "isp": "Your ISP",
+            "vpn_server": "VPN Server",
+            "internet": "Internet",
+            "sees": "sees:",
+            "encrypted": "Encrypted"
+        },
+        "mfa": {
+            "explanation": "Authentication factors are different ways to prove your identity. Using 2+ factors means even if one is stolen, attackers still can't get in.",
+            "knowledge": {
+                "title": "What you KNOW",
+                "examples": "Password, PIN, security question"
+            },
+            "possession": {
+                "title": "What you HAVE",
+                "examples": "Phone, YubiKey, authenticator app"
+            },
+            "inherence": {
+                "title": "What you ARE",
+                "examples": "Fingerprint, Face ID, voice"
+            },
+            "weak": "password alone is easy to steal",
+            "strong": "much harder to break",
+            "factor": "factor",
+            "factors": "factors"
+        },
+        "e2e": {
+            "title": "End-to-End Encryption",
+            "you": "You",
+            "friend": "Friend",
+            "message": "Hello!",
+            "server_blind": "Server can't read messages"
+        }
     }
 }
