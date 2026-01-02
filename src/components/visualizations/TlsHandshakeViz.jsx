@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Monitor, Server, ArrowRight, ArrowLeft, Lock, Key, ShieldCheck } from 'lucide-react';
+import { Monitor, Server, ArrowRight, ArrowLeft, Lock, Key, ShieldCheck, Lightbulb } from 'lucide-react';
 import VizContainer from './VizContainer';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 
@@ -10,6 +10,54 @@ const TlsHandshakeViz = () => {
     const prefersReducedMotion = usePrefersReducedMotion();
     const [currentStep, setCurrentStep] = useState(0);
 
+    // Detailed step explanations with analogies
+    const tlsStepsDetailed = [
+        {
+            id: 'client_hello',
+            title: t('visualizations.tls.steps.1.title', 'Client Hello'),
+            shortDesc: t('visualizations.tls.steps.1.short', 'Browser introduces itself'),
+            detail: t('visualizations.tls.steps.1.detail', 'Your browser sends: "Hi, I support TLS 1.3, and here are the encryption methods I know"'),
+            whatsSent: ['TLS versions', 'Cipher suites', 'Random number'],
+            analogy: t('visualizations.tls.steps.1.analogy', 'Like showing your ID at a secure building entrance'),
+            direction: 'right',
+            icon: ArrowRight,
+            color: 'var(--primary)'
+        },
+        {
+            id: 'server_hello',
+            title: t('visualizations.tls.steps.2.title', 'Server Hello + Certificate'),
+            shortDesc: t('visualizations.tls.steps.2.short', 'Server proves its identity'),
+            detail: t('visualizations.tls.steps.2.detail', 'Server responds: "Let\'s use TLS 1.3 with AES-256. Here\'s my certificate proving I\'m really google.com"'),
+            whatsSent: ['Chosen cipher', 'Server certificate', 'Server random'],
+            analogy: t('visualizations.tls.steps.2.analogy', 'Like the guard showing their badge and company ID'),
+            direction: 'left',
+            icon: ArrowLeft,
+            color: 'var(--secondary)'
+        },
+        {
+            id: 'key_exchange',
+            title: t('visualizations.tls.steps.3.title', 'Key Exchange'),
+            shortDesc: t('visualizations.tls.steps.3.short', 'Creating a shared secret'),
+            detail: t('visualizations.tls.steps.3.detail', 'Both sides use Diffie-Hellman to create a shared secret key without ever sending it directly'),
+            whatsSent: ['Pre-master secret', 'Session keys'],
+            analogy: t('visualizations.tls.steps.3.analogy', 'Like mixing colors - each adds their secret, neither knows the other\'s original'),
+            direction: 'right',
+            icon: Key,
+            color: '#ffa94d'
+        },
+        {
+            id: 'secure',
+            title: t('visualizations.tls.steps.4.title', 'Secure Connection'),
+            shortDesc: t('visualizations.tls.steps.4.short', 'Ready to talk privately'),
+            detail: t('visualizations.tls.steps.4.detail', 'Both sides now have matching session keys. All future messages are encrypted.'),
+            whatsSent: ['AES-256 active', 'HMAC enabled'],
+            analogy: t('visualizations.tls.steps.4.analogy', 'Like having a private language only you two understand'),
+            direction: 'both',
+            icon: Lock,
+            color: '#00ff9d'
+        }
+    ];
+
     const steps = [
         { id: 'step1', direction: 'right', icon: ArrowRight, color: 'var(--primary)' },
         { id: 'step2', direction: 'left', icon: ArrowLeft, color: 'var(--secondary)' },
@@ -17,7 +65,7 @@ const TlsHandshakeViz = () => {
         { id: 'step4', direction: 'both', icon: Lock, color: '#00ff9d' },
     ];
 
-    // Auto-cycle through steps
+    // Auto-cycle through steps - SLOWER for comprehension (4500ms instead of 1500ms)
     useEffect(() => {
         if (prefersReducedMotion) {
             setCurrentStep(3);
@@ -26,7 +74,7 @@ const TlsHandshakeViz = () => {
 
         const interval = setInterval(() => {
             setCurrentStep((prev) => (prev + 1) % 5);
-        }, 1500);
+        }, 4500);
 
         return () => clearInterval(interval);
     }, [prefersReducedMotion]);
@@ -47,17 +95,53 @@ const TlsHandshakeViz = () => {
         return { left: '50%', transform: 'translateX(-50%)' };
     };
 
+    const currentExplanation = tlsStepsDetailed[currentStep] || tlsStepsDetailed[0];
+    const displayStep = currentStep < 4 ? currentStep : 3;
+
     return (
         <VizContainer title={t('visualizations.tls.title')}>
             <div className="tls-viz-wrapper">
+                {/* Step Explanation Panel */}
+                <div className="tls-explanation-panel">
+                    <div className="tls-step-header">
+                        <span className="tls-step-number">Step {displayStep + 1} of 4</span>
+                        <h4 className="tls-step-title">{tlsStepsDetailed[displayStep].title}</h4>
+                    </div>
+                    <p className="tls-step-desc">{tlsStepsDetailed[displayStep].shortDesc}</p>
+
+                    <AnimatePresence>
+                        <motion.div
+                            className="tls-step-detail"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            key={displayStep}
+                        >
+                            <p>{tlsStepsDetailed[displayStep].detail}</p>
+
+                            {/* What's being sent */}
+                            <div className="tls-whats-sent">
+                                {tlsStepsDetailed[displayStep].whatsSent.map((item, i) => (
+                                    <span key={i} className="tls-sent-item">{item}</span>
+                                ))}
+                            </div>
+
+                            {/* Analogy */}
+                            <div className="tls-analogy">
+                                <Lightbulb size={14} />
+                                <span>{tlsStepsDetailed[displayStep].analogy}</span>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+
                 {/* Endpoints */}
                 <div className="tls-endpoints">
                     {/* Browser */}
                     <motion.div
                         className="tls-endpoint browser"
                         animate={{
-                            borderColor: currentStep === 3 ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
-                            boxShadow: currentStep === 3 ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
+                            borderColor: currentStep >= 3 ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
+                            boxShadow: currentStep >= 3 ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
                         }}
                     >
                         <Monitor size={28} color="var(--primary)" />
@@ -114,8 +198,8 @@ const TlsHandshakeViz = () => {
                     <motion.div
                         className="tls-endpoint server"
                         animate={{
-                            borderColor: currentStep === 3 ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
-                            boxShadow: currentStep === 3 ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
+                            borderColor: currentStep >= 3 ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
+                            boxShadow: currentStep >= 3 ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
                         }}
                     >
                         <Server size={28} color="var(--secondary)" />
@@ -134,6 +218,15 @@ const TlsHandshakeViz = () => {
                             <span className="tls-step-label">{t(`visualizations.tls.step${i + 1}`)}</span>
                         </div>
                     ))}
+                </div>
+
+                {/* Why It Matters */}
+                <div className="tls-why-matters">
+                    <p>
+                        <Lock size={12} style={{ display: 'inline', marginRight: '4px' }} />
+                        Without TLS, passwords and personal data travel in plain text anyone can intercept.
+                        Always look for the padlock icon in your browser.
+                    </p>
                 </div>
             </div>
         </VizContainer>

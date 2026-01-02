@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { User, Globe, Eye, EyeOff, ShieldOff, ShieldCheck } from 'lucide-react';
+import {
+    User, Globe, Eye, EyeOff, ShieldOff, ShieldCheck,
+    FileText, Clock, MousePointer, ShoppingCart, DollarSign,
+    XCircle, Heart, Users, MessageCircle, AlertTriangle, Target, Mail, Database
+} from 'lucide-react';
 import VizContainer from './VizContainer';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 
@@ -12,13 +16,44 @@ const TrackerBlockingViz = () => {
     const [trackerData, setTrackerData] = useState([]);
     const [currentSite, setCurrentSite] = useState(0);
 
+    // Detailed tracker data per site
+    const trackerDataTypes = {
+        'news.com': {
+            color: '#4a9eff',
+            trackers: ['Google Analytics', 'Facebook Pixel', 'Criteo'],
+            dataCollected: [
+                { type: 'Articles Read', icon: FileText, value: 'Politics, Tech, Sports' },
+                { type: 'Time Spent', icon: Clock, value: '4 min on politics' },
+                { type: 'Scroll Depth', icon: MousePointer, value: '85% of article' }
+            ]
+        },
+        'shop.com': {
+            color: '#ff6b6b',
+            trackers: ['Google Ads', 'Amazon', 'Pinterest'],
+            dataCollected: [
+                { type: 'Products Viewed', icon: ShoppingCart, value: 'Laptop, Headphones' },
+                { type: 'Price Checks', icon: DollarSign, value: 'Compared 3 times' },
+                { type: 'Cart Status', icon: XCircle, value: 'Abandoned checkout' }
+            ]
+        },
+        'social.com': {
+            color: '#a855f7',
+            trackers: ['Meta Pixel', 'TikTok Analytics'],
+            dataCollected: [
+                { type: 'Interests', icon: Heart, value: 'Photography, Travel' },
+                { type: 'Social Graph', icon: Users, value: '847 connections' },
+                { type: 'Engagement', icon: MessageCircle, value: 'Likes memes' }
+            ]
+        }
+    };
+
     const sites = [
         { name: 'news.com', color: '#4a9eff' },
         { name: 'shop.com', color: '#ff6b6b' },
         { name: 'social.com', color: '#a855f7' },
     ];
 
-    // Auto-cycle: show unblocked, then blocked
+    // Auto-cycle: show unblocked, then blocked - SLOWER for comprehension (4000ms instead of 1500ms)
     useEffect(() => {
         if (prefersReducedMotion) {
             setBlocked(true);
@@ -30,15 +65,15 @@ const TrackerBlockingViz = () => {
             setCurrentSite((prev) => {
                 const next = (prev + 1) % sites.length;
                 if (next === 0) {
-                    // After completing a cycle, toggle blocked state
+                    // After completing a cycle, pause then toggle blocked state
                     setTimeout(() => {
                         setBlocked((b) => !b);
                         setTrackerData([]);
-                    }, 500);
+                    }, 2000);
                 }
                 return next;
             });
-        }, 1500);
+        }, 4000);
 
         return () => clearInterval(siteInterval);
     }, [prefersReducedMotion]);
@@ -53,7 +88,7 @@ const TrackerBlockingViz = () => {
                     }
                     return prev;
                 });
-            }, 800);
+            }, 1500);
             return () => clearTimeout(timer);
         }
     }, [currentSite, blocked, prefersReducedMotion]);
@@ -77,6 +112,8 @@ const TrackerBlockingViz = () => {
         animate: { scale: 1, rotate: 0, transition: { type: 'spring', stiffness: 200 } },
     };
 
+    const currentSiteData = trackerDataTypes[sites[currentSite]?.name];
+
     return (
         <VizContainer>
             <div className="tracker-viz-wrapper">
@@ -86,6 +123,39 @@ const TrackerBlockingViz = () => {
                         {blocked ? <ShieldCheck size={16} /> : <ShieldOff size={16} />}
                         <span>{blocked ? t('visualizations.tracker.protected') : t('visualizations.tracker.exposed')}</span>
                     </div>
+                </div>
+
+                {/* Third-party tracker explainer */}
+                <div className="tracker-explainer">
+                    <div className="tracker-explainer-header">
+                        <AlertTriangle size={14} color={blocked ? '#00ff9d' : 'var(--accent)'} />
+                        <span>{blocked ? 'Trackers Blocked' : 'What\'s happening?'}</span>
+                    </div>
+                    {!blocked ? (
+                        <div className="tracker-explainer-content">
+                            <p>
+                                <strong>Third-party trackers</strong> are scripts from external companies
+                                embedded in websites. They follow you across different sites.
+                            </p>
+                            {currentSiteData && (
+                                <div className="tracker-company-list">
+                                    <span className="tracker-company-label">Trackers on {sites[currentSite]?.name}:</span>
+                                    <div className="tracker-company-tags">
+                                        {currentSiteData.trackers.map(tracker => (
+                                            <span key={tracker} className="tracker-company-tag">{tracker}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="tracker-explainer-content protected">
+                            <p>
+                                With a <strong>tracker blocker</strong> like uBlock Origin, these scripts
+                                are blocked. The website still works, but trackers can't collect data.
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Main visualization */}
@@ -162,32 +232,57 @@ const TrackerBlockingViz = () => {
                         })}
                     </div>
 
-                    {/* Tracker profile (only when not blocked) */}
+                    {/* Enhanced Tracker profile (only when not blocked) */}
                     <AnimatePresence>
                         {!blocked && trackerData.length > 0 && (
                             <motion.div
-                                className="tracker-profile"
+                                className="tracker-profile-enhanced"
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: 20 }}
                             >
                                 <div className="tracker-profile-header">
                                     <Eye size={14} color="var(--accent)" />
-                                    <span>{t('visualizations.tracker.profile')}</span>
+                                    <span>Your Profile (As Trackers See You)</span>
                                 </div>
-                                <div className="tracker-profile-data">
-                                    {trackerData.map((site, i) => (
-                                        <motion.span
-                                            key={i}
-                                            className="tracker-data-item"
-                                            initial={{ opacity: 0, y: 5 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: i * 0.1 }}
-                                        >
-                                            {site}
-                                        </motion.span>
-                                    ))}
+                                <div className="tracker-profile-categories">
+                                    {trackerData.map((siteName, i) => {
+                                        const siteData = trackerDataTypes[siteName];
+                                        if (!siteData) return null;
+                                        return (
+                                            <motion.div
+                                                key={siteName}
+                                                className="tracker-profile-category"
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: i * 0.2 }}
+                                            >
+                                                <span className="tracker-category-source">{siteName}</span>
+                                                <div className="tracker-data-points">
+                                                    {siteData.dataCollected.map((data, j) => (
+                                                        <motion.div
+                                                            key={data.type}
+                                                            className="tracker-data-point"
+                                                            initial={{ opacity: 0 }}
+                                                            animate={{ opacity: 1 }}
+                                                            transition={{ delay: i * 0.2 + j * 0.1 }}
+                                                        >
+                                                            <data.icon size={10} />
+                                                            <span className="tracker-data-type">{data.type}:</span>
+                                                            <span className="tracker-data-value">{data.value}</span>
+                                                        </motion.div>
+                                                    ))}
+                                                </div>
+                                            </motion.div>
+                                        );
+                                    })}
                                 </div>
+                                {trackerData.length > 1 && (
+                                    <div className="tracker-profile-summary">
+                                        <AlertTriangle size={12} color="var(--accent)" />
+                                        <span>Cross-site tracking: {trackerData.length} sites linked</span>
+                                    </div>
+                                )}
                             </motion.div>
                         )}
                         {blocked && (
@@ -201,10 +296,30 @@ const TrackerBlockingViz = () => {
                                     <EyeOff size={14} color="#00ff9d" />
                                     <span>{t('visualizations.tracker.no_profile')}</span>
                                 </div>
+                                <p className="tracker-blocked-message">No data collected. Your browsing stays private.</p>
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
+
+                {/* What happens with this data - only show when exposed with full profile */}
+                <AnimatePresence>
+                    {!blocked && trackerData.length >= 2 && (
+                        <motion.div
+                            className="tracker-impact"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                        >
+                            <h5>What happens with this data?</h5>
+                            <ul className="tracker-impact-list">
+                                <li><Target size={12} /> <span><strong>Targeted Ads:</strong> Laptop ads everywhere</span></li>
+                                <li><DollarSign size={12} /> <span><strong>Price Changes:</strong> Some sites show higher prices</span></li>
+                                <li><Database size={12} /> <span><strong>Data Brokers:</strong> Your profile sold to others</span></li>
+                            </ul>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* Explanation */}
                 <p className="tracker-explanation">

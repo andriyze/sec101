@@ -1358,6 +1358,174 @@ input:checked+.toggle-slider:before {
   line-height: 1.4;
 }
 
+/* Tracker Visualization Enhancements - NEW */
+.tracker-explainer {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 0.75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.tracker-explainer-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.tracker-explainer-content p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.tracker-explainer-content.protected p {
+  color: #00ff9d;
+}
+
+.tracker-company-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tracker-company-label {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
+
+.tracker-company-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tracker-company-tag {
+  font-size: 0.6rem;
+  padding: 0.15rem 0.35rem;
+  background: rgba(255, 0, 85, 0.15);
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+.tracker-profile-enhanced {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, rgba(255, 0, 85, 0.08), rgba(255, 0, 85, 0.02));
+  border: 1px solid rgba(255, 0, 85, 0.2);
+  border-radius: 10px;
+  min-width: 180px;
+  max-width: 200px;
+}
+
+.tracker-profile-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tracker-profile-category {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tracker-profile-category:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.tracker-category-source {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.tracker-data-points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tracker-data-point {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+}
+
+.tracker-data-type {
+  color: var(--text-muted);
+}
+
+.tracker-data-value {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.tracker-profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding-top: 0.4rem;
+  margin-top: 0.25rem;
+  border-top: 1px dashed rgba(255, 0, 85, 0.3);
+  font-size: 0.6rem;
+  color: var(--accent);
+}
+
+.tracker-blocked-message {
+  font-size: 0.7rem;
+  color: #00ff9d;
+  margin: 0;
+}
+
+.tracker-impact {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem;
+  background: rgba(255, 0, 85, 0.05);
+  border: 1px solid rgba(255, 0, 85, 0.15);
+  border-radius: 8px;
+}
+
+.tracker-impact h5 {
+  font-size: 0.8rem;
+  color: var(--text-main);
+  margin: 0 0 0.5rem;
+}
+
+.tracker-impact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tracker-impact-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.tracker-impact-list li span {
+  flex: 1;
+}
+
 /* Phishing Email Visualization */
 .phishing-viz-wrapper {
   display: flex;
@@ -1852,6 +2020,111 @@ input:checked+.toggle-slider:before {
   border-color: #00ff9d;
   color: var(--bg-dark);
   background: #00ff9d;
+}
+
+/* DNS Explanation Panel - NEW */
+.dns-explanation-panel {
+  background: rgba(0, 242, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.dns-step-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.dns-step-number {
+  font-size: 0.7rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dns-step-title {
+  font-size: 1rem;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.dns-step-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.dns-step-detail {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.dns-step-detail p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.dns-server-role {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(112, 0, 255, 0.1);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--secondary);
+  text-align: left;
+}
+
+.dns-packet-wrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dns-packet-label {
+  font-size: 0.55rem;
+  padding: 0.15rem 0.35rem;
+  background: var(--bg-card);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.dns-technical {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.dns-technical summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.25rem;
+}
+
+.dns-technical[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+.dns-technical p {
+  margin: 0;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  line-height: 1.5;
 }
 
 /* OSI Model Visualization */
@@ -2510,6 +2783,99 @@ input:checked+.toggle-slider:before {
 
 .tls-step-label {
   white-space: nowrap;
+}
+
+/* TLS Visualization Enhancements - NEW */
+.tls-explanation-panel {
+  background: rgba(0, 242, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.tls-step-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.tls-step-number {
+  font-size: 0.7rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tls-step-title {
+  font-size: 1rem;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.tls-step-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.tls-step-detail {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.tls-step-detail p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.tls-whats-sent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.tls-sent-item {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.4rem;
+  background: rgba(0, 242, 255, 0.1);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 4px;
+  color: var(--primary);
+}
+
+.tls-analogy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(112, 0, 255, 0.1);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--secondary);
+}
+
+.tls-why-matters {
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 255, 157, 0.05);
+  border: 1px solid rgba(0, 255, 157, 0.15);
+  border-radius: 6px;
+}
+
+.tls-why-matters p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* IPv4 vs IPv6 Visualization */
