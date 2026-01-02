@@ -25,7 +25,13 @@ const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
         const checkScore = () => {
             const stored = localStorage.getItem(quizStorageKey);
             if (stored) {
-                setQuizScore(parseInt(stored, 10));
+                try {
+                    const data = JSON.parse(stored);
+                    const percent = Math.round((data.score / data.total) * 100);
+                    setQuizScore(percent);
+                } catch {
+                    setQuizScore(0);
+                }
             }
         };
 
