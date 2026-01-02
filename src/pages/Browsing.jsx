@@ -5,6 +5,7 @@ import { Globe, Shield, EyeOff, Settings } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import NextTopicCard from '../components/NextTopicCard';
 import { useProgress } from '../hooks/useProgress';
+import TrackerBlockingViz from '../components/visualizations/TrackerBlockingViz';
 
 const Browsing = () => {
     const { t } = useTranslation();
@@ -59,6 +60,8 @@ const Browsing = () => {
                         ))}
                     </ul>
                 </div>
+
+                <TrackerBlockingViz />
             </section>
 
             {/* Browsers */}

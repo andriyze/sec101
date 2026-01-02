@@ -711,6 +711,40 @@
             "friend": "Friend",
             "message": "Hello!",
             "server_blind": "Server can't read messages"
+        },
+        "tracker": {
+            "protected": "Trackers blocked",
+            "exposed": "Trackers watching",
+            "you": "You",
+            "profile": "Building profile...",
+            "no_profile": "No tracking",
+            "explanation_exposed": "Without blockers, trackers follow you across websites and build a profile of your interests, habits, and identity.",
+            "explanation_blocked": "With a blocker like uBlock Origin, trackers are stopped. No profile is built."
+        },
+        "phishing": {
+            "email_title": "Incoming Email",
+            "from": "From",
+            "subject": "Subject",
+            "subject_text": "Account Suspended",
+            "greeting": "Dear Customer,",
+            "body_text": "Your account will be closed in 12 hours unless you verify your identity immediately.",
+            "link_text": "Click here to verify your account",
+            "actual_url": "Actual URL",
+            "red_flags": "Red Flags to Spot",
+            "flags": {
+                "sender": "Fake domain (paypa1)",
+                "urgency": "Creates panic",
+                "greeting": "Generic, not your name",
+                "link": "URL doesn't match",
+                "attachment": "Suspicious .exe file"
+            },
+            "legend": {
+                "sender": "Fake sender",
+                "urgency": "Urgency",
+                "greeting": "Generic greeting",
+                "link": "Fake URL",
+                "attachment": "Bad attachment"
+            }
         }
     }
 }

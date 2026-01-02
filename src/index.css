@@ -1192,12 +1192,387 @@ input:checked+.toggle-slider:before {
   border-radius: 6px;
 }
 
+/* Tracker Blocking Visualization */
+.tracker-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.tracker-header {
+  display: flex;
+  justify-content: center;
+}
+
+.tracker-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.tracker-status.exposed {
+  background: rgba(255, 0, 85, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(255, 0, 85, 0.3);
+}
+
+.tracker-status.protected {
+  background: rgba(0, 255, 157, 0.15);
+  color: #00ff9d;
+  border: 1px solid rgba(0, 255, 157, 0.3);
+}
+
+.tracker-flow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.tracker-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  position: relative;
+}
+
+.tracker-node.user {
+  border-color: var(--primary);
+}
+
+.tracker-node-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(0, 242, 255, 0.1);
+}
+
+.tracker-node-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.tracker-sites {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.tracker-site-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.tracker-connection {
+  width: 24px;
+  height: 2px;
+  background: var(--border-light);
+  border-radius: 1px;
+}
+
+.tracker-eye,
+.tracker-blocked {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tracker-eye {
+  background: rgba(255, 0, 85, 0.2);
+  border: 1px solid var(--accent);
+}
+
+.tracker-blocked {
+  background: rgba(0, 255, 157, 0.2);
+  border: 1px solid #00ff9d;
+}
+
+.tracker-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: rgba(255, 0, 85, 0.08);
+  border: 1px solid rgba(255, 0, 85, 0.2);
+  min-width: 100px;
+}
+
+.tracker-profile.blocked {
+  background: rgba(0, 255, 157, 0.08);
+  border: 1px solid rgba(0, 255, 157, 0.2);
+}
+
+.tracker-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.tracker-profile.blocked .tracker-profile-header {
+  color: #00ff9d;
+}
+
+.tracker-profile-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tracker-data-item {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  font-family: monospace;
+}
+
+.tracker-explanation {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 400px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Phishing Email Visualization */
+.phishing-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.phishing-email {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.85rem;
+}
+
+.phishing-email-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.phishing-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  border: 1px solid transparent;
+  margin: 2px;
+  border-radius: 4px;
+}
+
+.phishing-field-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  min-width: 50px;
+}
+
+.phishing-field-value {
+  color: var(--text-main);
+  font-size: 0.8rem;
+}
+
+.phishing-fake {
+  color: var(--accent);
+  font-family: monospace;
+}
+
+.phishing-urgent {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.phishing-body {
+  padding: 0.8rem;
+}
+
+.phishing-greeting {
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+  position: relative;
+}
+
+.phishing-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.phishing-link-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.phishing-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--primary);
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+
+.phishing-url-reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.4rem 0.5rem;
+  background: rgba(255, 0, 85, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 0, 85, 0.2);
+}
+
+.phishing-url-label {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
+
+.phishing-url-fake {
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.phishing-attachment {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  position: relative;
+}
+
+.phishing-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 0, 85, 0.15);
+  border: 1px solid rgba(255, 0, 85, 0.3);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: var(--accent);
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.phishing-flag.inline {
+  margin-left: 0.75rem;
+}
+
+.phishing-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.phishing-legend-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.phishing-legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.phishing-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.phishing-legend-item.active {
+  background: rgba(255, 0, 85, 0.1);
+  border-color: rgba(255, 0, 85, 0.3);
+  color: var(--accent);
+}
+
+.phishing-legend-number {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 0, 85, 0.2);
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .viz-packet,
   .viz-node,
   .mfa-factor-card,
-  .e2e-message {
+  .e2e-message,
+  .tracker-node,
+  .tracker-eye,
+  .phishing-flag {
     animation: none !important;
     transition: opacity 0.2s ease !important;
   }
@@ -1272,5 +1647,33 @@ input:checked+.toggle-slider:before {
 
   .e2e-flow {
     flex-wrap: wrap;
+  }
+
+  .tracker-flow {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tracker-sites {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tracker-profile {
+    min-width: auto;
+  }
+
+  .phishing-field {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .phishing-flag {
+    margin-left: 0;
+    margin-top: 0.3rem;
+  }
+
+  .phishing-legend-items {
+    flex-direction: column;
   }
 }

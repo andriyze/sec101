@@ -4,6 +4,7 @@ import { Mail, AlertTriangle, CheckCircle, Shield } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import NextTopicCard from '../components/NextTopicCard';
 import { useProgress } from '../hooks/useProgress';
+import PhishingEmailViz from '../components/visualizations/PhishingEmailViz';
 
 const Phishing = () => {
     const { t } = useTranslation();
@@ -44,26 +45,15 @@ const Phishing = () => {
                     ))}
                 </div>
 
-                <div className="grid grid-cols-2 gap-6" style={{ marginTop: '1.5rem' }}>
-                    <div className="card panel-solid">
-                        <h4 style={{ marginBottom: '0.75rem' }}>{t('phishing.tips.title')}</h4>
-                        <ul style={{ paddingLeft: '1.2rem', lineHeight: 1.6 }}>
-                            {t('phishing.tips.items', { returnObjects: true }).map((item, i) => (
-                                <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="card panel-solid">
-                        <h4 style={{ marginBottom: '0.5rem' }}>{t('phishing.sample.title')}</h4>
-                        <p style={{ marginBottom: '0.25rem', fontFamily: 'monospace', color: 'var(--text-main)' }}>{t('phishing.sample.from')}</p>
-                        <p style={{ marginBottom: '0.25rem', fontFamily: 'monospace', color: 'var(--text-main)' }}>{t('phishing.sample.subject')}</p>
-                        <p style={{ marginBottom: '0.5rem' }}>{t('phishing.sample.body')}</p>
-                        <div className="badge-grid">
-                            {t('phishing.sample.highlights', { returnObjects: true }).map((tag, i) => (
-                                <span key={i} className="pill pill-accent">{tag}</span>
-                            ))}
-                        </div>
-                    </div>
+                <PhishingEmailViz />
+
+                <div className="card panel-solid" style={{ marginTop: '1.5rem' }}>
+                    <h4 style={{ marginBottom: '0.75rem' }}>{t('phishing.tips.title')}</h4>
+                    <ul style={{ paddingLeft: '1.2rem', lineHeight: 1.6 }}>
+                        {t('phishing.tips.items', { returnObjects: true }).map((item, i) => (
+                            <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
+                        ))}
+                    </ul>
                 </div>
             </section>
 
