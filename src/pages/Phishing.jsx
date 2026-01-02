@@ -114,6 +114,28 @@ const Phishing = () => {
                 </div>
             </section>
 
+            {/* Other Phishing Channels - Smishing, Vishing, Quishing */}
+            <section className="section">
+                <div className="section-title" style={{ marginBottom: '1rem' }}>
+                    <AlertTriangle size={24} color="var(--secondary)" /> <h3 style={{ margin: 0 }}>{t('phishing.other_channels.title')}</h3>
+                </div>
+                <p style={{ marginBottom: '1rem', color: 'var(--text-muted)' }}>{t('phishing.other_channels.intro')}</p>
+                <div className="grid grid-cols-3 gap-6">
+                    <div className="card" style={{ borderLeft: '4px solid var(--secondary)' }}>
+                        <h4 style={{ color: 'var(--secondary)', marginBottom: '0.5rem' }}>{t('phishing.other_channels.smishing.title')}</h4>
+                        <p>{t('phishing.other_channels.smishing.desc')}</p>
+                    </div>
+                    <div className="card" style={{ borderLeft: '4px solid var(--secondary)' }}>
+                        <h4 style={{ color: 'var(--secondary)', marginBottom: '0.5rem' }}>{t('phishing.other_channels.vishing.title')}</h4>
+                        <p>{t('phishing.other_channels.vishing.desc')}</p>
+                    </div>
+                    <div className="card" style={{ borderLeft: '4px solid var(--secondary)' }}>
+                        <h4 style={{ color: 'var(--secondary)', marginBottom: '0.5rem' }}>{t('phishing.other_channels.quishing.title')}</h4>
+                        <p>{t('phishing.other_channels.quishing.desc')}</p>
+                    </div>
+                </div>
+            </section>
+
             <section className="section">
                 <Quiz
                     title={t('phishing.quiz.title')}

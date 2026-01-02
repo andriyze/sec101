@@ -76,11 +76,11 @@
             "subtitle": "Just use these. No research needed.",
             "bitwarden": "Free, open-source password manager. Works everywhere.",
             "brave": "Blocks ads & trackers by default. Fast daily browser.",
-            "protonmail": "Encrypted email. They can't read your messages.",
-            "signal": "Encrypted chat. Even Signal can't see your messages.",
+            "protonmail": "Encrypted email. Messages between Proton users are end-to-end encrypted.",
+            "signal": "Encrypted chat with minimal metadata collection.",
             "mfa_reminder": {
                 "title": "Enable 2FA everywhere!",
-                "desc": "Use an authenticator app (not SMS). This stops 99% of account hacks."
+                "desc": "Use an authenticator app (not SMS). This dramatically reduces account compromise risk."
             }
         }
     },
@@ -92,7 +92,7 @@
             "actions": [
                 "Install a password manager and import your top 5 accounts.",
                 "Enable MFA on email + bank (avoid SMS; use an app).",
-                "Download and store backup codes offline (photo or print)."
+                "Download and store backup codes offline (print or password manager secure note)."
             ]
         },
         "why_manager": {
@@ -108,7 +108,7 @@
                 "desc": "Alternative if you're already in the Proton ecosystem."
             },
             "apple": {
-                "desc": "Apple-only fallback. Limited to Safari and Apple devices."
+                "desc": "Apple ecosystem option. Works across Apple devices and via Chrome extension on other platforms."
             }
         },
         "bitwarden_setup": {
@@ -202,7 +202,7 @@
                 },
                 "hardware": {
                     "title": "Hardware Keys (YubiKey)",
-                    "desc": "Maximum Security. A physical USB key you plug in. Phishing-proof but costs $50+."
+                    "desc": "Maximum Security. A physical USB key you plug in. Phishing-proof but costs $50+. Important: Register at least 2 keys as backup in case you lose one."
                 },
                 "biometrics": {
                     "title": "Biometrics",
@@ -215,7 +215,7 @@
             },
             "bitwarden_advanced": {
                 "title": "Advanced Bitwarden Features",
-                "otp": "Bitwarden Premium can generate MFA codes (TOTP) just like Authy. This makes logging in faster (auto-fill everything).",
+                "otp": "Bitwarden Premium can generate MFA codes (TOTP). This is convenient but creates a single point of failure—if your vault is compromised, attackers get both your password and MFA. For highest security, use a separate authenticator app.",
                 "passkeys": "Bitwarden can now store Passkeys, allowing you to sync them across all your devices, not just Apple or Google ones."
             },
             "quick_actions": {
@@ -255,7 +255,7 @@
             "notes": [
                 "Passkeys work best when you’re signed into the same account on phone + laptop (Apple ID, Google, or Microsoft).",
                 "On shared computers, stick to passwords + MFA instead of passkeys.",
-                "You can export passkeys to move between ecosystems (e.g., to Bitwarden)."
+                "Passkey portability is improving but not universal. Some platforms now support export (e.g., to Bitwarden), but check before relying on it."
             ]
         }
     },
@@ -288,6 +288,32 @@
             "brave": "USE THIS for daily browsing. Blocks ads & trackers out of the box. Fast.",
             "firefox": "Good alternative. Requires manual hardening for best privacy.",
             "tor": "For maximum anonymity only. Slow. Don't use for regular browsing."
+        },
+        "quiz": {
+            "title": "Safe browsing quiz",
+            "questions": [
+                {
+                    "prompt": "Why enable HTTPS-Only mode?",
+                    "options": ["It blocks all images", "It forces encrypted connections to prevent snooping", "It makes sites load faster"],
+                    "answer": 1,
+                    "correct": "HTTPS encrypts your connection, protecting against interception on public networks.",
+                    "explainer": "Without HTTPS, anyone on the same network could potentially see your traffic."
+                },
+                {
+                    "prompt": "What's the safest way to install browser extensions?",
+                    "options": ["From random websites", "From official browser stores and trusted publishers only", "Download .zip files and drag them in"],
+                    "answer": 1,
+                    "correct": "Official stores have some vetting; random sources can ship malware.",
+                    "explainer": "Even official stores aren't perfect, so stick to well-known, trusted publishers."
+                },
+                {
+                    "prompt": "When should you use Tor Browser?",
+                    "options": ["For daily banking and shopping", "For streaming video faster", "For sensitive browsing where anonymity matters"],
+                    "answer": 2,
+                    "correct": "Tor is for anonymity, not speed or convenience. Avoid logging into personal accounts.",
+                    "explainer": "Tor routes traffic through multiple relays, which is slow but hides your identity."
+                }
+            ]
         },
         "hardening": {
             "brave": {
@@ -327,7 +353,7 @@
             },
             "signal": {
                 "title": "Signal - The Gold Standard",
-                "desc": "USE THIS. End-to-end encrypted, open source, non-profit. Even Signal cannot see your messages or who you talk to."
+                "desc": "USE THIS. End-to-end encrypted, open source, non-profit. Signal collects minimal metadata and cannot see your message content."
             },
             "whatsapp": {
                 "desc": "Encrypted messages, but owned by Meta. Collects metadata (who you talk to, when, how often). Use Signal instead."
@@ -351,7 +377,7 @@
         },
         "vpn": {
             "title": "VPN Services",
-            "intro": "Use a VPN on public WiFi to encrypt your traffic and hide your IP address.",
+            "intro": "A VPN can add privacy on public WiFi, but note: HTTPS already encrypts most traffic. A VPN shifts trust from the WiFi operator to the VPN provider—choose reputable, audited providers.",
             "mullvad": "USE THIS. Maximum privacy. No email needed—account is just a number. Flat €5/month. No tracking.",
             "proton": "Good free tier if you're in the Proton ecosystem. Swiss-based, no-logs.",
             "ivpn": "Privacy-focused alternative. No email required. Transparent company.",
@@ -376,12 +402,12 @@
         },
         "email": {
             "title": "Private Email",
-            "why": "Gmail scans your emails for ads and shares data with Google. With Proton Mail, your emails are encrypted—even Proton can't read them.",
+            "why": "Gmail integrates with Google's ecosystem and your emails are not end-to-end encrypted. With Proton Mail, emails between Proton users are end-to-end encrypted.",
             "proton": {
-                "desc": "USE THIS. Encrypted email based in Switzerland. Free tier available. Even Proton cannot read your emails."
+                "desc": "USE THIS. Encrypted email based in Switzerland. Free tier available. Messages between Proton users are end-to-end encrypted."
             },
             "gmail": {
-                "desc": "Google reads your emails to show you ads. Your data is used for profiling. Keep it for spam signups only."
+                "desc": "Your emails are not end-to-end encrypted and Google uses your data for profiling. Keep it for spam signups only."
             }
         }
     },
@@ -546,6 +572,22 @@
                 "Urgency language to rush you.",
                 "Unexpected attachment: treat as malicious."
             ]
+        },
+        "other_channels": {
+            "title": "Beyond Email: Other Phishing Channels",
+            "intro": "Attackers don't just use email. Watch out for these too:",
+            "smishing": {
+                "title": "SMS Phishing (Smishing)",
+                "desc": "Fake texts claiming to be from banks, delivery services, or government. Never click links in unexpected texts—go directly to the official website or app."
+            },
+            "vishing": {
+                "title": "Phone Call Phishing (Vishing)",
+                "desc": "Callers pretending to be tech support, banks, or officials. They create urgency ('Your account is compromised!'). Hang up and call the official number yourself."
+            },
+            "quishing": {
+                "title": "QR Code Phishing (Quishing)",
+                "desc": "Malicious QR codes placed over legitimate ones (parking meters, restaurant menus). Before scanning, check if the code looks tampered with. Preview the URL before opening."
+            }
         }
     },
     "tools": {
@@ -569,7 +611,7 @@
             "title": "MFA / OTP apps",
             "items": [
                 { "name": "Aegis (Android)", "emoji": "🔐", "desc": "Encrypted TOTP vault with export; open source.", "link": "https://getaegis.app" },
-                { "name": "Raivo (iOS)", "emoji": "📱", "desc": "Lightweight, open-source TOTP app for iOS.", "link": "https://raivo-otp.com" },
+                { "name": "2FAS (iOS/Android)", "emoji": "🔐", "desc": "Free, open-source TOTP app. No account needed, syncs via iCloud/Google backup.", "link": "https://2fas.com" },
                 { "name": "YubiKey", "emoji": "🗝️", "desc": "Hardware security keys that resist phishing (FIDO2/U2F).", "link": "https://www.yubico.com/products/" }
             ]
         },
@@ -601,8 +643,8 @@
             "takeaways": [
                 "The tools we recommend (Signal, Bitwarden, Proton) handle encryption for you—just use them.",
                 "Never share recovery phrases or backup codes. Treat them like cash.",
-                "If your device is lost/stolen, change your passwords. The encryption key may be compromised.",
-                "Green padlock in browser = encrypted connection. Red warning = stop and don't proceed."
+                "If your device is lost/stolen and was unlocked, or you suspect someone knows your PIN, change your passwords immediately. If it was locked with a strong PIN, encryption protects your data.",
+                "Look for 'https://' in the URL—this means the connection is encrypted. But note: this only protects the connection, not the site's legitimacy. Phishing sites can have HTTPS too."
             ]
         }
     },
