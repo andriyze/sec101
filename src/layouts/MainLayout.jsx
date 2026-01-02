@@ -60,6 +60,11 @@ const MainLayout = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Scroll to top on route change
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
+
     const currentNav = navItems.find((item) => item.path === location.pathname);
 
     return (

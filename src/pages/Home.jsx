@@ -20,6 +20,7 @@ const Home = () => {
         { path: '/social', icon: '💬', label: t('nav.social'), desc: t('home.cards.social.desc'), time: '6 min' },
         { path: '/devices', icon: '📱', label: t('nav.devices'), desc: t('home.cards.devices.desc'), time: '8 min' },
         { path: '/tools', icon: '🔧', label: t('nav.tools'), desc: t('home.cards.tools.desc'), time: '5 min' },
+        { path: '/advanced', icon: '🎓', label: t('nav.advanced'), desc: t('home.cards.advanced.desc'), time: '10 min' },
     ];
 
     return (

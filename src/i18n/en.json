@@ -61,7 +61,8 @@
             "browsing": { "desc": "Harden your browser and block trackers by default." },
             "social": { "desc": "Choose private messengers and stay safe on public Wi‑Fi." },
             "devices": { "desc": "Lock down phones and laptops, plan for loss or theft." },
-            "tools": { "desc": "Curated list of privacy-respecting apps and encryption basics." }
+            "tools": { "desc": "Curated list of privacy-respecting apps and encryption basics." },
+            "advanced": { "desc": "DNS, OSI model, ports, protocols, and how the internet really works." }
         },
         "security_vs_privacy": {
             "security": {

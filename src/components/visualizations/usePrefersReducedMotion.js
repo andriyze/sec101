@@ -8,9 +8,21 @@ export const usePrefersReducedMotion = () => {
         setPrefersReducedMotion(mediaQuery.matches);
 
         const handler = (e) => setPrefersReducedMotion(e.matches);
-        mediaQuery.addEventListener('change', handler);
 
-        return () => mediaQuery.removeEventListener('change', handler);
+        // Use addEventListener if available, fallback to addListener for iOS Safari <14
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handler);
+        } else if (mediaQuery.addListener) {
+            mediaQuery.addListener(handler);
+        }
+
+        return () => {
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener('change', handler);
+            } else if (mediaQuery.removeListener) {
+                mediaQuery.removeListener(handler);
+            }
+        };
     }, []);
 
     return prefersReducedMotion;

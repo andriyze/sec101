@@ -13,7 +13,7 @@ const VpnTunnelViz = () => {
 
     const packetVariants = {
         animate: (i) => ({
-            x: [0, 180],
+            x: [0, 60],
             opacity: [0, 1, 1, 0],
             transition: {
                 duration: 2.5,
@@ -26,7 +26,7 @@ const VpnTunnelViz = () => {
 
     const encryptedPacketVariants = {
         animate: (i) => ({
-            x: [0, 280],
+            x: [0, 80],
             opacity: [0, 1, 1, 0],
             transition: {
                 duration: 3,
@@ -68,7 +68,7 @@ const VpnTunnelViz = () => {
                     </div>
 
                     {/* Connection to ISP */}
-                    <div className="viz-connection" style={{ width: '80px', position: 'relative' }}>
+                    <div className="viz-connection viz-connection-md">
                         {!prefersReducedMotion && sites.map((site, i) => (
                             <motion.div
                                 key={`packet-${i}`}
@@ -102,7 +102,7 @@ const VpnTunnelViz = () => {
                     </div>
 
                     {/* Connection to Internet */}
-                    <div className="viz-connection" style={{ width: '60px' }} />
+                    <div className="viz-connection viz-connection-sm" />
 
                     {/* Internet */}
                     <div className="viz-node">
@@ -127,8 +127,7 @@ const VpnTunnelViz = () => {
 
                     {/* Encrypted Tunnel */}
                     <motion.div
-                        className="viz-connection encrypted"
-                        style={{ width: '120px', position: 'relative' }}
+                        className="viz-connection encrypted viz-connection-lg"
                         variants={!prefersReducedMotion ? glowVariants : undefined}
                         animate={!prefersReducedMotion ? 'animate' : undefined}
                     >
@@ -165,7 +164,7 @@ const VpnTunnelViz = () => {
                     </div>
 
                     {/* Connection to VPN Server */}
-                    <div className="viz-connection" style={{ width: '40px' }} />
+                    <div className="viz-connection viz-connection-xs" />
 
                     {/* VPN Server */}
                     <div className="viz-node" style={{ borderColor: 'var(--primary)' }}>
@@ -176,7 +175,7 @@ const VpnTunnelViz = () => {
                     </div>
 
                     {/* Connection to Internet */}
-                    <div className="viz-connection" style={{ width: '40px' }} />
+                    <div className="viz-connection viz-connection-xs" />
 
                     {/* Internet */}
                     <div className="viz-node">

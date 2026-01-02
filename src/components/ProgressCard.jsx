@@ -12,6 +12,7 @@ const TOPIC_LABELS = {
     social: 'nav.social',
     devices: 'nav.devices',
     tools: 'nav.tools',
+    advanced: 'nav.advanced',
 };
 
 const ProgressCard = () => {
