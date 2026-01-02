@@ -805,7 +805,48 @@
             "profile": "Building profile...",
             "no_profile": "No tracking",
             "explanation_exposed": "Without blockers, trackers follow you across websites and build a profile of your interests, habits, and identity.",
-            "explanation_blocked": "With a blocker like uBlock Origin, trackers are stopped. No profile is built."
+            "explanation_blocked": "With a blocker like uBlock Origin, trackers are stopped. No profile is built.",
+            "whats_happening": "What's happening?",
+            "trackers_blocked": "Trackers Blocked",
+            "third_party_desc": "Third-party trackers are scripts from external companies embedded in websites. They follow you across different sites.",
+            "trackers_on": "Trackers on {{site}}:",
+            "blocker_desc": "With a tracker blocker like uBlock Origin, these scripts are blocked. The website still works, but trackers can't collect data.",
+            "profile_header": "Your Profile (As Trackers See You)",
+            "cross_site": "Cross-site tracking: {{count}} sites linked",
+            "blocked_message": "No data collected. Your browsing stays private.",
+            "impact_title": "What happens with this data?",
+            "impact_ads": "Targeted Ads:",
+            "impact_ads_desc": "Laptop ads everywhere",
+            "impact_prices": "Price Changes:",
+            "impact_prices_desc": "Some sites show higher prices",
+            "impact_brokers": "Data Brokers:",
+            "impact_brokers_desc": "Your profile sold to others",
+            "sites": {
+                "news": {
+                    "trackers": ["Google Analytics", "Facebook Pixel", "Criteo"],
+                    "data": {
+                        "articles": { "type": "Articles Read", "value": "Politics, Tech, Sports" },
+                        "time": { "type": "Time Spent", "value": "4 min on politics" },
+                        "scroll": { "type": "Scroll Depth", "value": "85% of article" }
+                    }
+                },
+                "shop": {
+                    "trackers": ["Google Ads", "Amazon", "Pinterest"],
+                    "data": {
+                        "products": { "type": "Products Viewed", "value": "Laptop, Headphones" },
+                        "price": { "type": "Price Checks", "value": "Compared 3 times" },
+                        "cart": { "type": "Cart Status", "value": "Abandoned checkout" }
+                    }
+                },
+                "social": {
+                    "trackers": ["Meta Pixel", "TikTok Analytics"],
+                    "data": {
+                        "interests": { "type": "Interests", "value": "Photography, Travel" },
+                        "graph": { "type": "Social Graph", "value": "847 connections" },
+                        "engagement": { "type": "Engagement", "value": "Likes memes" }
+                    }
+                }
+            }
         },
         "phishing": {
             "email_title": "Incoming Email",
@@ -842,36 +883,44 @@
             "website": "Website",
             "query": "Where is",
             "response": "IP:",
+            "step_of": "Step {{current}} of {{total}}",
+            "technical_title": "Technical Details",
+            "technical_text": "DNS uses UDP port 53 for queries. Each step involves a query/response pair. The TTL (Time To Live) determines how long the result is cached. Modern DNS can use encryption (DoH/DoT) to prevent snooping.",
             "steps": {
                 "1": {
                     "title": "Browser Asks DNS Resolver",
                     "short": "Your device contacts the DNS resolver",
                     "detail": "When you type 'google.com', your browser first checks its cache. If not found, it asks your configured DNS resolver.",
-                    "role": "DNS Resolver: A server that finds IP addresses for you. Like a librarian who knows where to find information."
+                    "role": "DNS Resolver: A server that finds IP addresses for you. Like a librarian who knows where to find information.",
+                    "packet": "Query: google.com TYPE A"
                 },
                 "2": {
                     "title": "Resolver Contacts Root Server",
                     "short": "Resolver asks: 'Who handles .com domains?'",
                     "detail": "The resolver starts at the top of DNS hierarchy - the 13 root server clusters worldwide.",
-                    "role": "Root Server: The starting point for all DNS queries. Knows which servers handle each top-level domain."
+                    "role": "Root Server: The starting point for all DNS queries. Knows which servers handle each top-level domain.",
+                    "packet": "Response: Ask .com servers"
                 },
                 "3": {
                     "title": "Root Directs to TLD Server",
                     "short": "TLD server knows who controls google.com",
                     "detail": "The .com TLD server manages all .com registrations and knows which authoritative servers handle each domain.",
-                    "role": "TLD Server: Manages a domain extension like .com."
+                    "role": "TLD Server: Manages a domain extension like .com.",
+                    "packet": "Response: ns1.google.com"
                 },
                 "4": {
                     "title": "TLD Points to Authoritative Server",
                     "short": "Google's own DNS server has the answer",
                     "detail": "Google's authoritative name server has the definitive answer because Google controls it.",
-                    "role": "Authoritative Server: The final source of truth. Controlled by the domain owner."
+                    "role": "Authoritative Server: The final source of truth. Controlled by the domain owner.",
+                    "packet": "142.250.185.78 (TTL: 300s)"
                 },
                 "5": {
                     "title": "Answer Returns to You",
                     "short": "Your browser now knows where to connect",
                     "detail": "The IP travels back through the resolver and gets cached. Your browser can now connect directly.",
-                    "role": "Complete: DNS resolution done in 20-120 milliseconds."
+                    "role": "Complete: DNS resolution done in 20-120 milliseconds.",
+                    "packet": "Cached: google.com"
                 }
             }
         },
@@ -933,30 +982,36 @@
             "step3": "Key Exchange",
             "step4": "Secure Connection",
             "secure": "Encrypted",
+            "step_of": "Step {{current}} of {{total}}",
+            "why_matters": "Without TLS, passwords and personal data travel in plain text anyone can intercept. Always look for the padlock icon in your browser.",
             "steps": {
                 "1": {
                     "title": "Client Hello",
                     "short": "Browser introduces itself",
                     "detail": "Your browser sends: 'Hi, I support TLS 1.3, and here are the encryption methods I know'",
-                    "analogy": "Like showing your ID at a secure building entrance"
+                    "analogy": "Like showing your ID at a secure building entrance",
+                    "sent": ["TLS versions", "Cipher suites", "Random number"]
                 },
                 "2": {
                     "title": "Server Hello + Certificate",
                     "short": "Server proves its identity",
                     "detail": "Server responds: 'Let's use TLS 1.3 with AES-256. Here's my certificate proving I'm really google.com'",
-                    "analogy": "Like the guard showing their badge and company ID"
+                    "analogy": "Like the guard showing their badge and company ID",
+                    "sent": ["Chosen cipher", "Server certificate", "Server random"]
                 },
                 "3": {
                     "title": "Key Exchange",
                     "short": "Creating a shared secret",
                     "detail": "Both sides use Diffie-Hellman to create a shared secret key without ever sending it directly",
-                    "analogy": "Like mixing colors - each adds their secret, neither knows the other's original"
+                    "analogy": "Like mixing colors - each adds their secret, neither knows the other's original",
+                    "sent": ["Pre-master secret", "Session keys"]
                 },
                 "4": {
                     "title": "Secure Connection",
                     "short": "Ready to talk privately",
                     "detail": "Both sides now have matching session keys. All future messages are encrypted.",
-                    "analogy": "Like having a private language only you two understand"
+                    "analogy": "Like having a private language only you two understand",
+                    "sent": ["AES-256 active", "HMAC enabled"]
                 }
             }
         },

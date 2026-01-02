@@ -17,7 +17,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.1.title', 'Client Hello'),
             shortDesc: t('visualizations.tls.steps.1.short', 'Browser introduces itself'),
             detail: t('visualizations.tls.steps.1.detail', 'Your browser sends: "Hi, I support TLS 1.3, and here are the encryption methods I know"'),
-            whatsSent: ['TLS versions', 'Cipher suites', 'Random number'],
+            whatsSent: t('visualizations.tls.steps.1.sent', { returnObjects: true, defaultValue: ['TLS versions', 'Cipher suites', 'Random number'] }),
             analogy: t('visualizations.tls.steps.1.analogy', 'Like showing your ID at a secure building entrance'),
             direction: 'right',
             icon: ArrowRight,
@@ -28,7 +28,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.2.title', 'Server Hello + Certificate'),
             shortDesc: t('visualizations.tls.steps.2.short', 'Server proves its identity'),
             detail: t('visualizations.tls.steps.2.detail', 'Server responds: "Let\'s use TLS 1.3 with AES-256. Here\'s my certificate proving I\'m really google.com"'),
-            whatsSent: ['Chosen cipher', 'Server certificate', 'Server random'],
+            whatsSent: t('visualizations.tls.steps.2.sent', { returnObjects: true, defaultValue: ['Chosen cipher', 'Server certificate', 'Server random'] }),
             analogy: t('visualizations.tls.steps.2.analogy', 'Like the guard showing their badge and company ID'),
             direction: 'left',
             icon: ArrowLeft,
@@ -39,7 +39,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.3.title', 'Key Exchange'),
             shortDesc: t('visualizations.tls.steps.3.short', 'Creating a shared secret'),
             detail: t('visualizations.tls.steps.3.detail', 'Both sides use Diffie-Hellman to create a shared secret key without ever sending it directly'),
-            whatsSent: ['Pre-master secret', 'Session keys'],
+            whatsSent: t('visualizations.tls.steps.3.sent', { returnObjects: true, defaultValue: ['Pre-master secret', 'Session keys'] }),
             analogy: t('visualizations.tls.steps.3.analogy', 'Like mixing colors - each adds their secret, neither knows the other\'s original'),
             direction: 'right',
             icon: Key,
@@ -50,7 +50,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.4.title', 'Secure Connection'),
             shortDesc: t('visualizations.tls.steps.4.short', 'Ready to talk privately'),
             detail: t('visualizations.tls.steps.4.detail', 'Both sides now have matching session keys. All future messages are encrypted.'),
-            whatsSent: ['AES-256 active', 'HMAC enabled'],
+            whatsSent: t('visualizations.tls.steps.4.sent', { returnObjects: true, defaultValue: ['AES-256 active', 'HMAC enabled'] }),
             analogy: t('visualizations.tls.steps.4.analogy', 'Like having a private language only you two understand'),
             direction: 'both',
             icon: Lock,
@@ -89,13 +89,6 @@ const TlsHandshakeViz = () => {
         exit: { opacity: 0, scale: 0.5 }
     };
 
-    const getMessagePosition = (step, direction) => {
-        if (direction === 'right') return { left: '50%', transform: 'translateX(-50%)' };
-        if (direction === 'left') return { left: '50%', transform: 'translateX(-50%)' };
-        return { left: '50%', transform: 'translateX(-50%)' };
-    };
-
-    const currentExplanation = tlsStepsDetailed[currentStep] || tlsStepsDetailed[0];
     const displayStep = currentStep < 4 ? currentStep : 3;
 
     return (
@@ -104,7 +97,7 @@ const TlsHandshakeViz = () => {
                 {/* Step Explanation Panel */}
                 <div className="tls-explanation-panel">
                     <div className="tls-step-header">
-                        <span className="tls-step-number">Step {displayStep + 1} of 4</span>
+                        <span className="tls-step-number">{t('visualizations.tls.step_of', { current: displayStep + 1, total: 4 })}</span>
                         <h4 className="tls-step-title">{tlsStepsDetailed[displayStep].title}</h4>
                     </div>
                     <p className="tls-step-desc">{tlsStepsDetailed[displayStep].shortDesc}</p>
@@ -224,8 +217,7 @@ const TlsHandshakeViz = () => {
                 <div className="tls-why-matters">
                     <p>
                         <Lock size={12} style={{ display: 'inline', marginRight: '4px' }} />
-                        Without TLS, passwords and personal data travel in plain text anyone can intercept.
-                        Always look for the padlock icon in your browser.
+                        {t('visualizations.tls.why_matters', 'Without TLS, passwords and personal data travel in plain text anyone can intercept. Always look for the padlock icon in your browser.')}
                     </p>
                 </div>
             </div>

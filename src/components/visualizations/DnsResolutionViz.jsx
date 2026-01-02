@@ -10,7 +10,6 @@ const DnsResolutionViz = () => {
     const prefersReducedMotion = usePrefersReducedMotion();
     const [currentStep, setCurrentStep] = useState(0);
     const [showingResponse, setShowingResponse] = useState(false);
-    const [showDetail, setShowDetail] = useState(false);
 
     // Comprehensive step explanations
     const stepExplanations = [
@@ -20,7 +19,7 @@ const DnsResolutionViz = () => {
             description: t('visualizations.dns.steps.1.short', 'Your device contacts the DNS resolver'),
             detail: t('visualizations.dns.steps.1.detail', 'When you type "google.com", your browser first checks its cache. If not found, it asks your configured DNS resolver.'),
             serverRole: t('visualizations.dns.steps.1.role', 'DNS Resolver: A server that finds IP addresses for you. Like a librarian who knows where to find information.'),
-            packetLabel: 'Query: google.com TYPE A'
+            packetLabel: t('visualizations.dns.steps.1.packet', 'Query: google.com TYPE A')
         },
         {
             id: 'root',
@@ -28,7 +27,7 @@ const DnsResolutionViz = () => {
             description: t('visualizations.dns.steps.2.short', 'Resolver asks: "Who handles .com domains?"'),
             detail: t('visualizations.dns.steps.2.detail', 'The resolver starts at the top of DNS hierarchy - the 13 root server clusters worldwide.'),
             serverRole: t('visualizations.dns.steps.2.role', 'Root Server: The starting point for all DNS queries. Knows which servers handle each top-level domain.'),
-            packetLabel: 'Response: Ask .com servers'
+            packetLabel: t('visualizations.dns.steps.2.packet', 'Response: Ask .com servers')
         },
         {
             id: 'tld',
@@ -36,7 +35,7 @@ const DnsResolutionViz = () => {
             description: t('visualizations.dns.steps.3.short', 'TLD server knows who controls google.com'),
             detail: t('visualizations.dns.steps.3.detail', 'The .com TLD server manages all .com registrations and knows which authoritative servers handle each domain.'),
             serverRole: t('visualizations.dns.steps.3.role', 'TLD Server: Manages a domain extension like .com.'),
-            packetLabel: 'Response: ns1.google.com'
+            packetLabel: t('visualizations.dns.steps.3.packet', 'Response: ns1.google.com')
         },
         {
             id: 'auth',
@@ -44,7 +43,7 @@ const DnsResolutionViz = () => {
             description: t('visualizations.dns.steps.4.short', "Google's own DNS server has the answer"),
             detail: t('visualizations.dns.steps.4.detail', "Google's authoritative name server has the definitive answer because Google controls it."),
             serverRole: t('visualizations.dns.steps.4.role', 'Authoritative Server: The final source of truth. Controlled by the domain owner.'),
-            packetLabel: '142.250.185.78 (TTL: 300s)'
+            packetLabel: t('visualizations.dns.steps.4.packet', '142.250.185.78 (TTL: 300s)')
         },
         {
             id: 'response',
@@ -52,7 +51,7 @@ const DnsResolutionViz = () => {
             description: t('visualizations.dns.steps.5.short', 'Your browser now knows where to connect'),
             detail: t('visualizations.dns.steps.5.detail', 'The IP travels back through the resolver and gets cached. Your browser can now connect directly.'),
             serverRole: t('visualizations.dns.steps.5.role', 'Complete: DNS resolution done in 20-120 milliseconds.'),
-            packetLabel: 'Cached: google.com'
+            packetLabel: t('visualizations.dns.steps.5.packet', 'Cached: google.com')
         }
     ];
 
@@ -120,7 +119,9 @@ const DnsResolutionViz = () => {
         return false;
     };
 
-    const currentExplanation = stepExplanations[currentStep] || stepExplanations[0];
+    // When response is showing and we've cycled back to step 0, display step 5's content
+    const displayStep = showingResponse && currentStep === 0 ? 4 : currentStep;
+    const currentExplanation = stepExplanations[displayStep] || stepExplanations[0];
 
     return (
         <VizContainer title={t('visualizations.dns.title')}>
@@ -128,7 +129,7 @@ const DnsResolutionViz = () => {
                 {/* Step Explanation Panel */}
                 <div className="dns-explanation-panel">
                     <div className="dns-step-header">
-                        <span className="dns-step-number">Step {currentStep + 1} of 5</span>
+                        <span className="dns-step-number">{t('visualizations.dns.step_of', { current: displayStep + 1, total: 5 })}</span>
                         <h4 className="dns-step-title">{currentExplanation.title}</h4>
                     </div>
                     <p className="dns-step-desc">{currentExplanation.description}</p>
@@ -138,7 +139,7 @@ const DnsResolutionViz = () => {
                             className="dns-step-detail"
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
-                            key={currentStep}
+                            key={displayStep}
                         >
                             <p>{currentExplanation.detail}</p>
                             <div className="dns-server-role">
@@ -218,7 +219,7 @@ const DnsResolutionViz = () => {
                     {['1', '2', '3', '4', '5'].map((num, i) => (
                         <div
                             key={i}
-                            className={`dns-step ${currentStep === i ? 'active' : ''} ${currentStep > i ? 'done' : ''}`}
+                            className={`dns-step ${displayStep === i ? 'active' : ''} ${displayStep > i ? 'done' : ''}`}
                         >
                             {num}
                         </div>
@@ -227,12 +228,8 @@ const DnsResolutionViz = () => {
 
                 {/* Technical details toggle */}
                 <details className="dns-technical">
-                    <summary>Technical Details</summary>
-                    <p>
-                        DNS uses UDP port 53 for queries. Each step involves a query/response pair.
-                        The TTL (Time To Live) determines how long the result is cached.
-                        Modern DNS can use encryption (DoH/DoT) to prevent snooping.
-                    </p>
+                    <summary>{t('visualizations.dns.technical_title', 'Technical Details')}</summary>
+                    <p>{t('visualizations.dns.technical_text', 'DNS uses UDP port 53 for queries. Each step involves a query/response pair. The TTL (Time To Live) determines how long the result is cached. Modern DNS can use encryption (DoH/DoT) to prevent snooping.')}</p>
                 </details>
             </div>
         </VizContainer>

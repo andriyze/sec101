@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
     User, Globe, Eye, EyeOff, ShieldOff, ShieldCheck,
     FileText, Clock, MousePointer, ShoppingCart, DollarSign,
-    XCircle, Heart, Users, MessageCircle, AlertTriangle, Target, Mail, Database
+    XCircle, Heart, Users, MessageCircle, AlertTriangle, Target, Database
 } from 'lucide-react';
 import VizContainer from './VizContainer';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
@@ -16,33 +16,33 @@ const TrackerBlockingViz = () => {
     const [trackerData, setTrackerData] = useState([]);
     const [currentSite, setCurrentSite] = useState(0);
 
-    // Detailed tracker data per site
+    // Detailed tracker data per site - using i18n for data types
     const trackerDataTypes = {
         'news.com': {
             color: '#4a9eff',
-            trackers: ['Google Analytics', 'Facebook Pixel', 'Criteo'],
+            trackers: t('visualizations.tracker.sites.news.trackers', { returnObjects: true, defaultValue: ['Google Analytics', 'Facebook Pixel', 'Criteo'] }),
             dataCollected: [
-                { type: 'Articles Read', icon: FileText, value: 'Politics, Tech, Sports' },
-                { type: 'Time Spent', icon: Clock, value: '4 min on politics' },
-                { type: 'Scroll Depth', icon: MousePointer, value: '85% of article' }
+                { type: t('visualizations.tracker.sites.news.data.articles.type', 'Articles Read'), icon: FileText, value: t('visualizations.tracker.sites.news.data.articles.value', 'Politics, Tech, Sports') },
+                { type: t('visualizations.tracker.sites.news.data.time.type', 'Time Spent'), icon: Clock, value: t('visualizations.tracker.sites.news.data.time.value', '4 min on politics') },
+                { type: t('visualizations.tracker.sites.news.data.scroll.type', 'Scroll Depth'), icon: MousePointer, value: t('visualizations.tracker.sites.news.data.scroll.value', '85% of article') }
             ]
         },
         'shop.com': {
             color: '#ff6b6b',
-            trackers: ['Google Ads', 'Amazon', 'Pinterest'],
+            trackers: t('visualizations.tracker.sites.shop.trackers', { returnObjects: true, defaultValue: ['Google Ads', 'Amazon', 'Pinterest'] }),
             dataCollected: [
-                { type: 'Products Viewed', icon: ShoppingCart, value: 'Laptop, Headphones' },
-                { type: 'Price Checks', icon: DollarSign, value: 'Compared 3 times' },
-                { type: 'Cart Status', icon: XCircle, value: 'Abandoned checkout' }
+                { type: t('visualizations.tracker.sites.shop.data.products.type', 'Products Viewed'), icon: ShoppingCart, value: t('visualizations.tracker.sites.shop.data.products.value', 'Laptop, Headphones') },
+                { type: t('visualizations.tracker.sites.shop.data.price.type', 'Price Checks'), icon: DollarSign, value: t('visualizations.tracker.sites.shop.data.price.value', 'Compared 3 times') },
+                { type: t('visualizations.tracker.sites.shop.data.cart.type', 'Cart Status'), icon: XCircle, value: t('visualizations.tracker.sites.shop.data.cart.value', 'Abandoned checkout') }
             ]
         },
         'social.com': {
             color: '#a855f7',
-            trackers: ['Meta Pixel', 'TikTok Analytics'],
+            trackers: t('visualizations.tracker.sites.social.trackers', { returnObjects: true, defaultValue: ['Meta Pixel', 'TikTok Analytics'] }),
             dataCollected: [
-                { type: 'Interests', icon: Heart, value: 'Photography, Travel' },
-                { type: 'Social Graph', icon: Users, value: '847 connections' },
-                { type: 'Engagement', icon: MessageCircle, value: 'Likes memes' }
+                { type: t('visualizations.tracker.sites.social.data.interests.type', 'Interests'), icon: Heart, value: t('visualizations.tracker.sites.social.data.interests.value', 'Photography, Travel') },
+                { type: t('visualizations.tracker.sites.social.data.graph.type', 'Social Graph'), icon: Users, value: t('visualizations.tracker.sites.social.data.graph.value', '847 connections') },
+                { type: t('visualizations.tracker.sites.social.data.engagement.type', 'Engagement'), icon: MessageCircle, value: t('visualizations.tracker.sites.social.data.engagement.value', 'Likes memes') }
             ]
         }
     };
@@ -129,17 +129,14 @@ const TrackerBlockingViz = () => {
                 <div className="tracker-explainer">
                     <div className="tracker-explainer-header">
                         <AlertTriangle size={14} color={blocked ? '#00ff9d' : 'var(--accent)'} />
-                        <span>{blocked ? 'Trackers Blocked' : 'What\'s happening?'}</span>
+                        <span>{blocked ? t('visualizations.tracker.trackers_blocked') : t('visualizations.tracker.whats_happening')}</span>
                     </div>
                     {!blocked ? (
                         <div className="tracker-explainer-content">
-                            <p>
-                                <strong>Third-party trackers</strong> are scripts from external companies
-                                embedded in websites. They follow you across different sites.
-                            </p>
+                            <p>{t('visualizations.tracker.third_party_desc')}</p>
                             {currentSiteData && (
                                 <div className="tracker-company-list">
-                                    <span className="tracker-company-label">Trackers on {sites[currentSite]?.name}:</span>
+                                    <span className="tracker-company-label">{t('visualizations.tracker.trackers_on', { site: sites[currentSite]?.name })}</span>
                                     <div className="tracker-company-tags">
                                         {currentSiteData.trackers.map(tracker => (
                                             <span key={tracker} className="tracker-company-tag">{tracker}</span>
@@ -150,10 +147,7 @@ const TrackerBlockingViz = () => {
                         </div>
                     ) : (
                         <div className="tracker-explainer-content protected">
-                            <p>
-                                With a <strong>tracker blocker</strong> like uBlock Origin, these scripts
-                                are blocked. The website still works, but trackers can't collect data.
-                            </p>
+                            <p>{t('visualizations.tracker.blocker_desc')}</p>
                         </div>
                     )}
                 </div>
@@ -243,7 +237,7 @@ const TrackerBlockingViz = () => {
                             >
                                 <div className="tracker-profile-header">
                                     <Eye size={14} color="var(--accent)" />
-                                    <span>Your Profile (As Trackers See You)</span>
+                                    <span>{t('visualizations.tracker.profile_header')}</span>
                                 </div>
                                 <div className="tracker-profile-categories">
                                     {trackerData.map((siteName, i) => {
@@ -280,7 +274,7 @@ const TrackerBlockingViz = () => {
                                 {trackerData.length > 1 && (
                                     <div className="tracker-profile-summary">
                                         <AlertTriangle size={12} color="var(--accent)" />
-                                        <span>Cross-site tracking: {trackerData.length} sites linked</span>
+                                        <span>{t('visualizations.tracker.cross_site', { count: trackerData.length })}</span>
                                     </div>
                                 )}
                             </motion.div>
@@ -296,7 +290,7 @@ const TrackerBlockingViz = () => {
                                     <EyeOff size={14} color="#00ff9d" />
                                     <span>{t('visualizations.tracker.no_profile')}</span>
                                 </div>
-                                <p className="tracker-blocked-message">No data collected. Your browsing stays private.</p>
+                                <p className="tracker-blocked-message">{t('visualizations.tracker.blocked_message')}</p>
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -311,11 +305,11 @@ const TrackerBlockingViz = () => {
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                         >
-                            <h5>What happens with this data?</h5>
+                            <h5>{t('visualizations.tracker.impact_title')}</h5>
                             <ul className="tracker-impact-list">
-                                <li><Target size={12} /> <span><strong>Targeted Ads:</strong> Laptop ads everywhere</span></li>
-                                <li><DollarSign size={12} /> <span><strong>Price Changes:</strong> Some sites show higher prices</span></li>
-                                <li><Database size={12} /> <span><strong>Data Brokers:</strong> Your profile sold to others</span></li>
+                                <li><Target size={12} /> <span><strong>{t('visualizations.tracker.impact_ads')}</strong> {t('visualizations.tracker.impact_ads_desc')}</span></li>
+                                <li><DollarSign size={12} /> <span><strong>{t('visualizations.tracker.impact_prices')}</strong> {t('visualizations.tracker.impact_prices_desc')}</span></li>
+                                <li><Database size={12} /> <span><strong>{t('visualizations.tracker.impact_brokers')}</strong> {t('visualizations.tracker.impact_brokers_desc')}</span></li>
                             </ul>
                         </motion.div>
                     )}
