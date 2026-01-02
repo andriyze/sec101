@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const STORAGE_KEY = 'sec101-progress';
-const TOPIC_ORDER = ['passwords', 'phishing', 'browsing', 'social', 'devices', 'tools'];
+const TOPIC_ORDER = ['passwords', 'phishing', 'browsing', 'social', 'devices', 'tools', 'advanced'];
 
 const createDefaultProgress = () => ({
     version: 1,
@@ -12,6 +12,7 @@ const createDefaultProgress = () => ({
         social: { completed: false },
         devices: { completed: false },
         tools: { completed: false },
+        advanced: { completed: false },
     },
     lastVisitedTopic: null,
 });

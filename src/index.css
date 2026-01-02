@@ -1677,3 +1677,1117 @@ input:checked+.toggle-slider:before {
     flex-direction: column;
   }
 }
+
+/* ========================================
+   ADVANCED SECTION VISUALIZATIONS
+   ======================================== */
+
+/* DNS Resolution Visualization */
+.dns-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.dns-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+.dns-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-light);
+  min-width: 70px;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.dns-node.active {
+  transform: scale(1.05);
+}
+
+.dns-node-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 242, 255, 0.1);
+}
+
+.dns-node-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dns-connection {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 3px;
+  min-width: 30px;
+  background: var(--border-light);
+  border-radius: 2px;
+}
+
+.dns-packet {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.55rem;
+  font-weight: 600;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dns-packet.query {
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  color: var(--bg-dark);
+  box-shadow: 0 0 8px var(--primary-glow);
+}
+
+.dns-packet.response {
+  width: 20px;
+  height: 20px;
+  background: #00ff9d;
+  color: var(--bg-dark);
+  box-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+}
+
+.dns-query-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.dns-query-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.dns-query-text {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+
+.dns-query-arrow {
+  color: var(--text-dim);
+}
+
+.dns-query-result {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #00ff9d;
+}
+
+.dns-response-text {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #00ff9d;
+}
+
+.dns-response-text strong {
+  color: #00ff9d;
+}
+
+.dns-connection-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border-light);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dns-steps {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dns-step {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  transition: var(--transition-fast);
+}
+
+.dns-step.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(0, 242, 255, 0.1);
+}
+
+.dns-step.done {
+  border-color: #00ff9d;
+  color: var(--bg-dark);
+  background: #00ff9d;
+}
+
+/* OSI Model Visualization */
+.osi-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.osi-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.osi-layer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  transition: var(--transition-fast);
+}
+
+.osi-layer.active {
+  transform: translateX(4px);
+}
+
+.osi-layer-num {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--bg-dark);
+  flex-shrink: 0;
+}
+
+.osi-layer-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.osi-layer-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.osi-layer-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.osi-layer-example {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.osi-packet {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 242, 255, 0.15);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  font-size: 0.65rem;
+  color: var(--primary);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.osi-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.osi-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Ports Visualization */
+.ports-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+}
+
+.ports-building-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(0, 242, 255, 0.1);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--primary);
+}
+
+.ports-building-name {
+  font-weight: 600;
+}
+
+.ports-ip {
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.ports-visitor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(112, 0, 255, 0.15);
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+
+.ports-visitor-dest {
+  font-family: monospace;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.ports-building {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.ports-apartment {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  transition: var(--transition-fast);
+}
+
+.ports-apartment.active {
+  transform: translateX(4px);
+}
+
+.ports-apartment-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: monospace;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: var(--bg-dark);
+}
+
+.ports-apartment-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ports-apartment-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ports-service {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.ports-desc {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.ports-resident {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(0, 255, 157, 0.15);
+  border: 1px solid #00ff9d;
+  border-radius: 4px;
+  color: #00ff9d;
+}
+
+.ports-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ports-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Protocols Visualization */
+.protocols-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.protocols-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.protocols-toggle-btn {
+  padding: 0.5rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.protocols-toggle-btn:hover {
+  border-color: var(--primary);
+}
+
+.protocols-toggle-btn.active {
+  background: rgba(0, 242, 255, 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.protocols-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.protocols-lane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+
+.protocols-lane-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.protocols-lane.http .protocols-lane-header {
+  color: var(--accent);
+}
+
+.protocols-lane.https .protocols-lane-header {
+  color: #00ff9d;
+}
+
+.protocols-lane.tcp .protocols-lane-header {
+  color: #00ff9d;
+}
+
+.protocols-lane.udp .protocols-lane-header {
+  color: #ffa94d;
+}
+
+.protocols-lane-track {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 40px;
+  position: relative;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.protocols-packet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.protocols-packet.plain {
+  background: rgba(255, 0, 85, 0.15);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.protocols-packet.encrypted {
+  background: rgba(0, 255, 157, 0.15);
+  border: 1px solid #00ff9d;
+  color: #00ff9d;
+}
+
+.protocols-packet.tcp-packet {
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 255, 157, 0.15);
+  border: 1px solid #00ff9d;
+  color: #00ff9d;
+  font-weight: 600;
+}
+
+.protocols-packet.udp-packet {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 169, 77, 0.15);
+  border: 1px solid #ffa94d;
+  color: #ffa94d;
+  font-weight: 600;
+}
+
+.protocols-packet.udp-packet.lost {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.protocols-packets-row {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.protocols-watcher {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  margin-left: auto;
+}
+
+.protocols-watcher.safe {
+  color: #00ff9d;
+}
+
+.protocols-trait {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+/* Firewall Visualization */
+.firewall-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.firewall-zones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.firewall-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  min-width: 80px;
+}
+
+.firewall-zone span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.firewall-zone.external {
+  border-color: var(--accent);
+}
+
+.firewall-zone.internal {
+  border-color: #00ff9d;
+}
+
+.firewall-wall {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(112, 0, 255, 0.15), rgba(0, 242, 255, 0.15));
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+}
+
+.firewall-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.firewall-rule {
+  font-size: 0.65rem;
+  font-family: monospace;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+.firewall-rule.allow {
+  background: rgba(0, 255, 157, 0.15);
+  color: #00ff9d;
+}
+
+.firewall-rule.deny {
+  background: rgba(255, 0, 85, 0.15);
+  color: var(--accent);
+}
+
+.firewall-packets {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  position: relative;
+}
+
+.firewall-packet {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  position: absolute;
+}
+
+.firewall-packet.allowed {
+  background: rgba(0, 255, 157, 0.15);
+  border: 1px solid #00ff9d;
+  color: #00ff9d;
+}
+
+.firewall-packet.blocked {
+  background: rgba(255, 0, 85, 0.15);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.firewall-packet-port {
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.firewall-checking {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  margin-left: 0.25rem;
+}
+
+.firewall-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.firewall-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+}
+
+.firewall-legend-item.allowed {
+  color: #00ff9d;
+}
+
+.firewall-legend-item.blocked {
+  color: var(--accent);
+}
+
+/* TLS Handshake Visualization */
+.tls-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.tls-endpoints {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tls-endpoint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-light);
+  min-width: 80px;
+  transition: var(--transition-fast);
+}
+
+.tls-endpoint span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.tls-connection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  max-width: 200px;
+  position: relative;
+  min-height: 50px;
+}
+
+.tls-connection-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border-light);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tls-message {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid;
+  font-size: 0.7rem;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.tls-secure-tunnel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(0, 255, 157, 0.15);
+  border: 1px solid #00ff9d;
+  border-radius: 8px;
+  color: #00ff9d;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tls-steps {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tls-step {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  transition: var(--transition-fast);
+}
+
+.tls-step.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(0, 242, 255, 0.1);
+}
+
+.tls-step.done {
+  border-color: #00ff9d;
+  color: #00ff9d;
+  background: rgba(0, 255, 157, 0.1);
+}
+
+.tls-step-num {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.tls-step.active .tls-step-num {
+  background: var(--primary);
+  color: var(--bg-dark);
+}
+
+.tls-step.done .tls-step-num {
+  background: #00ff9d;
+  color: var(--bg-dark);
+}
+
+.tls-step-label {
+  white-space: nowrap;
+}
+
+/* IPv4 vs IPv6 Visualization */
+.ipv-viz-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.ipv-comparison {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ipv-version {
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+}
+
+.ipv-version.v4 {
+  border-color: var(--accent);
+}
+
+.ipv-version.v6 {
+  border-color: #00ff9d;
+}
+
+.ipv-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ipv-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ipv-version.v4 .ipv-label {
+  color: var(--accent);
+}
+
+.ipv-version.v6 .ipv-label {
+  color: #00ff9d;
+}
+
+.ipv-address {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+.ipv-address-text {
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+.ipv-address-text.v6 {
+  font-size: 0.7rem;
+}
+
+.ipv-cursor {
+  color: var(--primary);
+  margin-left: 2px;
+}
+
+.ipv-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.ipv-pool {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ipv-pool-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.ipv-pool-bar {
+  position: relative;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ipv-pool-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.ipv-pool-fill.depleted {
+  background: linear-gradient(90deg, var(--accent), #ff6b6b);
+}
+
+.ipv-pool-fill.unlimited {
+  background: linear-gradient(90deg, #00ff9d, var(--primary));
+}
+
+.ipv-pool-infinite {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ipv-pool-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+}
+
+.ipv-pool-status.depleted {
+  color: var(--accent);
+}
+
+.ipv-pool-status.unlimited {
+  color: #00ff9d;
+}
+
+/* Advanced Visualizations Mobile Responsive */
+@media (max-width: 768px) {
+  .dns-flow {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dns-node {
+    min-width: 60px;
+    padding: 0.5rem;
+  }
+
+  .dns-node-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .dns-node-label {
+    font-size: 0.6rem;
+  }
+
+  .dns-connection {
+    min-width: 20px;
+  }
+
+  .osi-layer {
+    padding: 0.5rem;
+  }
+
+  .osi-layer-num {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+
+  .osi-layer-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .osi-layer-name {
+    font-size: 0.8rem;
+  }
+
+  .osi-packet {
+    display: none;
+  }
+
+  .ports-building {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .ports-floor {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ports-apartment {
+    min-width: 70px;
+  }
+
+  .protocols-toggle-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .protocols-lane {
+    padding: 0.5rem;
+  }
+
+  .firewall-zones {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .firewall-zone {
+    min-width: 70px;
+  }
+
+  .firewall-wall {
+    order: -1;
+    width: 100%;
+  }
+
+  .firewall-rules {
+    flex-direction: row;
+    gap: 0.4rem;
+  }
+
+  .tls-endpoints {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tls-connection {
+    order: 3;
+    width: 100%;
+    min-height: 60px;
+  }
+
+  .tls-steps {
+    gap: 0.35rem;
+  }
+
+  .tls-step {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.65rem;
+  }
+
+  .tls-step-label {
+    display: none;
+  }
+
+  .ipv-comparison {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ipv-version {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .ipv-divider {
+    display: none;
+  }
+
+  .ipv-address-text {
+    font-size: 0.75rem;
+  }
+
+  .ipv-address-text.v6 {
+    font-size: 0.6rem;
+  }
+}

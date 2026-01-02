@@ -9,6 +9,7 @@ import Social from './pages/Social';
 import Devices from './pages/Devices';
 import TopicPage from './pages/TopicPage';
 import Tools from './pages/Tools';
+import Advanced from './pages/Advanced';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="social" element={<Social />} />
           <Route path="devices" element={<Devices />} />
           <Route path="tools" element={<Tools />} />
+          <Route path="advanced" element={<Advanced />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

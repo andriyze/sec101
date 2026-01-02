@@ -14,6 +14,7 @@
         "social": "Social Media",
         "devices": "Device Security",
         "tools": "Secure Tools",
+        "advanced": "Advanced Topics",
         "open_menu": "Open menu",
         "close_menu": "Close menu",
         "language_toggle": "Toggle language"
@@ -649,6 +650,92 @@
             ]
         }
     },
+    "advanced": {
+        "title": "Advanced Networking",
+        "subtitle": "Understand how the internet really works under the hood.",
+        "dns": {
+            "title": "How DNS Works",
+            "intro": "When you type 'google.com', your computer needs to find the actual server address. DNS (Domain Name System) is like the internet's phone book - it translates human-readable names into IP addresses."
+        },
+        "osi": {
+            "title": "The OSI Model",
+            "intro": "The OSI model breaks down network communication into 7 layers. Each layer has a specific job, making troubleshooting and understanding easier. Remember: 'Please Do Not Throw Sausage Pizza Away'."
+        },
+        "ports": {
+            "title": "Understanding Ports",
+            "intro": "Think of your computer as an apartment building. The IP address is the building address, and each port is a different apartment number where different services live."
+        },
+        "protocols": {
+            "title": "Network Protocols",
+            "intro": "Protocols are the rules computers use to talk to each other. Different protocols serve different purposes - some prioritize speed, others reliability or security."
+        },
+        "firewall": {
+            "title": "How Firewalls Work",
+            "intro": "A firewall is like a security guard for your network. It checks all incoming and outgoing traffic and decides what to allow or block based on security rules."
+        },
+        "tls": {
+            "title": "SSL/TLS Handshake",
+            "intro": "Before your browser can securely communicate with a website, they perform a 'handshake' to establish trust and agree on encryption. This happens every time you see the padlock icon."
+        },
+        "ipv": {
+            "title": "IPv4 vs IPv6",
+            "intro": "The internet is running out of IPv4 addresses. IPv6 is the new standard with virtually unlimited addresses, but the transition is still ongoing."
+        },
+        "quiz": {
+            "title": "Advanced Networking Quiz",
+            "questions": [
+                {
+                    "prompt": "What does DNS do?",
+                    "options": ["Encrypts your web traffic", "Translates domain names to IP addresses", "Blocks malicious websites"],
+                    "answer": 1,
+                    "correct": "DNS is like the internet's phone book - it converts names you remember to addresses computers understand.",
+                    "explainer": "Without DNS, you'd need to memorize IP addresses like 142.250.185.78 for every website."
+                },
+                {
+                    "prompt": "Which OSI layer handles IP addresses and routing?",
+                    "options": ["Layer 2 - Data Link", "Layer 3 - Network", "Layer 4 - Transport"],
+                    "answer": 1,
+                    "correct": "The Network layer (Layer 3) is responsible for IP addressing and routing packets between networks.",
+                    "explainer": "Routers operate at Layer 3, making decisions based on IP addresses."
+                },
+                {
+                    "prompt": "In the apartment building analogy, what is the port number?",
+                    "options": ["The building address", "The apartment number", "The resident's name"],
+                    "answer": 1,
+                    "correct": "The port is like the apartment number - it directs traffic to the right service on a computer.",
+                    "explainer": "IP address = building address, Port = apartment number, Service = resident."
+                },
+                {
+                    "prompt": "Why should you always prefer HTTPS over HTTP?",
+                    "options": ["HTTPS is faster", "HTTP doesn't work on mobile", "HTTPS encrypts your connection"],
+                    "answer": 2,
+                    "correct": "HTTPS uses encryption to protect your data from being read by others on the network.",
+                    "explainer": "Without HTTPS, passwords and personal data travel in plain text anyone can intercept."
+                },
+                {
+                    "prompt": "What is the main purpose of a firewall?",
+                    "options": ["Speed up internet connection", "Filter network traffic based on security rules", "Store website data locally"],
+                    "answer": 1,
+                    "correct": "Firewalls act as security guards, checking and filtering all network traffic.",
+                    "explainer": "They block unauthorized access while allowing legitimate traffic through."
+                },
+                {
+                    "prompt": "What happens during an SSL/TLS handshake?",
+                    "options": ["Files are downloaded", "Browser and server establish secure encrypted connection", "Cookies are deleted"],
+                    "answer": 1,
+                    "correct": "The handshake establishes trust and encryption before any sensitive data is exchanged.",
+                    "explainer": "This happens every time you connect to an HTTPS website."
+                },
+                {
+                    "prompt": "Why was IPv6 created?",
+                    "options": ["IPv4 is too slow", "IPv4 addresses are running out", "IPv4 doesn't support encryption"],
+                    "answer": 1,
+                    "correct": "IPv4 only supports about 4.3 billion addresses - not enough for all devices today.",
+                    "explainer": "IPv6 provides 340 undecillion addresses - virtually unlimited."
+                }
+            ]
+        }
+    },
     "progress": {
         "title": "Your Progress",
         "completed": "{{count}} of {{total}} topics completed",
@@ -745,6 +832,87 @@
                 "link": "Fake URL",
                 "attachment": "Bad attachment"
             }
+        },
+        "dns": {
+            "title": "DNS Resolution",
+            "your_device": "Your Device",
+            "resolver": "DNS Resolver",
+            "root": "Root Server",
+            "tld": "TLD Server",
+            "auth": "Auth Server",
+            "website": "Website",
+            "query": "Where is",
+            "response": "IP:"
+        },
+        "osi": {
+            "title": "OSI Model",
+            "data": "Data",
+            "sending": "Sending...",
+            "receiving": "Receiving...",
+            "layers": {
+                "physical": { "name": "Physical", "example": "Cables, Wi-Fi" },
+                "datalink": { "name": "Data Link", "example": "MAC, Ethernet" },
+                "network": { "name": "Network", "example": "IP, Routing" },
+                "transport": { "name": "Transport", "example": "TCP, UDP" },
+                "session": { "name": "Session", "example": "Connections" },
+                "presentation": { "name": "Presentation", "example": "TLS, JPEG" },
+                "application": { "name": "Application", "example": "HTTP, DNS" }
+            }
+        },
+        "ports": {
+            "title": "Ports: The Apartment Building",
+            "building": "Your Computer",
+            "ip_address": "IP: 192.168.1.100",
+            "visitor": "Request",
+            "resident": "Service",
+            "common": {
+                "80": { "service": "HTTP", "desc": "Web (unencrypted)" },
+                "443": { "service": "HTTPS", "desc": "Web (secure)" },
+                "22": { "service": "SSH", "desc": "Remote access" },
+                "25": { "service": "SMTP", "desc": "Email" },
+                "53": { "service": "DNS", "desc": "Name lookup" }
+            }
+        },
+        "protocols": {
+            "title": "Protocol Comparison",
+            "http_label": "HTTP",
+            "https_label": "HTTPS",
+            "tcp_label": "TCP",
+            "udp_label": "UDP",
+            "visible": "Visible to hackers",
+            "encrypted": "Encrypted",
+            "reliable": "Reliable, ordered",
+            "fast": "Fast, unordered",
+            "message": "Hello!"
+        },
+        "firewall": {
+            "title": "Firewall Protection",
+            "internal": "Your Network",
+            "external": "Internet",
+            "allowed": "Allowed",
+            "blocked": "Blocked",
+            "checking": "Checking rules..."
+        },
+        "tls": {
+            "title": "TLS Handshake",
+            "browser": "Browser",
+            "server": "Server",
+            "step1": "ClientHello",
+            "step2": "ServerHello + Cert",
+            "step3": "Key Exchange",
+            "step4": "Secure Connection",
+            "secure": "Encrypted"
+        },
+        "ipv": {
+            "title": "IPv4 vs IPv6",
+            "v4_label": "IPv4",
+            "v6_label": "IPv6",
+            "v4_example": "192.168.1.1",
+            "v6_example": "2001:0db8:85a3::8a2e:0370:7334",
+            "v4_count": "4.3 billion",
+            "v6_count": "340 undecillion",
+            "exhausted": "Running out",
+            "unlimited": "Virtually unlimited"
         }
     }
 }
