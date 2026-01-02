@@ -427,22 +427,21 @@
         ],
         "ios_apps": {
             "title": "iOS Apps",
-            "lockdown": "Lockdown: Open source firewall and tracker blocker.",
             "signal": "Signal: Encrypted messaging.",
+            "bitwarden": "Bitwarden: Open-source password manager.",
             "onion": "Onion Browser: Tor for iOS."
         },
         "android_apps": {
             "title": "Android Apps",
-            "netguard": "NetGuard: No-root firewall.",
-            "orbot": "Orbot: Tor proxy.",
-            "fdroid": "F-Droid: Open source app store."
+            "signal": "Signal: Encrypted messaging.",
+            "twofas": "2FAS: Open-source authenticator app.",
+            "orbot": "Orbot: Tor proxy."
         },
         "desktop_tools": {
             "title": "Desktop Tools",
-            "thunderbird": "Thunderbird: Open source email client with PGP support.",
-            "veracrypt": "VeraCrypt: File encryption.",
-            "protonvpn": "Proton VPN: Free/Paid VPN.",
-            "dangerzone": "Dangerzone: Sanitize suspicious PDFs."
+            "bitwarden": "Bitwarden: Open-source password manager.",
+            "mullvad": "Mullvad VPN: Privacy-focused VPN.",
+            "firefox": "Firefox: Privacy-respecting browser."
         },
         "resilience": {
             "title": "Resilience checklist",

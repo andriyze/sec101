@@ -96,16 +96,16 @@ const Devices = () => {
                 <h3 style={{ marginBottom: '1.5rem' }}>{t('devices.ios_apps.title')}</h3>
                 <div className="grid grid-cols-3 gap-6">
                     <Card
-                        title="Lockdown"
-                        icon="🛡️"
-                        description={t('devices.ios_apps.lockdown')}
-                        link="https://apps.apple.com/app/lockdown-apps/id1469783711"
-                    />
-                    <Card
                         title="Signal"
                         icon="💬"
                         description={t('devices.ios_apps.signal')}
                         link="https://apps.apple.com/app/signal-private-messenger/id874139669"
+                    />
+                    <Card
+                        title="Bitwarden"
+                        icon="🛡️"
+                        description={t('devices.ios_apps.bitwarden')}
+                        link="https://apps.apple.com/app/bitwarden-password-manager/id1137397744"
                     />
                     <Card
                         title="Onion Browser"
@@ -121,22 +121,22 @@ const Devices = () => {
                 <h3 style={{ marginBottom: '1.5rem' }}>{t('devices.android_apps.title')}</h3>
                 <div className="grid grid-cols-3 gap-6">
                     <Card
-                        title="NetGuard"
-                        icon="🛡️"
-                        description={t('devices.android_apps.netguard')}
-                        link="https://play.google.com/store/apps/details?id=eu.faircode.netguard"
+                        title="Signal"
+                        icon="💬"
+                        description={t('devices.android_apps.signal')}
+                        link="https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms"
+                    />
+                    <Card
+                        title="2FAS"
+                        icon="🔐"
+                        description={t('devices.android_apps.twofas')}
+                        link="https://play.google.com/store/apps/details?id=com.twofasapp"
                     />
                     <Card
                         title="Orbot"
                         icon="🧅"
                         description={t('devices.android_apps.orbot')}
                         link="https://play.google.com/store/apps/details?id=org.torproject.android"
-                    />
-                    <Card
-                        title="F-Droid"
-                        icon="🤖"
-                        description={t('devices.android_apps.fdroid')}
-                        link="https://f-droid.org"
                     />
                 </div>
             </section>
@@ -148,22 +148,22 @@ const Devices = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-6">
                     <Card
-                        title="Thunderbird"
-                        icon="📧"
-                        description={t('devices.desktop_tools.thunderbird')}
-                        link="https://www.thunderbird.net"
+                        title="Bitwarden"
+                        icon="🛡️"
+                        description={t('devices.desktop_tools.bitwarden')}
+                        link="https://bitwarden.com/download"
                     />
                     <Card
-                        title="VeraCrypt"
+                        title="Mullvad VPN"
                         icon="🔒"
-                        description={t('devices.desktop_tools.veracrypt')}
-                        link="https://www.veracrypt.fr"
+                        description={t('devices.desktop_tools.mullvad')}
+                        link="https://mullvad.net/download"
                     />
                     <Card
-                        title="Dangerzone"
-                        icon="☢️"
-                        description={t('devices.desktop_tools.dangerzone')}
-                        link="https://dangerzone.rocks"
+                        title="Firefox"
+                        icon="🦊"
+                        description={t('devices.desktop_tools.firefox')}
+                        link="https://www.mozilla.org/firefox/new/"
                     />
                 </div>
             </section>
