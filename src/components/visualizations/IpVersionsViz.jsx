@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { AlertTriangle, Check, Infinity } from 'lucide-react';
+import { AlertTriangle, Check, Infinity as InfinityIcon } from 'lucide-react';
 import VizContainer from './VizContainer';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 
@@ -125,7 +125,7 @@ const IpVersionsViz = () => {
                                     animate={{ x: [0, 10, 0] }}
                                     transition={{ duration: 2, repeat: Infinity }}
                                 >
-                                    <Infinity size={16} color="#00ff9d" />
+                                    <InfinityIcon size={16} color="#00ff9d" />
                                 </motion.div>
                             </div>
                             <div className="ipv-pool-status unlimited">
