@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '../components/Card';
 import { Smartphone, Laptop, ShieldCheck } from 'lucide-react';
 import Quiz from '../components/Quiz';
-import NextTopicCard from '../components/NextTopicCard';
-import { useProgress } from '../hooks/useProgress';
+import TopicCompletionCard from '../components/TopicCompletionCard';
 
 const Devices = () => {
     const { t } = useTranslation();
-    const { markTopicComplete } = useProgress();
     const checklistItems = t('devices.checklist_items', { returnObjects: true });
-
-    const handleQuizComplete = () => {
-        markTopicComplete('devices', 'quiz');
-    };
     const [completed, setCompleted] = useState(() => {
         if (typeof window === 'undefined') return Array(checklistItems.length).fill(false);
         const cached = window.localStorage.getItem('devices-checklist');
@@ -173,11 +167,10 @@ const Devices = () => {
                     title={t('devices.quiz.title')}
                     questions={t('devices.quiz.questions', { returnObjects: true })}
                     storageKey="quiz-devices"
-                    onComplete={handleQuizComplete}
                 />
             </section>
 
-            <NextTopicCard currentTopic="devices" />
+            <TopicCompletionCard topicId="devices" quizStorageKey="quiz-devices" />
         </div>
     );
 };

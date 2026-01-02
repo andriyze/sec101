@@ -412,6 +412,32 @@
             "gmail": {
                 "desc": "Gmail is part of Google's surveillance ecosystem. Your emails feed into profiling across all Google services. Use for spam signups only."
             }
+        },
+        "quiz": {
+            "title": "Social & Messaging Quiz",
+            "questions": [
+                {
+                    "prompt": "Why is Signal recommended over WhatsApp?",
+                    "options": ["Signal has more features", "Signal doesn't share metadata with Meta and is truly private", "Signal is faster"],
+                    "answer": 1,
+                    "correct": "Signal is non-profit, doesn't collect metadata, and doesn't share data with advertising companies.",
+                    "explainer": "WhatsApp is owned by Meta and shares metadata for profiling, even though messages are encrypted."
+                },
+                {
+                    "prompt": "When should you use a VPN?",
+                    "options": ["Only for illegal activities", "On public WiFi and to hide browsing from your ISP", "Never, they slow down internet"],
+                    "answer": 1,
+                    "correct": "VPNs protect you on public WiFi and prevent your ISP from logging every site you visit.",
+                    "explainer": "Your ISP sees all your traffic without a VPN. Public WiFi is especially risky."
+                },
+                {
+                    "prompt": "What does end-to-end encryption (E2EE) protect against?",
+                    "options": ["Viruses on your phone", "The app's server reading your messages", "Slow internet speeds"],
+                    "answer": 1,
+                    "correct": "E2EE means only you and the recipient can read messages—not even the app company.",
+                    "explainer": "With E2EE, the server just passes along encrypted data it cannot decrypt."
+                }
+            ]
         }
     },
     "devices": {
@@ -648,6 +674,32 @@
                 "If your device is lost/stolen and was unlocked, or you suspect someone knows your PIN, change your passwords immediately. If it was locked with a strong PIN, encryption protects your data.",
                 "Look for 'https://' in the URL—this means the connection is encrypted. But note: this only protects the connection, not the site's legitimacy. Phishing sites can have HTTPS too."
             ]
+        },
+        "quiz": {
+            "title": "Tools & Encryption Quiz",
+            "questions": [
+                {
+                    "prompt": "What does symmetric encryption use?",
+                    "options": ["Two different keys (public and private)", "One shared key for both encrypt and decrypt", "No keys, just a password"],
+                    "answer": 1,
+                    "correct": "Symmetric encryption uses the same key to lock and unlock data—like a safe with one key.",
+                    "explainer": "Your phone uses symmetric encryption to protect data when locked."
+                },
+                {
+                    "prompt": "Why use a password manager instead of remembering passwords?",
+                    "options": ["Password managers are faster to type", "Humans can't create truly random, unique passwords for every account", "Password managers look more professional"],
+                    "answer": 1,
+                    "correct": "Password managers generate and store unique, complex passwords for each account—something humans can't do reliably.",
+                    "explainer": "Reusing passwords means one breach compromises all your accounts."
+                },
+                {
+                    "prompt": "What does HTTPS protect?",
+                    "options": ["The connection between you and the website", "Against all viruses and malware", "The legitimacy of the website"],
+                    "answer": 0,
+                    "correct": "HTTPS encrypts the connection, but doesn't guarantee the site is legitimate—phishing sites can have HTTPS too.",
+                    "explainer": "Always check the actual domain name, not just the padlock icon."
+                }
+            ]
         }
     },
     "advanced": {
@@ -760,6 +812,15 @@
         "created_by": "Created with 🔒 by ",
         "recommended": "Recommended",
         "alternative": "Alternative"
+    },
+    "completion": {
+        "quiz_required": "Complete the Quiz",
+        "quiz_required_desc": "Pass the quiz above (50%+) to unlock topic completion.",
+        "current_score": "Current score: {{score}}% — need 50%",
+        "quiz_passed": "Quiz Passed! ({{score}}%)",
+        "ready_to_complete": "Ready to move on? Mark this topic as complete.",
+        "mark_complete": "Mark Topic Complete",
+        "next_preview": "Next up: {{topic}}"
     },
     "visualizations": {
         "vpn": {

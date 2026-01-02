@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '../components/Card';
 import { Shield, Lock, Smartphone, Globe, KeyRound } from 'lucide-react';
-import NextTopicCard from '../components/NextTopicCard';
-import { useProgress } from '../hooks/useProgress';
+import Quiz from '../components/Quiz';
+import TopicCompletionCard from '../components/TopicCompletionCard';
 
 const Tools = () => {
     const { t } = useTranslation();
-    const { markTopicComplete } = useProgress();
-
-    useEffect(() => {
-        markTopicComplete('tools', 'visit');
-    }, [markTopicComplete]);
+    const quizQuestions = t('tools.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
 
     const sections = [
         {
@@ -96,7 +92,16 @@ const Tools = () => {
                 ))}
             </div>
 
-            <NextTopicCard currentTopic="tools" />
+            {/* Quiz */}
+            <section className="section" style={{ marginTop: '2rem' }}>
+                <Quiz
+                    title={t('tools.quiz.title')}
+                    questions={quizQuestions}
+                    storageKey="quiz-tools"
+                />
+            </section>
+
+            <TopicCompletionCard topicId="tools" quizStorageKey="quiz-tools" />
         </div>
     );
 };

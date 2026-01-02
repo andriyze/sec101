@@ -3,20 +3,14 @@ import { useTranslation } from 'react-i18next';
 import Card from '../components/Card';
 import { Globe, Shield, EyeOff, Settings } from 'lucide-react';
 import Quiz from '../components/Quiz';
-import NextTopicCard from '../components/NextTopicCard';
-import { useProgress } from '../hooks/useProgress';
+import TopicCompletionCard from '../components/TopicCompletionCard';
 import TrackerBlockingViz from '../components/visualizations/TrackerBlockingViz';
 
 const Browsing = () => {
     const { t } = useTranslation();
-    const { markTopicComplete } = useProgress();
     const quizQuestions = t('browsing.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
     const quickSettings = t('browsing.quick_settings.items', { returnObjects: true, defaultValue: [] }) || [];
     const hardeningKeys = ['brave', 'firefox', 'tor'];
-
-    const handleQuizComplete = () => {
-        markTopicComplete('browsing', 'quiz');
-    };
 
     return (
         <div className="animate-fade-in">
@@ -117,11 +111,10 @@ const Browsing = () => {
                     title={t('browsing.quiz.title')}
                     questions={quizQuestions}
                     storageKey="quiz-browsing"
-                    onComplete={handleQuizComplete}
                 />
             </section>
 
-            <NextTopicCard currentTopic="browsing" />
+            <TopicCompletionCard topicId="browsing" quizStorageKey="quiz-browsing" />
         </div>
     );
 };

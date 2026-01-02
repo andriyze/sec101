@@ -2,18 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Mail, AlertTriangle, CheckCircle, Shield } from 'lucide-react';
 import Quiz from '../components/Quiz';
-import NextTopicCard from '../components/NextTopicCard';
-import { useProgress } from '../hooks/useProgress';
+import TopicCompletionCard from '../components/TopicCompletionCard';
 import PhishingEmailViz from '../components/visualizations/PhishingEmailViz';
 
 const Phishing = () => {
     const { t } = useTranslation();
-    const { markTopicComplete } = useProgress();
     const quizQuestions = t('phishing.quiz.questions', { returnObjects: true });
-
-    const handleQuizComplete = () => {
-        markTopicComplete('phishing', 'quiz');
-    };
 
     return (
         <div className="animate-fade-in">
@@ -131,11 +125,10 @@ const Phishing = () => {
                     title={t('phishing.quiz.title')}
                     questions={quizQuestions}
                     storageKey="quiz-phishing"
-                    onComplete={handleQuizComplete}
                 />
             </section>
 
-            <NextTopicCard currentTopic="phishing" />
+            <TopicCompletionCard topicId="phishing" quizStorageKey="quiz-phishing" />
         </div>
     );
 };

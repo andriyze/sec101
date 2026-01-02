@@ -3,18 +3,12 @@ import { useTranslation } from 'react-i18next';
 import Card from '../components/Card';
 import { KeyRound, ShieldCheck, Lock, Smartphone, Fingerprint, Key, AlertTriangle } from 'lucide-react';
 import Quiz from '../components/Quiz';
-import NextTopicCard from '../components/NextTopicCard';
-import { useProgress } from '../hooks/useProgress';
+import TopicCompletionCard from '../components/TopicCompletionCard';
 import MfaFactorsViz from '../components/visualizations/MfaFactorsViz';
 
 const Passwords = () => {
     const { t } = useTranslation();
-    const { markTopicComplete } = useProgress();
     const quizQuestions = t('passwords.quiz.questions', { returnObjects: true });
-
-    const handleQuizComplete = () => {
-        markTopicComplete('passwords', 'quiz');
-    };
 
     return (
         <div className="animate-fade-in">
@@ -268,11 +262,10 @@ const Passwords = () => {
                     title={t('passwords.quiz.title')}
                     questions={quizQuestions}
                     storageKey="quiz-passwords"
-                    onComplete={handleQuizComplete}
                 />
             </section>
 
-            <NextTopicCard currentTopic="passwords" />
+            <TopicCompletionCard topicId="passwords" quizStorageKey="quiz-passwords" />
         </div>
     );
 };

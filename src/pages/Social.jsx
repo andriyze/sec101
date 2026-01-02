@@ -1,19 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '../components/Card';
 import { MessageCircle, Shield, Globe, Lock, Info, Mail } from 'lucide-react';
-import NextTopicCard from '../components/NextTopicCard';
-import { useProgress } from '../hooks/useProgress';
+import Quiz from '../components/Quiz';
+import TopicCompletionCard from '../components/TopicCompletionCard';
 import VpnTunnelViz from '../components/visualizations/VpnTunnelViz';
 import E2eEncryptionViz from '../components/visualizations/E2eEncryptionViz';
 
 const Social = () => {
     const { t } = useTranslation();
-    const { markTopicComplete } = useProgress();
-
-    useEffect(() => {
-        markTopicComplete('social', 'visit');
-    }, [markTopicComplete]);
+    const quizQuestions = t('social.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
 
     return (
         <div className="animate-fade-in">
@@ -189,7 +185,16 @@ const Social = () => {
                 </div>
             </section>
 
-            <NextTopicCard currentTopic="social" />
+            {/* Quiz */}
+            <section className="section">
+                <Quiz
+                    title={t('social.quiz.title')}
+                    questions={quizQuestions}
+                    storageKey="quiz-social"
+                />
+            </section>
+
+            <TopicCompletionCard topicId="social" quizStorageKey="quiz-social" />
         </div>
     );
 };
