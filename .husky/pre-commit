@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# ============================================
+# PRE-COMMIT HOOK for sec101
+# ============================================
+
+# Exit on first error
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# ============================================
+# 1. SECURITY: Check for secrets/sensitive data
+# ============================================
+echo "🔐 Checking for sensitive data..."
+
+# Get staged files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+# Patterns to detect secrets (extend as needed)
+SECRET_PATTERNS=(
+    "PRIV""ATE.KEY"
+    "API_KEY\s*=\s*['\"][^'\"]+['\"]"
+    "SECRET_KEY\s*=\s*['\"][^'\"]+['\"]"
+    "PASSWORD\s*=\s*['\"][^'\"]+['\"]"
+    "aws_access_key_id\s*=\s*['\"][^'\"]+['\"]"
+    "aws_secret_access_key\s*=\s*['\"][^'\"]+['\"]"
+    "-----BEGIN.*PRIV""ATE KEY-----"
+    "sk-[a-zA-Z0-9]{20,}"
+    "ghp_[a-zA-Z0-9]{36}"
+    "gho_[a-zA-Z0-9]{36}"
+)
+
+# Skip checking the hook files themselves
+for file in $STAGED_FILES; do
+    if [ -f "$file" ] && [[ "$file" != .husky/* ]]; then
+        for pattern in "${SECRET_PATTERNS[@]}"; do
+            if grep -qiE "$pattern" "$file" 2>/dev/null; then
+                echo "❌ BLOCKED: Potential secret found in $file"
+                echo "   Pattern matched: $pattern"
+                echo "   Please remove sensitive data before committing."
+                exit 1
+            fi
+        done
+    fi
+done
+
+# Check for .env files being committed (allow .env.example)
+for file in $STAGED_FILES; do
+    if echo "$file" | grep -qE "^\.env(\.[^e]|$)" 2>/dev/null; then
+        echo "❌ BLOCKED: Attempting to commit .env file: $file"
+        echo "   Environment files should not be committed."
+        exit 1
+    fi
+done
+
+echo "✅ No secrets detected"
+
+# ============================================
+# 2. QUALITY: Lint staged files
+# ============================================
+echo "📝 Running lint-staged..."
+bunx lint-staged
+
+# ============================================
+# 3. BUILD: Verify build passes (optional - uncomment if desired)
+# ============================================
+# Uncomment the following to ensure build passes before commit:
+# echo "🏗️  Verifying build..."
+# bun run build --quiet
+
+echo ""
+echo "✅ All pre-commit checks passed!"

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// eslint-disable-next-line no-undef
 const previewPort = Number.parseInt(process.env.PORT ?? '4173', 10)
 
 // https://vite.dev/config/

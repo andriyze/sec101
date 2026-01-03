@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Building2, Mail, Globe, Terminal, Lock, Server } from 'lucide-react';

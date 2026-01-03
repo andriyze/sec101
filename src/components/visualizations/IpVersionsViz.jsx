@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+// eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.span
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Check, Infinity as InfinityIcon, Play, Pause } from 'lucide-react';
@@ -67,9 +68,11 @@ const IpVersionsViz = () => {
             }
         }
 
+        // Capture ref at effect start for cleanup
+        const currentIntervals = intervalsRef.current;
         return () => {
-            if (intervalsRef.current.deplete) clearInterval(intervalsRef.current.deplete);
-            if (intervalsRef.current.type) clearInterval(intervalsRef.current.type);
+            if (currentIntervals.deplete) clearInterval(currentIntervals.deplete);
+            if (currentIntervals.type) clearInterval(currentIntervals.type);
         };
     }, [isPlaying, prefersReducedMotion]);
 

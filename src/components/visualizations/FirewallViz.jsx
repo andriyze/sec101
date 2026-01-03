@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+// eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Monitor, Shield, Globe, Check, X, Play, Pause } from 'lucide-react';
@@ -8,7 +9,16 @@ import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 const FirewallViz = () => {
     const { t } = useTranslation();
     const prefersReducedMotion = usePrefersReducedMotion();
-    const [packets, setPackets] = useState([]);
+    const [packets, setPackets] = useState(() => {
+        // Initial state for reduced motion - show static example
+        if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return [
+                { id: 1, allowed: true, port: 443, status: 'passed' },
+                { id: 2, allowed: false, port: 23, status: 'blocked' },
+            ];
+        }
+        return [];
+    });
     const [packetId, setPacketId] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const intervalRef = useRef(null);
@@ -48,15 +58,7 @@ const FirewallViz = () => {
 
     // Handle play/pause
     useEffect(() => {
-        if (prefersReducedMotion) {
-            setPackets([
-                { id: 1, allowed: true, port: 443, status: 'passed' },
-                { id: 2, allowed: false, port: 23, status: 'blocked' },
-            ]);
-            return;
-        }
-
-        if (isPlaying) {
+        if (isPlaying && !prefersReducedMotion) {
             intervalRef.current = setInterval(generatePacket, 2000);
         } else {
             if (intervalRef.current) {

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+// eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
@@ -77,7 +78,8 @@ const TrackerBlockingViz = () => {
         if (blocked || prefersReducedMotion) return [];
         // Show accumulated sites up to current site index
         return sites.slice(0, currentSite + 1).map(s => s.name);
-    }, [currentStep, blocked, prefersReducedMotion]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentSite, blocked, prefersReducedMotion]);
 
     const trackerVariants = {
         initial: { scale: 0, opacity: 0 },
@@ -152,7 +154,6 @@ const TrackerBlockingViz = () => {
                     <div className="tracker-sites">
                         {sites.map((site, index) => {
                             const isActive = index === currentSite;
-                            const wasVisited = index < currentSite || (index === currentSite && trackerData.includes(site.name));
 
                             return (
                                 <div key={site.name} className="tracker-site-wrapper">

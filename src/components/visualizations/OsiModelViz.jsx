@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Radio, Network, Globe, Truck, Link2, Lock, AppWindow, ArrowDown, ArrowUp } from 'lucide-react';
@@ -19,18 +20,6 @@ const OsiModelViz = () => {
         { num: 2, key: 'datalink', icon: Network, color: '#ff0055' },
         { num: 1, key: 'physical', icon: Radio, color: '#ff3366' },
     ];
-
-    // Custom step handler to implement direction switching
-    const handleStepChange = useCallback((newStep, prevStep) => {
-        // When reaching the end going down, switch to up
-        if (direction === 'down' && newStep === 6 && prevStep === 5) {
-            setDirection('up');
-        }
-        // When reaching the beginning going up, switch to down
-        else if (direction === 'up' && newStep === 0 && prevStep === 1) {
-            setDirection('down');
-        }
-    }, [direction]);
 
     const {
         currentStep,

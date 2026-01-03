@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
@@ -49,17 +49,7 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
         }
     };
 
-    useEffect(() => {
-        if (!storageKey) return;
-        const raw = window.localStorage.getItem(storageKey);
-        if (raw) {
-            try {
-                setBestScore(JSON.parse(raw));
-            } catch {
-                setBestScore(null);
-            }
-        }
-    }, [storageKey]);
+    // bestScore is initialized via lazy initializer above, no need for effect
 
     if (!question) return null;
 

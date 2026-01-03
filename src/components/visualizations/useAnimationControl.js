@@ -18,8 +18,19 @@ export const useAnimationControl = ({
     autoPlay = false
 } = {}) => {
     const prefersReducedMotion = usePrefersReducedMotion();
-    const [currentStep, setCurrentStep] = useState(initialStep);
-    const [isPlaying, setIsPlaying] = useState(autoPlay && !prefersReducedMotion);
+    const [currentStep, setCurrentStep] = useState(() => {
+        // For reduced motion, show final state immediately
+        if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return totalSteps - 1;
+        }
+        return initialStep;
+    });
+    const [isPlaying, setIsPlaying] = useState(() => {
+        if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return false;
+        }
+        return autoPlay;
+    });
     const intervalRef = useRef(null);
 
     // Clear interval helper
@@ -32,13 +43,7 @@ export const useAnimationControl = ({
 
     // Set up auto-advance interval
     useEffect(() => {
-        if (prefersReducedMotion) {
-            setIsPlaying(false);
-            setCurrentStep(totalSteps - 1); // Show final state
-            return;
-        }
-
-        if (isPlaying) {
+        if (isPlaying && !prefersReducedMotion) {
             intervalRef.current = setInterval(() => {
                 setCurrentStep((prev) => {
                     const next = prev + 1;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Mail, Paperclip, ExternalLink } from 'lucide-react';
@@ -39,9 +40,9 @@ const PhishingEmailViz = () => {
         if (currentStep === 3) {
             const timer = setTimeout(() => setShowingUrl(true), 500);
             return () => clearTimeout(timer);
-        } else {
-            setShowingUrl(false);
         }
+        // Reset when leaving step 3
+        return () => setShowingUrl(false);
     }, [currentStep]);
 
     const isHighlighted = (position) => {
