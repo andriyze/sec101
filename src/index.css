@@ -1798,8 +1798,19 @@ input:checked+.toggle-slider:before {
   }
 
   .vpn-viz-row {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     padding-left: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  .vpn-viz-row::-webkit-scrollbar {
+    display: none;
   }
 
   .vpn-viz-label {
@@ -1808,6 +1819,10 @@ input:checked+.toggle-slider:before {
     margin-bottom: 0.5rem;
     width: 100%;
     text-align: center;
+  }
+
+  .vpn-viz-wrapper {
+    gap: 1rem;
   }
 
   .viz-connection {

@@ -11,7 +11,7 @@ const IpVersionsViz = () => {
     const [v4Level, setV4Level] = useState(85); // Start at 85% depleted
     const [typingV4, setTypingV4] = useState('');
     const [typingV6, setTypingV6] = useState('');
-    const [isPlaying, setIsPlaying] = useState(!prefersReducedMotion);
+    const [isPlaying, setIsPlaying] = useState(false);
     const intervalsRef = useRef({ deplete: null, type: null });
 
     const v4Example = '192.168.1.1';

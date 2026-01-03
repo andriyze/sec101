@@ -1,15 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ShieldAlert, ShieldCheck, Brain, Key, Fingerprint } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const MfaFactorsViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [activeFactors, setActiveFactors] = useState([]);
-    const [cycleIndex, setCycleIndex] = useState(0);
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 4,
+        interval: 2000,
+        loop: true,
+        autoPlay: false
+    });
 
     const factors = [
         {
@@ -29,36 +43,16 @@ const MfaFactorsViz = () => {
         },
     ];
 
-    // Auto-cycle through states
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setActiveFactors(['knowledge', 'possession']);
-            return;
-        }
-
-        const states = [
-            ['knowledge'],
-            ['knowledge', 'possession'],
-            ['knowledge', 'possession', 'inherence'],
-            ['knowledge', 'possession'],
-        ];
-
-        const interval = setInterval(() => {
-            setCycleIndex((prev) => (prev + 1) % states.length);
-        }, 2000);
-
-        return () => clearInterval(interval);
-    }, [prefersReducedMotion]);
-
-    useEffect(() => {
-        const states = [
-            ['knowledge'],
-            ['knowledge', 'possession'],
-            ['knowledge', 'possession', 'inherence'],
-            ['knowledge', 'possession'],
-        ];
-        setActiveFactors(states[cycleIndex]);
-    }, [cycleIndex]);
+    // Map step to active factors
+    const factorStates = [
+        ['knowledge'],
+        ['knowledge', 'possession'],
+        ['knowledge', 'possession', 'inherence'],
+        ['knowledge', 'possession'],
+    ];
+    const activeFactors = prefersReducedMotion
+        ? ['knowledge', 'possession']
+        : factorStates[currentStep];
 
     const activeCount = activeFactors.length;
     const isStrong = activeCount >= 2;
@@ -158,6 +152,17 @@ const MfaFactorsViz = () => {
                         )}
                     </motion.div>
                 </AnimatePresence>
+
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

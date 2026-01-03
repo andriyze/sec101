@@ -1,36 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { User, Users, Server, Lock, Unlock, EyeOff, ArrowRight } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const E2eEncryptionViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [step, setStep] = useState(0);
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 5,
+        interval: 1200,
+        loop: true,
+        autoPlay: false
+    });
 
     // Animation cycle: 0=start, 1=encrypting, 2=in-transit, 3=decrypting, 4=received
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setStep(2); // Show middle state for reduced motion
-            return;
-        }
-
-        const interval = setInterval(() => {
-            setStep((prev) => (prev + 1) % 5);
-        }, 1200);
-
-        return () => clearInterval(interval);
-    }, [prefersReducedMotion]);
-
     const getMessage = () => {
-        if (step <= 0) return t('visualizations.e2e.message');
-        if (step >= 4) return t('visualizations.e2e.message');
+        if (currentStep <= 0) return t('visualizations.e2e.message');
+        if (currentStep >= 4) return t('visualizations.e2e.message');
         return '••••••••';
     };
 
-    const isEncrypted = step >= 1 && step <= 3;
+    const isEncrypted = currentStep >= 1 && currentStep <= 3;
 
     const messageVariants = {
         initial: { opacity: 0, scale: 0.8 },
@@ -55,17 +57,17 @@ const E2eEncryptionViz = () => {
                 {/* Main Flow */}
                 <div className="e2e-flow">
                     {/* Sender */}
-                    <div className="viz-node" style={{ borderColor: step === 0 ? 'var(--primary)' : 'var(--border-light)' }}>
+                    <div className="viz-node" style={{ borderColor: currentStep === 0 ? 'var(--primary)' : 'var(--border-light)' }}>
                         <div className="viz-node-icon">
-                            <User size={20} color={step === 0 ? 'var(--primary)' : 'var(--text-muted)'} />
+                            <User size={20} color={currentStep === 0 ? 'var(--primary)' : 'var(--text-muted)'} />
                         </div>
                         <span className="viz-node-label">{t('visualizations.e2e.you')}</span>
                     </div>
 
                     {/* Lock Icon */}
                     <motion.div
-                        style={{ color: step === 1 ? 'var(--primary)' : 'var(--text-dim)' }}
-                        animate={!prefersReducedMotion && step === 1 ? { scale: [1, 1.2, 1] } : {}}
+                        style={{ color: currentStep === 1 ? 'var(--primary)' : 'var(--text-dim)' }}
+                        animate={!prefersReducedMotion && currentStep === 1 ? { scale: [1, 1.2, 1] } : {}}
                         transition={{ duration: 0.3 }}
                     >
                         <Lock size={16} />
@@ -74,7 +76,7 @@ const E2eEncryptionViz = () => {
                     {/* Arrow */}
                     <motion.div
                         variants={!prefersReducedMotion ? arrowVariants : undefined}
-                        animate={!prefersReducedMotion && step === 2 ? 'animate' : undefined}
+                        animate={!prefersReducedMotion && currentStep === 2 ? 'animate' : undefined}
                         style={{ color: 'var(--text-dim)' }}
                     >
                         <ArrowRight size={16} />
@@ -99,7 +101,7 @@ const E2eEncryptionViz = () => {
                     {/* Arrow */}
                     <motion.div
                         variants={!prefersReducedMotion ? arrowVariants : undefined}
-                        animate={!prefersReducedMotion && step === 2 ? 'animate' : undefined}
+                        animate={!prefersReducedMotion && currentStep === 2 ? 'animate' : undefined}
                         style={{ color: 'var(--text-dim)' }}
                     >
                         <ArrowRight size={16} />
@@ -107,17 +109,17 @@ const E2eEncryptionViz = () => {
 
                     {/* Unlock Icon */}
                     <motion.div
-                        style={{ color: step === 3 ? 'var(--primary)' : 'var(--text-dim)' }}
-                        animate={!prefersReducedMotion && step === 3 ? { scale: [1, 1.2, 1] } : {}}
+                        style={{ color: currentStep === 3 ? 'var(--primary)' : 'var(--text-dim)' }}
+                        animate={!prefersReducedMotion && currentStep === 3 ? { scale: [1, 1.2, 1] } : {}}
                         transition={{ duration: 0.3 }}
                     >
                         <Unlock size={16} />
                     </motion.div>
 
                     {/* Recipient */}
-                    <div className="viz-node" style={{ borderColor: step === 4 ? '#00ff9d' : 'var(--border-light)' }}>
+                    <div className="viz-node" style={{ borderColor: currentStep === 4 ? '#00ff9d' : 'var(--border-light)' }}>
                         <div className="viz-node-icon">
-                            <Users size={20} color={step === 4 ? '#00ff9d' : 'var(--text-muted)'} />
+                            <Users size={20} color={currentStep === 4 ? '#00ff9d' : 'var(--text-muted)'} />
                         </div>
                         <span className="viz-node-label">{t('visualizations.e2e.friend')}</span>
                     </div>
@@ -135,6 +137,17 @@ const E2eEncryptionViz = () => {
                     <EyeOff size={12} />
                     <span>{t('visualizations.e2e.server_blind')}</span>
                 </motion.div>
+
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

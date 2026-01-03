@@ -3,13 +3,28 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Mail, Paperclip, ExternalLink } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const PhishingEmailViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [activeFlag, setActiveFlag] = useState(-1);
     const [showingUrl, setShowingUrl] = useState(false);
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 5,
+        interval: 2500,
+        loop: true,
+        autoPlay: false
+    });
 
     const redFlags = [
         { id: 'sender', position: 'sender' },
@@ -19,32 +34,18 @@ const PhishingEmailViz = () => {
         { id: 'attachment', position: 'attachment' },
     ];
 
-    // Auto-cycle through red flags
+    // Handle URL reveal for link step (step 3)
     useEffect(() => {
-        if (prefersReducedMotion) {
-            setActiveFlag(0);
-            return;
+        if (currentStep === 3) {
+            const timer = setTimeout(() => setShowingUrl(true), 500);
+            return () => clearTimeout(timer);
+        } else {
+            setShowingUrl(false);
         }
-
-        const interval = setInterval(() => {
-            setActiveFlag((prev) => {
-                const next = (prev + 1) % (redFlags.length + 1);
-                // Show URL reveal when highlighting the link
-                if (next === 3) {
-                    setTimeout(() => setShowingUrl(true), 500);
-                } else {
-                    setShowingUrl(false);
-                }
-                return next === redFlags.length ? -1 : next;
-            });
-        }, 2500);
-
-        return () => clearInterval(interval);
-    }, [prefersReducedMotion]);
+    }, [currentStep]);
 
     const isHighlighted = (position) => {
-        if (activeFlag === -1) return false;
-        return redFlags[activeFlag]?.position === position;
+        return redFlags[currentStep]?.position === position;
     };
 
     const highlightVariants = {
@@ -211,10 +212,10 @@ const PhishingEmailViz = () => {
                         {redFlags.map((flag, index) => (
                             <motion.div
                                 key={flag.id}
-                                className={`phishing-legend-item ${activeFlag === index ? 'active' : ''}`}
+                                className={`phishing-legend-item ${currentStep === index ? 'active' : ''}`}
                                 animate={{
-                                    opacity: activeFlag === -1 || activeFlag === index ? 1 : 0.4,
-                                    scale: activeFlag === index ? 1.05 : 1,
+                                    opacity: currentStep === index ? 1 : 0.4,
+                                    scale: currentStep === index ? 1.05 : 1,
                                 }}
                             >
                                 <span className="phishing-legend-number">{index + 1}</span>
@@ -223,6 +224,17 @@ const PhishingEmailViz = () => {
                         ))}
                     </div>
                 </div>
+
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

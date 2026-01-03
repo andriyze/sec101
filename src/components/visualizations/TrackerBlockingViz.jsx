@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
@@ -7,14 +7,33 @@ import {
     XCircle, Heart, Users, MessageCircle, AlertTriangle, Target, Database
 } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const TrackerBlockingViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [blocked, setBlocked] = useState(false);
-    const [trackerData, setTrackerData] = useState([]);
-    const [currentSite, setCurrentSite] = useState(0);
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 6,
+        interval: 4000,
+        loop: true,
+        autoPlay: false
+    });
+
+    // Derive blocked and currentSite from step
+    // Steps 0-2: unblocked (sites 0, 1, 2)
+    // Steps 3-5: blocked (sites 0, 1, 2)
+    const blocked = prefersReducedMotion ? true : currentStep >= 3;
+    const currentSite = currentStep % 3;
 
     // Detailed tracker data per site - using i18n for data types
     const trackerDataTypes = {
@@ -53,45 +72,12 @@ const TrackerBlockingViz = () => {
         { name: 'social.com', color: '#a855f7' },
     ];
 
-    // Auto-cycle: show unblocked, then blocked - SLOWER for comprehension (4000ms instead of 1500ms)
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setBlocked(true);
-            return;
-        }
-
-        // Cycle through sites, then toggle blocked state
-        const siteInterval = setInterval(() => {
-            setCurrentSite((prev) => {
-                const next = (prev + 1) % sites.length;
-                if (next === 0) {
-                    // After completing a cycle, pause then toggle blocked state
-                    setTimeout(() => {
-                        setBlocked((b) => !b);
-                        setTrackerData([]);
-                    }, 2000);
-                }
-                return next;
-            });
-        }, 4000);
-
-        return () => clearInterval(siteInterval);
-    }, [prefersReducedMotion]);
-
-    // Add tracker data when not blocked
-    useEffect(() => {
-        if (!blocked && !prefersReducedMotion) {
-            const timer = setTimeout(() => {
-                setTrackerData((prev) => {
-                    if (prev.length < 3) {
-                        return [...prev, sites[currentSite].name];
-                    }
-                    return prev;
-                });
-            }, 1500);
-            return () => clearTimeout(timer);
-        }
-    }, [currentSite, blocked, prefersReducedMotion]);
+    // Build tracker data based on current step (accumulate for unblocked states)
+    const trackerData = useMemo(() => {
+        if (blocked || prefersReducedMotion) return [];
+        // Show accumulated sites up to current site index
+        return sites.slice(0, currentSite + 1).map(s => s.name);
+    }, [currentStep, blocked, prefersReducedMotion]);
 
     const trackerVariants = {
         initial: { scale: 0, opacity: 0 },
@@ -322,6 +308,17 @@ const TrackerBlockingViz = () => {
                         : t('visualizations.tracker.explanation_exposed')
                     }
                 </p>
+
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

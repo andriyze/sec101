@@ -10,7 +10,7 @@ const FirewallViz = () => {
     const prefersReducedMotion = usePrefersReducedMotion();
     const [packets, setPackets] = useState([]);
     const [packetId, setPacketId] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(!prefersReducedMotion);
+    const [isPlaying, setIsPlaying] = useState(false);
     const intervalRef = useRef(null);
 
     const generatePacket = useCallback(() => {
