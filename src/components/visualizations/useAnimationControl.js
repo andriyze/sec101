@@ -8,14 +8,14 @@ import { usePrefersReducedMotion } from './usePrefersReducedMotion';
  * @param {number} options.interval - Auto-advance interval in ms (default: 4000)
  * @param {boolean} options.loop - Whether to loop back to start (default: true)
  * @param {number} options.initialStep - Starting step (default: 0)
- * @param {boolean} options.autoPlay - Start playing automatically (default: true)
+ * @param {boolean} options.autoPlay - Start playing automatically (default: false)
  */
 export const useAnimationControl = ({
     totalSteps,
     interval = 4000,
     loop = true,
     initialStep = 0,
-    autoPlay = true
+    autoPlay = false
 } = {}) => {
     const prefersReducedMotion = usePrefersReducedMotion();
     const [currentStep, setCurrentStep] = useState(initialStep);
