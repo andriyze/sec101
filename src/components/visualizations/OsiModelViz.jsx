@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Radio, Network, Globe, Truck, Link2, Lock, AppWindow, ArrowDown, ArrowUp } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const OsiModelViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [activeLayer, setActiveLayer] = useState(-1);
     const [direction, setDirection] = useState('down'); // 'down' = sending, 'up' = receiving
 
     const layers = [
@@ -21,33 +20,61 @@ const OsiModelViz = () => {
         { num: 1, key: 'physical', icon: Radio, color: '#ff3366' },
     ];
 
-    // Auto-cycle through layers
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setActiveLayer(3);
-            return;
+    // Custom step handler to implement direction switching
+    const handleStepChange = useCallback((newStep, prevStep) => {
+        // When reaching the end going down, switch to up
+        if (direction === 'down' && newStep === 6 && prevStep === 5) {
+            setDirection('up');
         }
+        // When reaching the beginning going up, switch to down
+        else if (direction === 'up' && newStep === 0 && prevStep === 1) {
+            setDirection('down');
+        }
+    }, [direction]);
 
-        const interval = setInterval(() => {
-            setActiveLayer((prev) => {
-                if (direction === 'down') {
-                    if (prev >= 6) {
-                        setDirection('up');
-                        return 6;
-                    }
-                    return prev + 1;
-                } else {
-                    if (prev <= 0) {
-                        setDirection('down');
-                        return -1;
-                    }
-                    return prev - 1;
-                }
-            });
-        }, 800);
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep: baseNextStep,
+        prevStep: basePrevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 7,
+        interval: 800,
+        loop: true
+    });
 
-        return () => clearInterval(interval);
-    }, [prefersReducedMotion, direction]);
+    // Enhanced next/prev that handle direction
+    const nextStep = () => {
+        if (direction === 'down') {
+            if (currentStep >= 6) {
+                setDirection('up');
+            }
+            baseNextStep();
+        } else {
+            if (currentStep <= 0) {
+                setDirection('down');
+            }
+            basePrevStep();
+        }
+    };
+
+    const prevStep = () => {
+        if (direction === 'down') {
+            if (currentStep <= 0) {
+                setDirection('up');
+            }
+            basePrevStep();
+        } else {
+            if (currentStep >= 6) {
+                setDirection('down');
+            }
+            baseNextStep();
+        }
+    };
 
     const layerVariants = {
         inactive: {
@@ -60,6 +87,9 @@ const OsiModelViz = () => {
         }
     };
 
+    // Map currentStep to layer index (when direction is down, step 0 = layer 0; when up, step 0 = layer 6)
+    const activeLayer = direction === 'down' ? currentStep : (6 - currentStep);
+
     return (
         <VizContainer title={t('visualizations.osi.title')}>
             <div className="osi-viz-wrapper">
@@ -68,7 +98,7 @@ const OsiModelViz = () => {
                     <motion.div
                         className="osi-direction-icon"
                         animate={{ y: direction === 'down' ? [0, 5, 0] : [0, -5, 0] }}
-                        transition={{ duration: 0.5, repeat: Infinity }}
+                        transition={{ duration: 0.5, repeat: isPlaying ? Infinity : 0 }}
                     >
                         {direction === 'down' ? <ArrowDown size={16} /> : <ArrowUp size={16} />}
                     </motion.div>
@@ -99,7 +129,7 @@ const OsiModelViz = () => {
                                 <span className="osi-layer-name">{t(`visualizations.osi.layers.${layer.key}.name`)}</span>
                                 <span className="osi-layer-example">{t(`visualizations.osi.layers.${layer.key}.example`)}</span>
                             </div>
-                            {activeLayer === index && (
+                            {activeLayer === index && !prefersReducedMotion && (
                                 <motion.div
                                     className="osi-data-packet"
                                     initial={{ opacity: 0, scale: 0.5 }}
@@ -112,6 +142,18 @@ const OsiModelViz = () => {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Animation Controls */}
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

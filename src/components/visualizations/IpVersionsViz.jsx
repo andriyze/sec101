@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { AlertTriangle, Check, Infinity as InfinityIcon } from 'lucide-react';
+import { AlertTriangle, Check, Infinity as InfinityIcon, Play, Pause } from 'lucide-react';
 import VizContainer from './VizContainer';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
 
@@ -11,6 +11,8 @@ const IpVersionsViz = () => {
     const [v4Level, setV4Level] = useState(85); // Start at 85% depleted
     const [typingV4, setTypingV4] = useState('');
     const [typingV6, setTypingV6] = useState('');
+    const [isPlaying, setIsPlaying] = useState(!prefersReducedMotion);
+    const intervalsRef = useRef({ deplete: null, type: null });
 
     const v4Example = '192.168.1.1';
     const v6Example = '2001:0db8:85a3::7334';
@@ -24,40 +26,57 @@ const IpVersionsViz = () => {
             return;
         }
 
-        // Slowly deplete IPv4
-        const depleteInterval = setInterval(() => {
-            setV4Level((prev) => {
-                if (prev >= 95) return 85;
-                return prev + 0.5;
-            });
-        }, 500);
+        if (isPlaying) {
+            // Slowly deplete IPv4
+            intervalsRef.current.deplete = setInterval(() => {
+                setV4Level((prev) => {
+                    if (prev >= 95) return 85;
+                    return prev + 0.5;
+                });
+            }, 500);
 
-        // Type out addresses
-        let v4Index = 0;
-        let v6Index = 0;
-        const typeInterval = setInterval(() => {
-            if (v4Index <= v4Example.length) {
-                setTypingV4(v4Example.slice(0, v4Index));
-                v4Index++;
+            // Type out addresses
+            let v4Index = 0;
+            let v6Index = 0;
+            intervalsRef.current.type = setInterval(() => {
+                if (v4Index <= v4Example.length) {
+                    setTypingV4(v4Example.slice(0, v4Index));
+                    v4Index++;
+                }
+                if (v6Index <= v6Example.length) {
+                    setTypingV6(v6Example.slice(0, v6Index));
+                    v6Index++;
+                }
+                if (v4Index > v4Example.length && v6Index > v6Example.length) {
+                    // Reset after a pause
+                    setTimeout(() => {
+                        v4Index = 0;
+                        v6Index = 0;
+                    }, 2000);
+                }
+            }, 150);
+        } else {
+            // Clear intervals when paused
+            if (intervalsRef.current.deplete) {
+                clearInterval(intervalsRef.current.deplete);
+                intervalsRef.current.deplete = null;
             }
-            if (v6Index <= v6Example.length) {
-                setTypingV6(v6Example.slice(0, v6Index));
-                v6Index++;
+            if (intervalsRef.current.type) {
+                clearInterval(intervalsRef.current.type);
+                intervalsRef.current.type = null;
             }
-            if (v4Index > v4Example.length && v6Index > v6Example.length) {
-                // Reset after a pause
-                setTimeout(() => {
-                    v4Index = 0;
-                    v6Index = 0;
-                }, 2000);
-            }
-        }, 150);
+        }
 
         return () => {
-            clearInterval(depleteInterval);
-            clearInterval(typeInterval);
+            if (intervalsRef.current.deplete) clearInterval(intervalsRef.current.deplete);
+            if (intervalsRef.current.type) clearInterval(intervalsRef.current.type);
         };
-    }, [prefersReducedMotion]);
+    }, [isPlaying, prefersReducedMotion]);
+
+    const togglePlay = () => {
+        if (prefersReducedMotion) return;
+        setIsPlaying(prev => !prev);
+    };
 
     return (
         <VizContainer title={t('visualizations.ipv.title')}>
@@ -72,11 +91,13 @@ const IpVersionsViz = () => {
 
                         <div className="ipv-address">
                             <span className="ipv-address-text">{typingV4 || t('visualizations.ipv.v4_example')}</span>
-                            <motion.span
-                                className="ipv-cursor"
-                                animate={{ opacity: [1, 0] }}
-                                transition={{ duration: 0.5, repeat: Infinity }}
-                            >|</motion.span>
+                            {isPlaying && !prefersReducedMotion && (
+                                <motion.span
+                                    className="ipv-cursor"
+                                    animate={{ opacity: [1, 0] }}
+                                    transition={{ duration: 0.5, repeat: Infinity }}
+                                >|</motion.span>
+                            )}
                         </div>
 
                         <div className="ipv-pool">
@@ -109,24 +130,33 @@ const IpVersionsViz = () => {
 
                         <div className="ipv-address">
                             <span className="ipv-address-text v6">{typingV6 || t('visualizations.ipv.v6_example')}</span>
-                            <motion.span
-                                className="ipv-cursor"
-                                animate={{ opacity: [1, 0] }}
-                                transition={{ duration: 0.5, repeat: Infinity }}
-                            >|</motion.span>
+                            {isPlaying && !prefersReducedMotion && (
+                                <motion.span
+                                    className="ipv-cursor"
+                                    animate={{ opacity: [1, 0] }}
+                                    transition={{ duration: 0.5, repeat: Infinity }}
+                                >|</motion.span>
+                            )}
                         </div>
 
                         <div className="ipv-pool">
                             <div className="ipv-pool-label">{t('visualizations.ipv.v6_count')}</div>
                             <div className="ipv-pool-bar">
                                 <div className="ipv-pool-fill unlimited" style={{ width: '100%' }} />
-                                <motion.div
-                                    className="ipv-pool-infinite"
-                                    animate={{ x: [0, 10, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                >
-                                    <InfinityIcon size={16} color="#00ff9d" />
-                                </motion.div>
+                                {isPlaying && !prefersReducedMotion && (
+                                    <motion.div
+                                        className="ipv-pool-infinite"
+                                        animate={{ x: [0, 10, 0] }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                    >
+                                        <InfinityIcon size={16} color="#00ff9d" />
+                                    </motion.div>
+                                )}
+                                {!isPlaying && (
+                                    <div className="ipv-pool-infinite">
+                                        <InfinityIcon size={16} color="#00ff9d" />
+                                    </div>
+                                )}
                             </div>
                             <div className="ipv-pool-status unlimited">
                                 <Check size={12} />
@@ -134,6 +164,19 @@ const IpVersionsViz = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Simple Play/Pause Control */}
+                <div className={`animation-controls ${prefersReducedMotion ? 'disabled' : ''}`}>
+                    <button
+                        className="animation-control-btn play-pause"
+                        onClick={togglePlay}
+                        disabled={prefersReducedMotion}
+                        aria-label={isPlaying ? t('controls.pause', 'Pause animation') : t('controls.play', 'Play animation')}
+                        title={isPlaying ? t('controls.pause', 'Pause') : t('controls.play', 'Play')}
+                    >
+                        {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                    </button>
                 </div>
             </div>
         </VizContainer>

@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Building2, Mail, Globe, Terminal, Lock, Server } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const PortsViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [activePort, setActivePort] = useState(-1);
-    const [visitorPosition, setVisitorPosition] = useState(null);
 
     const ports = [
         { num: '80', icon: Globe, color: '#ff6b6b' },
@@ -19,39 +17,36 @@ const PortsViz = () => {
         { num: '53', icon: Server, color: '#7000ff' },
     ];
 
-    // Auto-cycle through ports
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setActivePort(1); // Show HTTPS port
-            return;
-        }
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: ports.length,
+        interval: 2500,
+        loop: true
+    });
 
-        const interval = setInterval(() => {
-            const nextPort = Math.floor(Math.random() * ports.length);
-            setVisitorPosition('arriving');
-
-            setTimeout(() => {
-                setActivePort(nextPort);
-                setVisitorPosition('at-port');
-            }, 600);
-
-            setTimeout(() => {
-                setVisitorPosition(null);
-            }, 1800);
-        }, 2500);
-
-        return () => clearInterval(interval);
-    }, [prefersReducedMotion]);
+    const activePort = currentStep;
 
     const visitorVariants = {
-        arriving: {
-            x: [-100, 0],
-            opacity: [0, 1],
+        initial: {
+            x: -100,
+            opacity: 0
+        },
+        animate: {
+            x: 0,
+            opacity: 1,
             transition: { duration: 0.5 }
         },
-        'at-port': {
-            scale: [1, 1.1, 1],
-            transition: { duration: 0.3 }
+        exit: {
+            opacity: 0,
+            scale: 0.5
         }
     };
 
@@ -66,14 +61,15 @@ const PortsViz = () => {
                 </div>
 
                 {/* Visitor indicator */}
-                <AnimatePresence>
-                    {visitorPosition && (
+                <AnimatePresence mode="wait">
+                    {!prefersReducedMotion && (
                         <motion.div
+                            key={activePort}
                             className="ports-visitor"
                             variants={visitorVariants}
-                            initial="arriving"
-                            animate={visitorPosition}
-                            exit={{ opacity: 0, scale: 0.5 }}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
                         >
                             <span>{t('visualizations.ports.visitor')}</span>
                             <span className="ports-visitor-dest">→ :{ports[activePort]?.num}</span>
@@ -116,6 +112,18 @@ const PortsViz = () => {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Animation Controls */}
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

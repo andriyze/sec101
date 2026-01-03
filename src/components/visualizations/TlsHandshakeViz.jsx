@@ -1,14 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Monitor, Server, ArrowRight, ArrowLeft, Lock, Key, ShieldCheck, Lightbulb } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const TlsHandshakeViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [currentStep, setCurrentStep] = useState(0);
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 4,
+        interval: 4500,
+        loop: true
+    });
 
     // Detailed step explanations with analogies
     const tlsStepsDetailed = [
@@ -65,20 +79,6 @@ const TlsHandshakeViz = () => {
         { id: 'step4', direction: 'both', icon: Lock, color: '#00ff9d' },
     ];
 
-    // Auto-cycle through steps - SLOWER for comprehension (4500ms instead of 1500ms)
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setCurrentStep(3);
-            return;
-        }
-
-        const interval = setInterval(() => {
-            setCurrentStep((prev) => (prev + 1) % 5);
-        }, 4500);
-
-        return () => clearInterval(interval);
-    }, [prefersReducedMotion]);
-
     const messageVariants = {
         hidden: { opacity: 0, scale: 0.5 },
         visible: {
@@ -89,7 +89,7 @@ const TlsHandshakeViz = () => {
         exit: { opacity: 0, scale: 0.5 }
     };
 
-    const displayStep = currentStep < 4 ? currentStep : 3;
+    const isSecure = currentStep === 3;
 
     return (
         <VizContainer title={t('visualizations.tls.title')}>
@@ -97,23 +97,23 @@ const TlsHandshakeViz = () => {
                 {/* Step Explanation Panel */}
                 <div className="tls-explanation-panel">
                     <div className="tls-step-header">
-                        <span className="tls-step-number">{t('visualizations.tls.step_of', { current: displayStep + 1, total: 4 })}</span>
-                        <h4 className="tls-step-title">{tlsStepsDetailed[displayStep].title}</h4>
+                        <span className="tls-step-number">{t('visualizations.tls.step_of', { current: currentStep + 1, total: 4 })}</span>
+                        <h4 className="tls-step-title">{tlsStepsDetailed[currentStep].title}</h4>
                     </div>
-                    <p className="tls-step-desc">{tlsStepsDetailed[displayStep].shortDesc}</p>
+                    <p className="tls-step-desc">{tlsStepsDetailed[currentStep].shortDesc}</p>
 
                     <AnimatePresence>
                         <motion.div
                             className="tls-step-detail"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            key={displayStep}
+                            key={currentStep}
                         >
-                            <p>{tlsStepsDetailed[displayStep].detail}</p>
+                            <p>{tlsStepsDetailed[currentStep].detail}</p>
 
                             {/* What's being sent */}
                             <div className="tls-whats-sent">
-                                {tlsStepsDetailed[displayStep].whatsSent.map((item, i) => (
+                                {tlsStepsDetailed[currentStep].whatsSent.map((item, i) => (
                                     <span key={i} className="tls-sent-item">{item}</span>
                                 ))}
                             </div>
@@ -121,7 +121,7 @@ const TlsHandshakeViz = () => {
                             {/* Analogy */}
                             <div className="tls-analogy">
                                 <Lightbulb size={14} />
-                                <span>{tlsStepsDetailed[displayStep].analogy}</span>
+                                <span>{tlsStepsDetailed[currentStep].analogy}</span>
                             </div>
                         </motion.div>
                     </AnimatePresence>
@@ -133,8 +133,8 @@ const TlsHandshakeViz = () => {
                     <motion.div
                         className="tls-endpoint browser"
                         animate={{
-                            borderColor: currentStep >= 3 ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
-                            boxShadow: currentStep >= 3 ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
+                            borderColor: isSecure ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
+                            boxShadow: isSecure ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
                         }}
                     >
                         <Monitor size={28} color="var(--primary)" />
@@ -147,7 +147,7 @@ const TlsHandshakeViz = () => {
 
                         {/* Animated messages */}
                         <AnimatePresence>
-                            {currentStep < 4 && steps[currentStep] && (
+                            {!prefersReducedMotion && steps[currentStep] && (
                                 <motion.div
                                     key={currentStep}
                                     className={`tls-message ${steps[currentStep].direction}`}
@@ -173,12 +173,13 @@ const TlsHandshakeViz = () => {
 
                         {/* Secure tunnel indicator */}
                         <AnimatePresence>
-                            {currentStep === 4 && (
+                            {isSecure && (
                                 <motion.div
                                     className="tls-secure-tunnel"
                                     initial={{ opacity: 0, scaleX: 0 }}
                                     animate={{ opacity: 1, scaleX: 1 }}
                                     exit={{ opacity: 0 }}
+                                    style={{ position: 'absolute', bottom: '-30px' }}
                                 >
                                     <ShieldCheck size={20} color="#00ff9d" />
                                     <span>{t('visualizations.tls.secure')}</span>
@@ -191,8 +192,8 @@ const TlsHandshakeViz = () => {
                     <motion.div
                         className="tls-endpoint server"
                         animate={{
-                            borderColor: currentStep >= 3 ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
-                            boxShadow: currentStep >= 3 ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
+                            borderColor: isSecure ? '#00ff9d' : 'rgba(255, 255, 255, 0.1)',
+                            boxShadow: isSecure ? '0 0 20px rgba(0, 255, 157, 0.3)' : 'none'
                         }}
                     >
                         <Server size={28} color="var(--secondary)" />
@@ -200,18 +201,17 @@ const TlsHandshakeViz = () => {
                     </motion.div>
                 </div>
 
-                {/* Step indicators */}
-                <div className="tls-steps">
-                    {steps.map((step, i) => (
-                        <div
-                            key={step.id}
-                            className={`tls-step ${currentStep === i ? 'active' : ''} ${currentStep > i ? 'done' : ''}`}
-                        >
-                            <span className="tls-step-num">{i + 1}</span>
-                            <span className="tls-step-label">{t(`visualizations.tls.step${i + 1}`)}</span>
-                        </div>
-                    ))}
-                </div>
+                {/* Animation Controls */}
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
 
                 {/* Why It Matters */}
                 <div className="tls-why-matters">

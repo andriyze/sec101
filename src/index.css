@@ -3232,3 +3232,125 @@ input:checked+.toggle-slider:before {
     backdrop-filter: blur(5px);
   }
 }
+
+/* ========================================
+   ANIMATION CONTROLS
+   ======================================== */
+
+.animation-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+
+.animation-controls.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.animation-control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.animation-control-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(0, 242, 255, 0.1);
+}
+
+.animation-control-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.animation-control-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.animation-control-btn.play-pause {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+}
+
+.animation-control-btn.play-pause:hover:not(:disabled) {
+  background: rgba(0, 242, 255, 0.15);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.animation-step-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.animation-step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--border-light);
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  padding: 0;
+}
+
+.animation-step-dot:hover:not(:disabled) {
+  border-color: var(--primary);
+  transform: scale(1.2);
+}
+
+.animation-step-dot.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary-glow);
+}
+
+.animation-step-dot.done {
+  border-color: #00ff9d;
+  background: #00ff9d;
+}
+
+.animation-step-dot:disabled {
+  cursor: not-allowed;
+}
+
+/* Responsive animation controls */
+@media (max-width: 768px) {
+  .animation-controls {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .animation-control-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .animation-control-btn.play-pause {
+    width: 32px;
+    height: 32px;
+  }
+
+  .animation-step-dot {
+    width: 8px;
+    height: 8px;
+  }
+}

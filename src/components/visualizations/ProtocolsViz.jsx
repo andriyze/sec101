@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, Lock, Unlock, Check, X, Zap } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const ProtocolsViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
     const [comparison, setComparison] = useState('http'); // 'http' or 'tcp'
-    const [animationStep, setAnimationStep] = useState(0);
 
-    // Toggle between comparisons and animate
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setAnimationStep(2);
-            return;
-        }
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        reset,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 4,
+        interval: 1200,
+        loop: true
+    });
 
-        const stepInterval = setInterval(() => {
-            setAnimationStep((prev) => {
-                if (prev >= 3) {
-                    // Switch comparison type
-                    setComparison((c) => c === 'http' ? 'tcp' : 'http');
-                    return 0;
-                }
-                return prev + 1;
-            });
-        }, 1200);
-
-        return () => clearInterval(stepInterval);
-    }, [prefersReducedMotion]);
+    // Handle comparison toggle
+    const handleComparisonChange = (newComparison) => {
+        setComparison(newComparison);
+        reset(); // Reset animation when switching
+    };
 
     const packetVariants = {
         hidden: { x: -50, opacity: 0 },
@@ -45,13 +45,13 @@ const ProtocolsViz = () => {
                 <div className="protocols-toggle">
                     <button
                         className={`protocols-toggle-btn ${comparison === 'http' ? 'active' : ''}`}
-                        onClick={() => { setComparison('http'); setAnimationStep(0); }}
+                        onClick={() => handleComparisonChange('http')}
                     >
                         HTTP / HTTPS
                     </button>
                     <button
                         className={`protocols-toggle-btn ${comparison === 'tcp' ? 'active' : ''}`}
-                        onClick={() => { setComparison('tcp'); setAnimationStep(0); }}
+                        onClick={() => handleComparisonChange('tcp')}
                     >
                         TCP / UDP
                     </button>
@@ -67,12 +67,12 @@ const ProtocolsViz = () => {
                             </div>
                             <div className="protocols-lane-track">
                                 <AnimatePresence>
-                                    {animationStep >= 1 && (
+                                    {currentStep >= 1 && !prefersReducedMotion && (
                                         <motion.div
                                             className="protocols-packet plain"
                                             variants={packetVariants}
                                             initial="hidden"
-                                            animate={animationStep >= 3 ? 'sent' : 'visible'}
+                                            animate={currentStep >= 3 ? 'sent' : 'visible'}
                                             exit="sent"
                                         >
                                             <span>{t('visualizations.protocols.message')}</span>
@@ -94,12 +94,12 @@ const ProtocolsViz = () => {
                             </div>
                             <div className="protocols-lane-track">
                                 <AnimatePresence>
-                                    {animationStep >= 1 && (
+                                    {currentStep >= 1 && !prefersReducedMotion && (
                                         <motion.div
                                             className="protocols-packet encrypted"
                                             variants={packetVariants}
                                             initial="hidden"
-                                            animate={animationStep >= 3 ? 'sent' : 'visible'}
+                                            animate={currentStep >= 3 ? 'sent' : 'visible'}
                                             exit="sent"
                                         >
                                             <Lock size={14} />
@@ -130,7 +130,7 @@ const ProtocolsViz = () => {
                                             className="protocols-packet tcp-packet"
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{
-                                                opacity: animationStep >= num ? 1 : 0.3,
+                                                opacity: currentStep >= num ? 1 : 0.3,
                                                 y: 0
                                             }}
                                             transition={{ delay: num * 0.2 }}
@@ -157,9 +157,9 @@ const ProtocolsViz = () => {
                                             className={`protocols-packet udp-packet ${num === 2 ? 'lost' : ''}`}
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{
-                                                opacity: animationStep >= 1 ? (num === 2 ? 0.3 : 1) : 0.3,
+                                                opacity: currentStep >= 1 ? (num === 2 ? 0.3 : 1) : 0.3,
                                                 y: 0,
-                                                scale: num === 2 && animationStep >= 2 ? 0.8 : 1
+                                                scale: num === 2 && currentStep >= 2 ? 0.8 : 1
                                             }}
                                             transition={{ delay: num * 0.1 }}
                                         >
@@ -172,6 +172,18 @@ const ProtocolsViz = () => {
                         </div>
                     </div>
                 )}
+
+                {/* Animation Controls */}
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

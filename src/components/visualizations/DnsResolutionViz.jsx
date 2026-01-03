@@ -1,15 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Monitor, Server, Globe, Database, ArrowRight, Lightbulb } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import { useAnimationControl } from './useAnimationControl';
 
 const DnsResolutionViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [currentStep, setCurrentStep] = useState(0);
-    const [showingResponse, setShowingResponse] = useState(false);
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 5,
+        interval: 4000,
+        loop: true
+    });
 
     // Comprehensive step explanations
     const stepExplanations = [
@@ -71,29 +84,6 @@ const DnsResolutionViz = () => {
         { id: 'auth', icon: Globe, label: t('visualizations.dns.auth'), color: '#00ff9d' },
     ];
 
-    // Auto-cycle through steps - SLOWER for better comprehension (4000ms instead of 1500ms)
-    useEffect(() => {
-        if (prefersReducedMotion) {
-            setCurrentStep(4);
-            setShowingResponse(true);
-            return;
-        }
-
-        const interval = setInterval(() => {
-            setCurrentStep((prev) => {
-                const next = (prev + 1) % 6;
-                if (next === 5) {
-                    setShowingResponse(true);
-                    setTimeout(() => setShowingResponse(false), 3000);
-                    return 0;
-                }
-                return next;
-            });
-        }, 4000);
-
-        return () => clearInterval(interval);
-    }, [prefersReducedMotion]);
-
     const packetVariants = {
         initial: { scale: 0, opacity: 0 },
         animate: {
@@ -119,9 +109,8 @@ const DnsResolutionViz = () => {
         return false;
     };
 
-    // When response is showing and we've cycled back to step 0, display step 5's content
-    const displayStep = showingResponse && currentStep === 0 ? 4 : currentStep;
-    const currentExplanation = stepExplanations[displayStep] || stepExplanations[0];
+    const currentExplanation = stepExplanations[currentStep] || stepExplanations[0];
+    const showingResponse = currentStep === 4;
 
     return (
         <VizContainer title={t('visualizations.dns.title')}>
@@ -129,7 +118,7 @@ const DnsResolutionViz = () => {
                 {/* Step Explanation Panel */}
                 <div className="dns-explanation-panel">
                     <div className="dns-step-header">
-                        <span className="dns-step-number">{t('visualizations.dns.step_of', { current: displayStep + 1, total: 5 })}</span>
+                        <span className="dns-step-number">{t('visualizations.dns.step_of', { current: currentStep + 1, total: 5 })}</span>
                         <h4 className="dns-step-title">{currentExplanation.title}</h4>
                     </div>
                     <p className="dns-step-desc">{currentExplanation.description}</p>
@@ -139,7 +128,7 @@ const DnsResolutionViz = () => {
                             className="dns-step-detail"
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
-                            key={displayStep}
+                            key={currentStep}
                         >
                             <p>{currentExplanation.detail}</p>
                             <div className="dns-server-role">
@@ -214,17 +203,17 @@ const DnsResolutionViz = () => {
                     ))}
                 </div>
 
-                {/* Step indicator */}
-                <div className="dns-steps">
-                    {['1', '2', '3', '4', '5'].map((num, i) => (
-                        <div
-                            key={i}
-                            className={`dns-step ${displayStep === i ? 'active' : ''} ${displayStep > i ? 'done' : ''}`}
-                        >
-                            {num}
-                        </div>
-                    ))}
-                </div>
+                {/* Animation Controls */}
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
 
                 {/* Technical details toggle */}
                 <details className="dns-technical">
