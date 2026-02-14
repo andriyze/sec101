@@ -412,13 +412,13 @@
     },
     "vpn": {
       "title": "VPN Services",
-      "intro": "A VPN hides your browsing from your ISP and protects against mass surveillance. Your ISP logs every site you visit—a VPN prevents this. Choose reputable, audited providers.",
+      "intro": "A VPN encrypts traffic between your device and the VPN server, which is especially helpful on public WiFi. It hides your IP from websites, while your ISP can still see that you're using a VPN. Choose reputable, audited providers.",
       "mullvad": "USE THIS. Maximum privacy. No email needed—account is just a number. Flat €5/month. No tracking.",
       "proton": "Good free tier if you're in the Proton ecosystem. Swiss-based, no-logs.",
       "ivpn": "Privacy-focused alternative. No email required. Transparent company.",
       "explanation": {
         "title": "How does a VPN work?",
-        "desc": "A VPN (Virtual Private Network) creates a secure 'tunnel' between your device and the internet. It hides your location (IP address) and encrypts your data so WiFi hackers or your ISP cannot see what websites you visit."
+        "desc": "A VPN (Virtual Private Network) creates a secure 'tunnel' between your device and a VPN server. It masks your IP from sites you visit and makes local-network snooping much harder, while your ISP typically sees the VPN connection itself."
       }
     },
     "wifi": {
@@ -467,8 +467,8 @@
             "Never, they slow down internet"
           ],
           "answer": 1,
-          "correct": "VPNs protect you on public WiFi and prevent your ISP from logging every site you visit.",
-          "explainer": "Your ISP sees all your traffic without a VPN. Public WiFi is especially risky."
+          "correct": "VPNs protect you on public WiFi and reduce what your ISP can inspect directly by encrypting traffic to the VPN server.",
+          "explainer": "Without a VPN, your ISP can usually see the services/domains you connect to and any unencrypted traffic. Public WiFi is especially risky."
         },
         {
           "prompt": "What does end-to-end encryption (E2EE) protect against?",
@@ -883,7 +883,7 @@
     },
     "tls": {
       "title": "SSL/TLS Handshake",
-      "intro": "Before your browser can securely communicate with a website, they perform a 'handshake' to establish trust and agree on encryption. This happens every time you see the padlock icon."
+      "intro": "Before your browser can securely communicate with a website, they perform a 'handshake' to establish trust and agree on encryption. This happens when a secure session is established (for example, first connection or session renewal)."
     },
     "ipv": {
       "title": "IPv4 vs IPv6",
@@ -948,7 +948,7 @@
           ],
           "answer": 1,
           "correct": "The handshake establishes trust and encryption before any sensitive data is exchanged.",
-          "explainer": "This happens every time you connect to an HTTPS website."
+          "explainer": "A handshake occurs when a secure HTTPS session is established or renewed."
         },
         {
           "prompt": "Why was IPv6 created?",

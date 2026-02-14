@@ -8,18 +8,22 @@ import TopicCompletionCard from '../components/TopicCompletionCard';
 const Devices = () => {
     const { t } = useTranslation();
     const checklistItems = t('devices.checklist_items', { returnObjects: true });
+    const emptyChecklistState = () => Array(checklistItems.length).fill(false);
+    const normalizeChecklistState = (value) =>
+        Array.from({ length: checklistItems.length }, (_, i) => Boolean(value?.[i]));
+
     const [completed, setCompleted] = useState(() => {
-        if (typeof window === 'undefined') return Array(checklistItems.length).fill(false);
+        if (typeof window === 'undefined') return emptyChecklistState();
         const cached = window.localStorage.getItem('devices-checklist');
         if (cached) {
             try {
                 const parsed = JSON.parse(cached);
-                return Array.isArray(parsed) ? parsed : Array(checklistItems.length).fill(false);
+                return Array.isArray(parsed) ? normalizeChecklistState(parsed) : emptyChecklistState();
             } catch {
-                return Array(checklistItems.length).fill(false);
+                return emptyChecklistState();
             }
         }
-        return Array(checklistItems.length).fill(false);
+        return emptyChecklistState();
     });
 
     const toggleItem = (index) => {

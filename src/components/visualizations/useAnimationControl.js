@@ -58,6 +58,10 @@ export const useAnimationControl = ({
         return clearAnimationInterval;
     }, [isPlaying, interval, totalSteps, loop, prefersReducedMotion, clearAnimationInterval]);
 
+    const reducedMotionStep = Math.max(0, totalSteps - 1);
+    const effectiveCurrentStep = prefersReducedMotion ? reducedMotionStep : currentStep;
+    const effectiveIsPlaying = prefersReducedMotion ? false : isPlaying;
+
     // Go to next step (pauses auto-play)
     const nextStep = useCallback(() => {
         setIsPlaying(false);
@@ -112,10 +116,10 @@ export const useAnimationControl = ({
     }, [autoPlay, prefersReducedMotion]);
 
     return {
-        currentStep,
-        isPlaying,
-        isFirstStep: currentStep === 0,
-        isLastStep: currentStep === totalSteps - 1,
+        currentStep: effectiveCurrentStep,
+        isPlaying: effectiveIsPlaying,
+        isFirstStep: effectiveCurrentStep === 0,
+        isLastStep: effectiveCurrentStep === totalSteps - 1,
         totalSteps,
         nextStep,
         prevStep,
