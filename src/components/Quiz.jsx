@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+const QUIZ_UPDATED_EVENT = 'sec101:quiz-updated';
 
 const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
     const { t } = useTranslation();
@@ -21,6 +23,38 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
 
     const question = shuffled[current];
 
+    useEffect(() => {
+        if (!storageKey || typeof window === 'undefined') return undefined;
+
+        const refreshBestScore = (event) => {
+            if (event.detail?.storageKey && event.detail.storageKey !== storageKey) return;
+
+            const raw = window.localStorage.getItem(storageKey);
+            if (!raw) {
+                setCurrent(0);
+                setSelected(null);
+                setShowResult(false);
+                setScore(0);
+                setBestScore(null);
+                return;
+            }
+
+            try {
+                setBestScore(JSON.parse(raw));
+            } catch {
+                setBestScore(null);
+            }
+        };
+
+        window.addEventListener(QUIZ_UPDATED_EVENT, refreshBestScore);
+        window.addEventListener('storage', refreshBestScore);
+
+        return () => {
+            window.removeEventListener(QUIZ_UPDATED_EVENT, refreshBestScore);
+            window.removeEventListener('storage', refreshBestScore);
+        };
+    }, [storageKey]);
+
     const onSelect = (index) => {
         if (selected !== null) return;
         setSelected(index);
@@ -33,12 +67,16 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
             setShowResult(true);
             const payload = { score, total: shuffled.length };
             const percent = (score / shuffled.length) * 100;
-            if (storageKey) {
+            if (storageKey && typeof window !== 'undefined') {
                 const bestPercent = bestScore ? (bestScore.score / bestScore.total) * 100 : -1;
                 if (percent > bestPercent) {
                     window.localStorage.setItem(storageKey, JSON.stringify(payload));
                     setBestScore(payload);
                 }
+
+                window.dispatchEvent(new CustomEvent(QUIZ_UPDATED_EVENT, {
+                    detail: { storageKey },
+                }));
             }
             if (percent >= 50 && onComplete) {
                 onComplete();

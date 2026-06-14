@@ -2,8 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Cpu, Globe, Server, Network, Shield, Lock, Wifi } from 'lucide-react';
 import Quiz from '../components/Quiz';
-import NextTopicCard from '../components/NextTopicCard';
-import { useProgress } from '../hooks/useProgress';
+import TopicCompletionCard from '../components/TopicCompletionCard';
 import DnsResolutionViz from '../components/visualizations/DnsResolutionViz';
 import OsiModelViz from '../components/visualizations/OsiModelViz';
 import PortsViz from '../components/visualizations/PortsViz';
@@ -14,12 +13,7 @@ import IpVersionsViz from '../components/visualizations/IpVersionsViz';
 
 const Advanced = () => {
     const { t } = useTranslation();
-    const { markTopicComplete } = useProgress();
     const quizQuestions = t('advanced.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
-
-    const handleQuizComplete = () => {
-        markTopicComplete('advanced', 'quiz');
-    };
 
     return (
         <div className="animate-fade-in">
@@ -100,11 +94,10 @@ const Advanced = () => {
                     title={t('advanced.quiz.title')}
                     questions={quizQuestions}
                     storageKey="quiz-advanced"
-                    onComplete={handleQuizComplete}
                 />
             </section>
 
-            <NextTopicCard currentTopic="advanced" />
+            <TopicCompletionCard topicId="advanced" quizStorageKey="quiz-advanced" />
         </div>
     );
 };

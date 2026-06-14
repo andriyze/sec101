@@ -14,6 +14,8 @@ const TOPIC_LABELS = {
     advanced: 'nav.advanced',
 };
 
+const QUIZ_UPDATED_EVENT = 'sec101:quiz-updated';
+
 const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -23,27 +25,39 @@ const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
 
     useEffect(() => {
         const checkScore = () => {
+            if (typeof window === 'undefined' || !quizStorageKey) {
+                setQuizScore(0);
+                return;
+            }
+
             const stored = localStorage.getItem(quizStorageKey);
-            if (stored) {
-                try {
-                    const data = JSON.parse(stored);
-                    const percent = Math.round((data.score / data.total) * 100);
-                    setQuizScore(percent);
-                } catch {
-                    setQuizScore(0);
-                }
+            if (!stored) {
+                setQuizScore(0);
+                return;
+            }
+
+            try {
+                const data = JSON.parse(stored);
+                const percent = data.total > 0 ? Math.round((data.score / data.total) * 100) : 0;
+                setQuizScore(percent);
+            } catch {
+                setQuizScore(0);
+            }
+        };
+
+        const handleQuizUpdated = (event) => {
+            if (!event.detail?.storageKey || event.detail.storageKey === quizStorageKey) {
+                checkScore();
             }
         };
 
         checkScore();
-        // Listen for storage changes (quiz completion)
         window.addEventListener('storage', checkScore);
-        // Also poll for changes within same tab
-        const interval = setInterval(checkScore, 500);
+        window.addEventListener(QUIZ_UPDATED_EVENT, handleQuizUpdated);
 
         return () => {
             window.removeEventListener('storage', checkScore);
-            clearInterval(interval);
+            window.removeEventListener(QUIZ_UPDATED_EVENT, handleQuizUpdated);
         };
     }, [quizStorageKey]);
 

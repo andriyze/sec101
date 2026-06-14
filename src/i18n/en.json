@@ -88,14 +88,15 @@
     },
     "stack": {
       "title": "Your Security Stack",
-      "subtitle": "Just use these. No research needed.",
-      "bitwarden": "Free, open-source password manager. Works everywhere.",
-      "brave": "Blocks ads & trackers by default. Fast daily browser.",
-      "protonmail": "Encrypted email. Unlike Gmail, Proton can't read your messages and doesn't profile you.",
-      "signal": "Encrypted chat. Unlike WhatsApp, Signal doesn't share data with Meta or build profiles on you.",
+      "subtitle": "Default recommendations for most everyday users.",
+      "reviewed": "Recommendations reviewed June 2026. Verify pricing and features before switching.",
+      "bitwarden": "Strong free password manager with open-source clients and broad platform support.",
+      "brave": "Daily browser with built-in ad and tracker blocking.",
+      "protonmail": "Private email with zero-access encryption for stored mail and E2EE between Proton users.",
+      "signal": "Encrypted chat from a nonprofit with minimal server-side metadata.",
       "mfa_reminder": {
         "title": "Enable 2FA everywhere!",
-        "desc": "Use an authenticator app (not SMS). This stops the vast majority of account hacks. Enable it everywhere."
+        "desc": "Use an authenticator app or hardware key when available. Avoid SMS if you have a stronger option."
       }
     }
   },
@@ -117,7 +118,7 @@
     "managers": {
       "title": "Password Managers",
       "bitwarden": {
-        "desc": "USE THIS. Free, open-source, works on all devices. The gold standard."
+        "desc": "Best default for most users: open-source clients, strong free tier, and broad device support."
       },
       "proton": {
         "desc": "Alternative if you're already in the Proton ecosystem."
@@ -221,7 +222,7 @@
         },
         "apps": {
           "title": "Authenticator Apps",
-          "desc": "USE THIS. Scan a QR code, get a new 6-digit code every 30 seconds. Works offline. See 2FAS below."
+          "desc": "Good default. Scan a QR code, get a new 6-digit code every 30 seconds, and keep access even when offline."
         },
         "hardware": {
           "title": "Hardware Keys (YubiKey)",
@@ -255,7 +256,7 @@
           "Go to 'Manage your Google Account' -> 'Security'.",
           "Click '2-Step Verification' -> 'Get Started'.",
           "Choose 'Authenticator App' (Recommended). Avoid SMS.",
-          "Scan the QR code with your 2FA app (2FAS, Raivo).",
+          "Scan the QR code with 2FAS or another trusted authenticator app.",
           "Enter the 6-digit code to verify.",
           "CRITICAL: Download Backup Codes and store them offline."
         ]
@@ -308,7 +309,7 @@
     },
     "browsers": {
       "title": "Secure Browsers",
-      "brave": "USE THIS for daily browsing. Blocks ads & trackers out of the box. Fast.",
+      "brave": "Good default for daily browsing. Blocks ads and trackers out of the box.",
       "firefox": "Good alternative. Requires manual hardening for best privacy.",
       "tor": "For maximum anonymity only. Slow. Don't use for regular browsing."
     },
@@ -388,10 +389,10 @@
       },
       "signal": {
         "title": "Signal - The Gold Standard",
-        "desc": "USE THIS. End-to-end encrypted, open source, non-profit. Unlike WhatsApp, Signal doesn't share data with Meta or build profiles on you."
+        "desc": "Best default for private conversations: end-to-end encrypted, open source, nonprofit, and designed to keep server-side metadata minimal."
       },
       "whatsapp": {
-        "desc": "Encrypted messages, but owned by Meta. Collects metadata (who you talk to, when, how often). Use Signal instead."
+        "desc": "Messages are end-to-end encrypted by default, but WhatsApp is owned by Meta and collects more metadata than Signal."
       }
     },
     "metadata": {
@@ -413,7 +414,7 @@
     "vpn": {
       "title": "VPN Services",
       "intro": "A VPN encrypts traffic between your device and the VPN server, which is especially helpful on public WiFi. It hides your IP from websites, while your ISP can still see that you're using a VPN. Choose reputable, audited providers.",
-      "mullvad": "USE THIS. Maximum privacy. No email needed—account is just a number. Flat €5/month. No tracking.",
+      "mullvad": "Strong privacy-focused choice. No email needed; the account is a number. Flat €5/month as of June 2026.",
       "proton": "Good free tier if you're in the Proton ecosystem. Swiss-based, no-logs.",
       "ivpn": "Privacy-focused alternative. No email required. Transparent company.",
       "explanation": {
@@ -425,12 +426,12 @@
       "title": "Do this on public Wi‑Fi",
       "donts_title": "Avoid doing this on public Wi‑Fi",
       "items": [
-        "Use a VPN to hide your browsing from your ISP and mask your IP address.",
+        "Use a VPN to reduce what the network operator can see and mask your IP address from sites.",
         "Turn on HTTPS-Only in your browser.",
         "Forget the network when done; turn off auto-join."
       ],
       "donts": [
-        "Don't browse without a VPN—your ISP and network operator can see which sites you visit.",
+        "Don't assume public Wi-Fi is private. HTTPS helps, and a VPN reduces what the network operator can see.",
         "Avoid logging into sensitive accounts without HTTPS or a VPN.",
         "Don't share files over AirDrop/Bluetooth unless needed."
       ]
@@ -439,10 +440,10 @@
       "title": "Private Email",
       "why": "Gmail integrates with Google's ecosystem and your emails are not end-to-end encrypted. With Proton Mail, emails between Proton users are end-to-end encrypted.",
       "proton": {
-        "desc": "USE THIS. Encrypted email based in Switzerland. Free tier available. Unlike Gmail, Proton can't read your messages and doesn't profile you."
+        "desc": "Strong privacy-focused email. Stored mail uses zero-access encryption, and mail between Proton users is end-to-end encrypted."
       },
       "gmail": {
-        "desc": "Gmail is part of Google's surveillance ecosystem. Your emails feed into profiling across all Google services. Use for spam signups only."
+        "desc": "Gmail is convenient and secure, but standard email is not end-to-end encrypted by default. Use a privacy-focused account for sensitive mail."
       }
     },
     "quiz": {
@@ -689,6 +690,7 @@
   "tools": {
     "title": "Secure Tools List",
     "subtitle": "Trusted, privacy-respecting options to install quickly.",
+    "reviewed": "Reviewed June 2026. Confirm current platform support, pricing, and ownership before switching.",
     "messengers": {
       "title": "Private messengers",
       "items": [
@@ -978,6 +980,8 @@
   "common": {
     "get": "Get",
     "visit": "Visit Website",
+    "reset_progress": "Reset progress",
+    "reset_confirm": "Reset all progress and quiz scores? This cannot be undone.",
     "quiz_next": "Next",
     "quiz_finish": "Finish",
     "quiz_score": "Score",
@@ -989,6 +993,15 @@
     "recommended": "Recommended",
     "alternative": "Alternative"
   },
+  "controls": {
+    "previous": "Previous step",
+    "next": "Next step",
+    "steps": "Animation steps",
+    "go_to_step": "Go to step {{step}}",
+    "step_n": "Step {{n}}",
+    "play": "Play animation",
+    "pause": "Pause animation"
+  },
   "completion": {
     "quiz_required": "Complete the Quiz",
     "quiz_required_desc": "Pass the quiz above (50%+) to unlock topic completion.",
@@ -999,6 +1012,10 @@
     "next_preview": "Next up: {{topic}}"
   },
   "visualizations": {
+    "accessibility": {
+      "titled": "{{title}} visualization. Review the labels and use the controls, when present, to step through the diagram.",
+      "untitled": "Interactive learning visualization. Review the labels and use the controls, when present, to step through the diagram."
+    },
     "vpn": {
       "title": "How a VPN Protects You",
       "without": "Without VPN",

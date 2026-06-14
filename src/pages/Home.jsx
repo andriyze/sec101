@@ -86,6 +86,7 @@ const Home = () => {
                         <h2 style={{ margin: 0 }}>{t('home.stack.title')}</h2>
                     </div>
                     <p className="section-subtitle" style={{ margin: 0 }}>{t('home.stack.subtitle')}</p>
+                    <span className="pill" style={{ marginTop: '0.25rem' }}>{t('home.stack.reviewed')}</span>
                 </div>
                 <div className="grid grid-cols-4 gap-6">
                     <a href="https://bitwarden.com" target="_blank" rel="noopener noreferrer" className="card panel-solid stack-card" style={{ textDecoration: 'none' }}>
@@ -138,7 +139,7 @@ const Home = () => {
                         return (
                             <button
                                 key={topic.path}
-                                className="card panel-solid"
+                                className="card panel-solid card-interactive"
                                 style={{
                                     textAlign: 'left',
                                     borderColor: isCompleted ? 'rgba(0, 255, 157, 0.3)' : 'rgba(255,255,255,0.08)',

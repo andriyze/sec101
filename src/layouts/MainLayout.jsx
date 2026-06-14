@@ -32,6 +32,7 @@ const MainLayout = () => {
             });
             // Clear checklists
             localStorage.removeItem('devices-checklist');
+            window.dispatchEvent(new CustomEvent('sec101:quiz-updated'));
         }
     };
 
@@ -59,6 +60,11 @@ const MainLayout = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+        document.documentElement.lang = i18n.language === 'ua' ? 'uk' : 'en';
+        document.title = t('app.title');
+    }, [i18n.language, t]);
 
     // Scroll to top on route change
     useEffect(() => {

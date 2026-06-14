@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Card from '../components/Card';
 import { Shield, Lock, Smartphone, Globe, KeyRound } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
@@ -52,11 +51,12 @@ const Tools = () => {
                     <h2 style={{ margin: 0 }}>{t('tools.title')}</h2>
                 </div>
                 <p className="section-subtitle">{t('tools.subtitle')}</p>
+                <span className="pill">{t('tools.reviewed')}</span>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
                 {sections.map((section, idx) => (
-                    <div key={idx} className="card panel-solid">
+                    <div key={idx} className="tool-section panel-solid">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                             {section.icon}
                             <h3 style={{ margin: 0 }}>{section.title}</h3>
@@ -66,17 +66,35 @@ const Tools = () => {
                                 {section.intro}
                             </p>
                         )}
-                        <div className="grid grid-cols-1 gap-4">
-                            {section.items.map((tool, i) => (
-                                <Card
-                                    key={i}
-                                    title={tool.name}
-                                    icon={tool.emoji}
-                                    description={tool.desc}
-                                    link={tool.link}
-                                    linkText={tool.link ? t('common.get') + ` ${tool.name}` : undefined}
-                                />
-                            ))}
+                        <div className="tool-list">
+                            {section.items.map((tool, i) => {
+                                const content = (
+                                    <>
+                                        <div className="tool-list-icon" aria-hidden="true">{tool.emoji}</div>
+                                        <div className="tool-list-copy">
+                                            <h4>{tool.name}</h4>
+                                            <p>{tool.desc}</p>
+                                        </div>
+                                        {tool.link && <span className="tool-list-action">{t('common.visit')}</span>}
+                                    </>
+                                );
+
+                                return tool.link ? (
+                                    <a
+                                        key={i}
+                                        className="tool-list-item"
+                                        href={tool.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {content}
+                                    </a>
+                                ) : (
+                                    <div key={i} className="tool-list-item">
+                                        {content}
+                                    </div>
+                                );
+                            })}
                         </div>
                         {section.takeaways && (
                             <div style={{ marginTop: '0.75rem' }}>
