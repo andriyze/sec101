@@ -192,9 +192,6 @@ const DnsResolutionViz = () => {
                                                 <div className="dns-packet">
                                                     <ArrowRight size={12} />
                                                 </div>
-                                                <span className="dns-packet-label">
-                                                    {stepExplanations[index]?.packetLabel}
-                                                </span>
                                             </motion.div>
                                         )}
                                     </AnimatePresence>
@@ -202,6 +199,10 @@ const DnsResolutionViz = () => {
                             )}
                         </React.Fragment>
                     ))}
+                </div>
+
+                <div className="dns-packet-status" role="status">
+                    {currentExplanation.packetLabel}
                 </div>
 
                 {/* Animation Controls */}
