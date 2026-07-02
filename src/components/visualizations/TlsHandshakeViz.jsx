@@ -6,6 +6,7 @@ import { Monitor, Server, ArrowRight, ArrowLeft, Lock, Key, ShieldCheck, Lightbu
 import VizContainer from './VizContainer';
 import AnimationControls from './AnimationControls';
 import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
 
 const TlsHandshakeViz = () => {
     const { t } = useTranslation();
@@ -32,7 +33,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.1.title', 'Client Hello'),
             shortDesc: t('visualizations.tls.steps.1.short', 'Browser introduces itself'),
             detail: t('visualizations.tls.steps.1.detail', 'Your browser sends: "Hi, I support TLS 1.3, and here are the encryption methods I know"'),
-            whatsSent: t('visualizations.tls.steps.1.sent', { returnObjects: true, defaultValue: ['TLS versions', 'Cipher suites', 'Random number'] }),
+            whatsSent: tArray(t, 'visualizations.tls.steps.1.sent', { defaultValue: ['TLS versions', 'Cipher suites', 'Random number'] }),
             analogy: t('visualizations.tls.steps.1.analogy', 'Like showing your ID at a secure building entrance'),
             direction: 'right',
             icon: ArrowRight,
@@ -43,7 +44,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.2.title', 'Server Hello + Certificate'),
             shortDesc: t('visualizations.tls.steps.2.short', 'Server proves its identity'),
             detail: t('visualizations.tls.steps.2.detail', 'Server responds: "Let\'s use TLS 1.3 with AES-256. Here\'s my certificate proving I\'m really google.com"'),
-            whatsSent: t('visualizations.tls.steps.2.sent', { returnObjects: true, defaultValue: ['Chosen cipher', 'Server certificate', 'Server random'] }),
+            whatsSent: tArray(t, 'visualizations.tls.steps.2.sent', { defaultValue: ['Chosen cipher', 'Server certificate', 'Server random'] }),
             analogy: t('visualizations.tls.steps.2.analogy', 'Like the guard showing their badge and company ID'),
             direction: 'left',
             icon: ArrowLeft,
@@ -54,7 +55,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.3.title', 'Key Exchange'),
             shortDesc: t('visualizations.tls.steps.3.short', 'Creating a shared secret'),
             detail: t('visualizations.tls.steps.3.detail', 'Both sides use Diffie-Hellman to create a shared secret key without ever sending it directly'),
-            whatsSent: t('visualizations.tls.steps.3.sent', { returnObjects: true, defaultValue: ['Pre-master secret', 'Session keys'] }),
+            whatsSent: tArray(t, 'visualizations.tls.steps.3.sent', { defaultValue: ['Pre-master secret', 'Session keys'] }),
             analogy: t('visualizations.tls.steps.3.analogy', 'Like mixing colors - each adds their secret, neither knows the other\'s original'),
             direction: 'right',
             icon: Key,
@@ -65,7 +66,7 @@ const TlsHandshakeViz = () => {
             title: t('visualizations.tls.steps.4.title', 'Secure Connection'),
             shortDesc: t('visualizations.tls.steps.4.short', 'Ready to talk privately'),
             detail: t('visualizations.tls.steps.4.detail', 'Both sides now have matching session keys. All future messages are encrypted.'),
-            whatsSent: t('visualizations.tls.steps.4.sent', { returnObjects: true, defaultValue: ['AES-256 active', 'HMAC enabled'] }),
+            whatsSent: tArray(t, 'visualizations.tls.steps.4.sent', { defaultValue: ['AES-256 active', 'HMAC enabled'] }),
             analogy: t('visualizations.tls.steps.4.analogy', 'Like having a private language only you two understand'),
             direction: 'both',
             icon: Lock,
@@ -96,7 +97,7 @@ const TlsHandshakeViz = () => {
         <VizContainer title={t('visualizations.tls.title')}>
             <div className="tls-viz-wrapper">
                 {/* Step Explanation Panel */}
-                <div className="tls-explanation-panel">
+                <div className="tls-explanation-panel" aria-live="polite" aria-atomic="true">
                     <div className="tls-step-header">
                         <span className="tls-step-number">{t('visualizations.tls.step_of', { current: currentStep + 1, total: 4 })}</span>
                         <h4 className="tls-step-title">{tlsStepsDetailed[currentStep].title}</h4>

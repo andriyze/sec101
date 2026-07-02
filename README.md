@@ -11,17 +11,26 @@ Interactive security fundamentals course for non-technical users. Covers passwor
 ## Run Locally
 
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
+```
+
+## Verify
+
+```bash
+bun run lint
+bun run test
+bun run build
 ```
 
 ## Deploy
 
 ```bash
-npm run build
+bun run build
+bun run start
 ```
 
-Outputs static files to `dist/`.
+Build outputs static files to `dist/`; `bun run start` serves them with cache headers.
 
 ## License
 

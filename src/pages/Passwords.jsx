@@ -5,10 +5,11 @@ import { KeyRound, ShieldCheck, Lock, Smartphone, Fingerprint, Key, AlertTriangl
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
 import MfaFactorsViz from '../components/visualizations/MfaFactorsViz';
+import { tArray } from '../i18n/safeTranslate';
 
 const Passwords = () => {
     const { t } = useTranslation();
-    const quizQuestions = t('passwords.quiz.questions', { returnObjects: true });
+    const quizQuestions = tArray(t, 'passwords.quiz.questions');
 
     return (
         <div className="animate-fade-in">
@@ -27,7 +28,7 @@ const Passwords = () => {
                     <div className="alert-content">
                         <h3>{t('passwords.quick.title')}</h3>
                         <ul className="list-clean" style={{ marginTop: '0.5rem' }}>
-                            {t('passwords.quick.actions', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'passwords.quick.actions').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.35rem' }}>• {item}</li>
                             ))}
                         </ul>
@@ -49,7 +50,7 @@ const Passwords = () => {
                     <div className="card card-recommended">
                         <span className="recommended-badge">{t('common.recommended')}</span>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
-                            <div className="icon-box">🛡️</div>
+                            <div className="icon-box" aria-hidden="true">🛡️</div>
                             <h3 style={{ margin: '0 0 0 1rem' }}>Bitwarden</h3>
                         </div>
                         <p>{t('passwords.managers.bitwarden.desc')}</p>
@@ -82,7 +83,7 @@ const Passwords = () => {
                             <div>
                                 <h5 style={{ marginBottom: '0.5rem', fontWeight: 600 }}>{t('passwords.bitwarden_setup.desktop.title')}</h5>
                                 <ul style={{ paddingLeft: '1.2rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                                    {t('passwords.bitwarden_setup.desktop.steps', { returnObjects: true }).map((step, i) => (
+                                    {tArray(t, 'passwords.bitwarden_setup.desktop.steps').map((step, i) => (
                                         <li key={i} style={{ marginBottom: '0.4rem' }}>{step}</li>
                                     ))}
                                 </ul>
@@ -90,7 +91,7 @@ const Passwords = () => {
                             <div>
                                 <h5 style={{ marginBottom: '0.5rem', fontWeight: 600 }}>{t('passwords.bitwarden_setup.mobile.title')}</h5>
                                 <ul style={{ paddingLeft: '1.2rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                                    {t('passwords.bitwarden_setup.mobile.steps', { returnObjects: true }).map((step, i) => (
+                                    {tArray(t, 'passwords.bitwarden_setup.mobile.steps').map((step, i) => (
                                         <li key={i} style={{ marginBottom: '0.4rem' }}>{step}</li>
                                     ))}
                                 </ul>
@@ -103,7 +104,7 @@ const Passwords = () => {
                             <AlertTriangle size={18} color="var(--accent)" /> {t('passwords.recovery.title')}
                         </h4>
                         <ul style={{ paddingLeft: '1.2rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                            {t('passwords.recovery.items', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'passwords.recovery.items').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.4rem' }}>{item}</li>
                             ))}
                         </ul>
@@ -118,7 +119,7 @@ const Passwords = () => {
                         </h4>
                         <p>{t('passwords.bad_passwords.desc')}</p>
                         <div className="badge-grid">
-                            {t('passwords.bad_passwords.examples', { returnObjects: true }).map((pw) => (
+                            {tArray(t, 'passwords.bad_passwords.examples').map((pw) => (
                                 <span key={pw} className="pill pill-accent" style={{ fontFamily: 'monospace' }}>{pw}</span>
                             ))}
                         </div>
@@ -127,7 +128,7 @@ const Passwords = () => {
                         <h4>{t('passwords.good_passwords.title')}</h4>
                         <p>{t('passwords.good_passwords.desc')}</p>
                         <div className="badge-grid">
-                            {t('passwords.good_passwords.examples', { returnObjects: true }).map((pw) => (
+                            {tArray(t, 'passwords.good_passwords.examples').map((pw) => (
                                 <span key={pw} className="pill pill-success" style={{ fontFamily: 'monospace' }}>{pw}</span>
                             ))}
                         </div>
@@ -158,7 +159,7 @@ const Passwords = () => {
                     <div className="card card-recommended">
                         <span className="recommended-badge">{t('common.recommended')}</span>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
-                            <div className="icon-box">📱</div>
+                            <div className="icon-box" aria-hidden="true">📱</div>
                             <h3 style={{ margin: '0 0 0 1rem' }}>{t('passwords.mfa.methods.apps.title')}</h3>
                         </div>
                         <p>{t('passwords.mfa.methods.apps.desc')}</p>
@@ -175,7 +176,7 @@ const Passwords = () => {
                     />
                     <div className="card" style={{ borderColor: 'var(--danger)', background: 'rgba(255, 59, 48, 0.05)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                            <div className="icon-box">📩</div>
+                            <div className="icon-box" aria-hidden="true">📩</div>
                             <h3 style={{ margin: '0 0 0 1rem', color: 'var(--danger)' }}>{t('passwords.mfa.methods.sms.title')}</h3>
                         </div>
                         <p>{t('passwords.mfa.methods.sms.desc')}</p>
@@ -186,7 +187,7 @@ const Passwords = () => {
                 <div className="card card-recommended" style={{ marginBottom: '2rem' }}>
                     <span className="recommended-badge">{t('passwords.mfa.app_recommendation.badge')}</span>
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
-                        <div className="icon-box">🔐</div>
+                        <div className="icon-box" aria-hidden="true">🔐</div>
                         <h3 style={{ margin: '0 0 0 1rem' }}>2FAS</h3>
                     </div>
                     <p>{t('passwords.mfa.app_recommendation.desc')}</p>
@@ -212,7 +213,7 @@ const Passwords = () => {
                     <div className="card panel-solid">
                         <h4 style={{ color: 'var(--primary)', marginBottom: '0.75rem' }}>{t('passwords.mfa.gmail.title')}</h4>
                         <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem' }}>
-                            {t('passwords.mfa.gmail.steps', { returnObjects: true }).map((step, i) => (
+                            {tArray(t, 'passwords.mfa.gmail.steps').map((step, i) => (
                                 <li key={i} style={{ marginBottom: '0.5rem' }}>{step}</li>
                             ))}
                         </ol>
@@ -221,7 +222,7 @@ const Passwords = () => {
                     <div className="card panel-solid">
                         <h4 style={{ color: 'var(--secondary)', marginBottom: '0.75rem' }}>{t('passwords.mfa.proton.title')}</h4>
                         <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem' }}>
-                            {t('passwords.mfa.proton.steps', { returnObjects: true }).map((step, i) => (
+                            {tArray(t, 'passwords.mfa.proton.steps').map((step, i) => (
                                 <li key={i} style={{ marginBottom: '0.5rem' }}>{step}</li>
                             ))}
                         </ol>
@@ -231,7 +232,7 @@ const Passwords = () => {
                 <div className="card panel-solid">
                     <h4>{t('passwords.mfa.quick_actions.title')}</h4>
                     <ul className="list-clean" style={{ marginTop: '0.75rem' }}>
-                        {t('passwords.mfa.quick_actions.items', { returnObjects: true }).map((item, i) => (
+                        {tArray(t, 'passwords.mfa.quick_actions.items').map((item, i) => (
                             <li key={i} style={{ marginBottom: '0.4rem' }}>• {item}</li>
                         ))}
                     </ul>
@@ -250,7 +251,7 @@ const Passwords = () => {
                 <div className="card" style={{ borderLeft: '4px solid var(--accent)' }}>
                     <p style={{ marginBottom: '1rem' }}>{t('passwords.passkeys.setup')}</p>
                     <ul style={{ paddingLeft: '1.25rem' }}>
-                        {t('passwords.passkeys.notes', { returnObjects: true }).map((item, i) => (
+                        {tArray(t, 'passwords.passkeys.notes').map((item, i) => (
                             <li key={i} style={{ marginBottom: '0.4rem' }}>{item}</li>
                         ))}
                     </ul>

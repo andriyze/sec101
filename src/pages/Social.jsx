@@ -6,10 +6,11 @@ import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
 import VpnTunnelViz from '../components/visualizations/VpnTunnelViz';
 import E2eEncryptionViz from '../components/visualizations/E2eEncryptionViz';
+import { tArray } from '../i18n/safeTranslate';
 
 const Social = () => {
     const { t } = useTranslation();
-    const quizQuestions = t('social.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
+    const quizQuestions = tArray(t, 'social.quiz.questions');
 
     return (
         <div className="animate-fade-in">
@@ -43,7 +44,7 @@ const Social = () => {
                     <div className="card card-recommended">
                         <span className="recommended-badge">{t('common.recommended')}</span>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
-                            <div className="icon-box">💬</div>
+                            <div className="icon-box" aria-hidden="true">💬</div>
                             <h3 style={{ margin: '0 0 0 1rem' }}>Signal</h3>
                         </div>
                         <p>{t('social.messaging.signal.desc')}</p>
@@ -64,7 +65,7 @@ const Social = () => {
                     <div className="card panel-solid">
                         <h4 style={{ marginBottom: '0.5rem' }}>{t('social.metadata.title')}</h4>
                         <ul style={{ paddingLeft: '1.2rem' }}>
-                            {t('social.metadata.points', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'social.metadata.points').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
                             ))}
                         </ul>
@@ -72,7 +73,7 @@ const Social = () => {
                     <div className="card panel-solid">
                         <h4 style={{ marginBottom: '0.5rem' }}>{t('social.verification.title')}</h4>
                         <ol style={{ paddingLeft: '1.2rem' }}>
-                            {t('social.verification.steps', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'social.verification.steps').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
                             ))}
                         </ol>
@@ -106,7 +107,7 @@ const Social = () => {
                     <div className="card card-recommended">
                         <span className="recommended-badge">{t('common.recommended')}</span>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
-                            <div className="icon-box">🔐</div>
+                            <div className="icon-box" aria-hidden="true">🔐</div>
                             <h3 style={{ margin: '0 0 0 1rem' }}>Mullvad</h3>
                         </div>
                         <p>{t('social.vpn.mullvad')}</p>
@@ -134,7 +135,7 @@ const Social = () => {
                     <div className="card">
                         <h4>{t('social.wifi.title')}</h4>
                         <ul style={{ paddingLeft: '1.2rem' }}>
-                            {t('social.wifi.items', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'social.wifi.items').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
                             ))}
                         </ul>
@@ -142,7 +143,7 @@ const Social = () => {
                     <div className="card">
                         <h4>{t('social.wifi.donts_title')}</h4>
                         <ul style={{ paddingLeft: '1.2rem' }}>
-                            {t('social.wifi.donts', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'social.wifi.donts').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
                             ))}
                         </ul>
@@ -167,7 +168,7 @@ const Social = () => {
                     <div className="card card-recommended">
                         <span className="recommended-badge">{t('common.recommended')}</span>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
-                            <div className="icon-box">🟣</div>
+                            <div className="icon-box" aria-hidden="true">🟣</div>
                             <h3 style={{ margin: '0 0 0 1rem' }}>Proton Mail</h3>
                         </div>
                         <p>{t('social.email.proton.desc')}</p>
@@ -177,7 +178,7 @@ const Social = () => {
                     </div>
                     <div className="card" style={{ borderColor: 'rgba(255, 59, 48, 0.3)', background: 'rgba(255, 59, 48, 0.03)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                            <div className="icon-box">📧</div>
+                            <div className="icon-box" aria-hidden="true">📧</div>
                             <h3 style={{ margin: '0 0 0 1rem', color: 'var(--text-muted)' }}>Gmail</h3>
                         </div>
                         <p style={{ color: 'var(--text-muted)' }}>{t('social.email.gmail.desc')}</p>

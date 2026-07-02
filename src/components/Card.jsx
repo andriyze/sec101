@@ -7,7 +7,7 @@ const Card = ({ title, description, link, linkText, icon }) => {
     return (
         <div className="card">
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                {icon && <div className="icon-box">{icon}</div>}
+                {icon && <div className="icon-box" aria-hidden="true">{icon}</div>}
                 <h3 style={{ margin: icon ? '0 0 0 1rem' : 0 }}>{title}</h3>
             </div>
             <p>{description}</p>

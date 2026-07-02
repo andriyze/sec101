@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, X, Shield, ChevronRight, CheckCircle, Circle, RotateCcw, Github } from 'lucide-react';
 import clsx from 'clsx';
 import { useProgress } from '../hooks/useProgress';
+import { QUIZ_UPDATED_EVENT, RESETTABLE_STORAGE_KEYS, STORAGE_RESET_EVENT } from '../storageKeys';
 
 const MainLayout = () => {
     const { t, i18n } = useTranslation();
     const location = useLocation();
     const { isTopicCompleted, resetProgress } = useProgress();
+    const mainRef = useRef(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
         typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
     );
     const [isMobile, setIsMobile] = useState(() =>
         typeof window !== 'undefined' ? window.innerWidth < 1024 : false
     );
+    const [showResetConfirm, setShowResetConfirm] = useState(false);
 
     const toggleLanguage = () => {
         const newLang = i18n.language === 'en' ? 'ua' : 'en';
@@ -22,18 +25,17 @@ const MainLayout = () => {
     };
 
     const handleResetProgress = () => {
-        if (window.confirm(t('common.reset_confirm', { defaultValue: 'Are you sure you want to reset all progress? This cannot be undone.' }))) {
-            resetProgress();
-            // Clear quiz scores
-            Object.keys(localStorage).forEach(key => {
-                if (key.startsWith('quiz-')) {
-                    localStorage.removeItem(key);
-                }
-            });
-            // Clear checklists
-            localStorage.removeItem('devices-checklist');
-            window.dispatchEvent(new CustomEvent('sec101:quiz-updated'));
-        }
+        setShowResetConfirm(true);
+    };
+
+    const confirmResetProgress = () => {
+        resetProgress();
+        RESETTABLE_STORAGE_KEYS.forEach((key) => {
+            window.localStorage.removeItem(key);
+        });
+        window.dispatchEvent(new CustomEvent(QUIZ_UPDATED_EVENT));
+        window.dispatchEvent(new CustomEvent(STORAGE_RESET_EVENT));
+        setShowResetConfirm(false);
     };
 
     const navItems = [
@@ -61,20 +63,41 @@ const MainLayout = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const currentNav = navItems.find((item) => item.path === location.pathname);
+
     useEffect(() => {
         document.documentElement.lang = i18n.language === 'ua' ? 'uk' : 'en';
-        document.title = t('app.title');
-    }, [i18n.language, t]);
+        document.title = currentNav?.isHome || !currentNav
+            ? t('app.title')
+            : `${currentNav.label} · ${t('app.title')}`;
+    }, [currentNav, i18n.language, t]);
 
-    // Scroll to top on route change
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        const frame = window.requestAnimationFrame(() => {
+            mainRef.current?.focus();
+        });
+
+        return () => window.cancelAnimationFrame(frame);
     }, [location.pathname]);
 
-    const currentNav = navItems.find((item) => item.path === location.pathname);
+    useEffect(() => {
+        if (!showResetConfirm) return undefined;
+
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                setShowResetConfirm(false);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [showResetConfirm]);
 
     return (
         <div className="app-shell">
+            <a className="skip-link" href="#main-content">{t('nav.skip_to_content')}</a>
             {/* Sidebar */}
             <aside className={clsx("sidebar", isSidebarOpen ? "open" : "closed")} aria-label="Primary">
                 <div className="sidebar-header">
@@ -121,7 +144,7 @@ const MainLayout = () => {
             {isMobile && isSidebarOpen && <div className="sidebar-backdrop" onClick={() => setIsSidebarOpen(false)} aria-hidden="true" />}
 
             {/* Main Content */}
-            <main className="main-content">
+            <main id="main-content" className="main-content" ref={mainRef} tabIndex={-1}>
                 <header className="topbar">
                     <div className="topbar-title">
                         <button
@@ -205,6 +228,29 @@ const MainLayout = () => {
                     </footer>
                 </div>
             </main>
+            {showResetConfirm && (
+                <div className="modal-backdrop" role="presentation" onMouseDown={() => setShowResetConfirm(false)}>
+                    <div
+                        className="modal-panel"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="reset-dialog-title"
+                        aria-describedby="reset-dialog-desc"
+                        onMouseDown={(event) => event.stopPropagation()}
+                    >
+                        <h2 id="reset-dialog-title">{t('common.reset_progress')}</h2>
+                        <p id="reset-dialog-desc">{t('common.reset_confirm')}</p>
+                        <div className="modal-actions">
+                            <button className="btn btn-glass" onClick={() => setShowResetConfirm(false)}>
+                                {t('common.cancel')}
+                            </button>
+                            <button className="btn btn-primary" onClick={confirmResetProgress}>
+                                {t('common.reset_confirm_button')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

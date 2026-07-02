@@ -3,18 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, CheckCircle, Circle, PartyPopper } from 'lucide-react';
 import { useProgress } from '../hooks/useProgress';
-
-const TOPIC_LABELS = {
-    passwords: 'nav.passwords',
-    phishing: 'nav.phishing',
-    browsing: 'nav.browsing',
-    social: 'nav.social',
-    devices: 'nav.devices',
-    tools: 'nav.tools',
-    advanced: 'nav.advanced',
-};
-
-const QUIZ_UPDATED_EVENT = 'sec101:quiz-updated';
+import { QUIZ_UPDATED_EVENT } from '../storageKeys';
+import { TOPIC_LABEL_KEYS } from '../topics';
 
 const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
     const { t } = useTranslation();
@@ -113,7 +103,7 @@ const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
                 </button>
                 {nextTopic && (
                     <p style={{ margin: '1rem 0 0', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                        {t('completion.next_preview', { topic: t(TOPIC_LABELS[nextTopic]) })}
+                        {t('completion.next_preview', { topic: t(TOPIC_LABEL_KEYS[nextTopic]) })}
                     </p>
                 )}
             </div>
@@ -144,7 +134,7 @@ const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
                     className="btn btn-primary"
                     style={{ marginTop: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                 >
-                    {t('progress.next_topic', { topic: t(TOPIC_LABELS[nextTopic]) })}
+                    {t('progress.next_topic', { topic: t(TOPIC_LABEL_KEYS[nextTopic]) })}
                     <ArrowRight size={18} />
                 </button>
             )}

@@ -10,6 +10,7 @@ import {
 import VizContainer from './VizContainer';
 import AnimationControls from './AnimationControls';
 import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
 
 const TrackerBlockingViz = () => {
     const { t } = useTranslation();
@@ -40,7 +41,7 @@ const TrackerBlockingViz = () => {
     const trackerDataTypes = {
         'news.com': {
             color: '#4a9eff',
-            trackers: t('visualizations.tracker.sites.news.trackers', { returnObjects: true, defaultValue: ['Google Analytics', 'Facebook Pixel', 'Criteo'] }),
+            trackers: tArray(t, 'visualizations.tracker.sites.news.trackers', { defaultValue: ['Google Analytics', 'Facebook Pixel', 'Criteo'] }),
             dataCollected: [
                 { type: t('visualizations.tracker.sites.news.data.articles.type', 'Articles Read'), icon: FileText, value: t('visualizations.tracker.sites.news.data.articles.value', 'Politics, Tech, Sports') },
                 { type: t('visualizations.tracker.sites.news.data.time.type', 'Time Spent'), icon: Clock, value: t('visualizations.tracker.sites.news.data.time.value', '4 min on politics') },
@@ -49,7 +50,7 @@ const TrackerBlockingViz = () => {
         },
         'shop.com': {
             color: '#ff6b6b',
-            trackers: t('visualizations.tracker.sites.shop.trackers', { returnObjects: true, defaultValue: ['Google Ads', 'Amazon', 'Pinterest'] }),
+            trackers: tArray(t, 'visualizations.tracker.sites.shop.trackers', { defaultValue: ['Google Ads', 'Amazon', 'Pinterest'] }),
             dataCollected: [
                 { type: t('visualizations.tracker.sites.shop.data.products.type', 'Products Viewed'), icon: ShoppingCart, value: t('visualizations.tracker.sites.shop.data.products.value', 'Laptop, Headphones') },
                 { type: t('visualizations.tracker.sites.shop.data.price.type', 'Price Checks'), icon: DollarSign, value: t('visualizations.tracker.sites.shop.data.price.value', 'Compared 3 times') },
@@ -58,7 +59,7 @@ const TrackerBlockingViz = () => {
         },
         'social.com': {
             color: '#a855f7',
-            trackers: t('visualizations.tracker.sites.social.trackers', { returnObjects: true, defaultValue: ['Meta Pixel', 'TikTok Analytics'] }),
+            trackers: tArray(t, 'visualizations.tracker.sites.social.trackers', { defaultValue: ['Meta Pixel', 'TikTok Analytics'] }),
             dataCollected: [
                 { type: t('visualizations.tracker.sites.social.data.interests.type', 'Interests'), icon: Heart, value: t('visualizations.tracker.sites.social.data.interests.value', 'Photography, Travel') },
                 { type: t('visualizations.tracker.sites.social.data.graph.type', 'Social Graph'), icon: Users, value: t('visualizations.tracker.sites.social.data.graph.value', '847 connections') },
@@ -103,7 +104,7 @@ const TrackerBlockingViz = () => {
     const currentSiteData = trackerDataTypes[sites[currentSite]?.name];
 
     return (
-        <VizContainer>
+        <VizContainer title={t('visualizations.tracker.title')}>
             <div className="tracker-viz-wrapper">
                 {/* Header */}
                 <div className="tracker-header">

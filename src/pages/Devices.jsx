@@ -4,17 +4,19 @@ import Card from '../components/Card';
 import { Smartphone, Laptop, ShieldCheck } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
+import { DEVICES_CHECKLIST_STORAGE_KEY, STORAGE_RESET_EVENT } from '../storageKeys';
+import { tArray } from '../i18n/safeTranslate';
 
 const Devices = () => {
     const { t } = useTranslation();
-    const checklistItems = t('devices.checklist_items', { returnObjects: true });
+    const checklistItems = tArray(t, 'devices.checklist_items');
     const emptyChecklistState = () => Array(checklistItems.length).fill(false);
     const normalizeChecklistState = (value) =>
         Array.from({ length: checklistItems.length }, (_, i) => Boolean(value?.[i]));
 
     const [completed, setCompleted] = useState(() => {
         if (typeof window === 'undefined') return emptyChecklistState();
-        const cached = window.localStorage.getItem('devices-checklist');
+        const cached = window.localStorage.getItem(DEVICES_CHECKLIST_STORAGE_KEY);
         if (cached) {
             try {
                 const parsed = JSON.parse(cached);
@@ -35,8 +37,17 @@ const Devices = () => {
     };
 
     useEffect(() => {
-        window.localStorage.setItem('devices-checklist', JSON.stringify(completed));
+        window.localStorage.setItem(DEVICES_CHECKLIST_STORAGE_KEY, JSON.stringify(completed));
     }, [completed]);
+
+    useEffect(() => {
+        const handleStorageReset = () => {
+            setCompleted(emptyChecklistState());
+        };
+
+        window.addEventListener(STORAGE_RESET_EVENT, handleStorageReset);
+        return () => window.removeEventListener(STORAGE_RESET_EVENT, handleStorageReset);
+    });
 
     return (
         <div className="animate-fade-in">
@@ -73,7 +84,7 @@ const Devices = () => {
                     <div className="card panel-solid">
                         <h4 style={{ marginBottom: '0.5rem' }}>{t('devices.resilience.title')}</h4>
                         <ul style={{ paddingLeft: '1.2rem' }}>
-                            {t('devices.resilience.items', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'devices.resilience.items').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
                             ))}
                         </ul>
@@ -81,7 +92,7 @@ const Devices = () => {
                     <div className="card panel-solid">
                         <h4 style={{ marginBottom: '0.5rem' }}>{t('devices.lost_device.title')}</h4>
                         <ol style={{ paddingLeft: '1.2rem' }}>
-                            {t('devices.lost_device.steps', { returnObjects: true }).map((item, i) => (
+                            {tArray(t, 'devices.lost_device.steps').map((item, i) => (
                                 <li key={i} style={{ marginBottom: '0.35rem' }}>{item}</li>
                             ))}
                         </ol>
@@ -169,7 +180,7 @@ const Devices = () => {
             <section className="section">
                 <Quiz
                     title={t('devices.quiz.title')}
-                    questions={t('devices.quiz.questions', { returnObjects: true })}
+                    questions={tArray(t, 'devices.quiz.questions')}
                     storageKey="quiz-devices"
                 />
             </section>

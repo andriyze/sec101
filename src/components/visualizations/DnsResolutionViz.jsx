@@ -117,7 +117,7 @@ const DnsResolutionViz = () => {
         <VizContainer title={t('visualizations.dns.title')}>
             <div className="dns-viz-wrapper">
                 {/* Step Explanation Panel */}
-                <div className="dns-explanation-panel">
+                <div className="dns-explanation-panel" aria-live="polite" aria-atomic="true">
                     <div className="dns-step-header">
                         <span className="dns-step-number">{t('visualizations.dns.step_of', { current: currentStep + 1, total: 5 })}</span>
                         <h4 className="dns-step-title">{currentExplanation.title}</h4>

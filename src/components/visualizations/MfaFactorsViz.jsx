@@ -75,7 +75,7 @@ const MfaFactorsViz = () => {
     };
 
     return (
-        <VizContainer>
+        <VizContainer title={t('visualizations.mfa.title')}>
             <div className="mfa-viz-wrapper">
                 {/* Explanation Header */}
                 <div className="mfa-header">

@@ -5,11 +5,12 @@ import { Globe, Shield, EyeOff, Settings } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
 import TrackerBlockingViz from '../components/visualizations/TrackerBlockingViz';
+import { tArray } from '../i18n/safeTranslate';
 
 const Browsing = () => {
     const { t } = useTranslation();
-    const quizQuestions = t('browsing.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
-    const quickSettings = t('browsing.quick_settings.items', { returnObjects: true, defaultValue: [] }) || [];
+    const quizQuestions = tArray(t, 'browsing.quiz.questions');
+    const quickSettings = tArray(t, 'browsing.quick_settings.items');
     const hardeningKeys = ['brave', 'firefox', 'tor'];
 
     return (
@@ -68,7 +69,7 @@ const Browsing = () => {
                     <div className="card card-recommended">
                         <span className="recommended-badge">{t('common.recommended')}</span>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
-                            <div className="icon-box">🦁</div>
+                            <div className="icon-box" aria-hidden="true">🦁</div>
                             <h3 style={{ margin: '0 0 0 1rem' }}>Brave</h3>
                         </div>
                         <p>{t('browsing.browsers.brave')}</p>
@@ -97,7 +98,7 @@ const Browsing = () => {
                         <div key={browserKey} className="card panel-solid">
                             <h4 style={{ marginBottom: '0.5rem' }}>{t(`browsing.hardening.${browserKey}.title`)}</h4>
                             <ul style={{ paddingLeft: '1.2rem' }}>
-                                {(t(`browsing.hardening.${browserKey}.steps`, { returnObjects: true, defaultValue: [] }) || []).map((step, i) => (
+                                {tArray(t, `browsing.hardening.${browserKey}.steps`).map((step, i) => (
                                     <li key={i} style={{ marginBottom: '0.35rem' }}>{step}</li>
                                 ))}
                             </ul>

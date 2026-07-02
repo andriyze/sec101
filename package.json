@@ -8,8 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test": "bun test",
     "preview": "vite preview",
-    "start": "vite preview",
+    "start": "bun scripts/serve-static.mjs",
     "prepare": "husky"
   },
   "lint-staged": {

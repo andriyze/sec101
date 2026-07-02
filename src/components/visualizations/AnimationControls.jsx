@@ -48,15 +48,14 @@ const AnimationControls = ({
 
             {/* Step dots */}
             {showStepDots && (
-                <div className="animation-step-dots" role="tablist" aria-label={t('controls.steps', 'Animation steps')}>
+                <div className="animation-step-dots" aria-label={t('controls.steps', 'Animation steps')}>
                     {Array.from({ length: totalSteps }, (_, i) => (
                         <button
                             key={i}
                             className={`animation-step-dot ${currentStep === i ? 'active' : ''} ${currentStep > i ? 'done' : ''}`}
                             onClick={() => onGoToStep?.(i)}
                             disabled={disabled}
-                            role="tab"
-                            aria-selected={currentStep === i}
+                            aria-current={currentStep === i ? 'step' : undefined}
                             aria-label={t('controls.go_to_step', { step: i + 1, defaultValue: `Go to step ${i + 1}` })}
                             title={t('controls.step_n', { n: i + 1, defaultValue: `Step ${i + 1}` })}
                         />

@@ -119,6 +119,25 @@ a:hover {
   border: 0;
 }
 
+.skip-link {
+  position: fixed;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 1000;
+  transform: translateY(-150%);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background: rgba(10, 10, 15, 0.96);
+  color: var(--text-main);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: none;
+}
+
 .flex {
   display: flex;
 }
@@ -417,6 +436,10 @@ a:hover {
   padding: var(--space-md);
 }
 
+.main-content:focus {
+  outline: none;
+}
+
 .sidebar.closed + .main-content {
   margin-left: 80px;
 }
@@ -427,6 +450,44 @@ a:hover {
   background: rgba(0, 0, 0, 0.6);
   z-index: 40;
   backdrop-filter: blur(2px);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(8px);
+}
+
+.modal-panel {
+  width: min(100%, 420px);
+  padding: var(--space-md);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: rgba(16, 16, 24, 0.98);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.modal-panel h2 {
+  margin: 0 0 var(--space-xs);
+  font-size: 1.35rem;
+}
+
+.modal-panel p {
+  color: var(--text-muted);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  flex-wrap: wrap;
 }
 
 /* Toggle Switch */

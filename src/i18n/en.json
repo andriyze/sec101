@@ -4,7 +4,10 @@
     "subtitle": "A simple guide to personal information security",
     "start": "Start Presentation",
     "role_student": "Student",
-    "role_parent": "Parent"
+    "role_parent": "Parent",
+    "error_title": "Something went wrong",
+    "error_desc": "The app hit an unexpected error. Reloading the page usually fixes it.",
+    "error_reload": "Reload page"
   },
   "nav": {
     "home": "Home",
@@ -17,7 +20,8 @@
     "advanced": "Advanced Topics",
     "open_menu": "Open menu",
     "close_menu": "Close menu",
-    "language_toggle": "Toggle language"
+    "language_toggle": "Toggle language",
+    "skip_to_content": "Skip to content"
   },
   "home": {
     "badges": {
@@ -68,13 +72,31 @@
       "quickstart": "Start with phishing"
     },
     "cards": {
-      "passwords": { "desc": "Managers, MFA, and passkeys set up in minutes." },
-      "phishing": { "desc": "Spot red flags fast and recover safely if you clicked." },
-      "browsing": { "desc": "Harden your browser and block trackers by default." },
-      "social": { "desc": "Choose private messengers and stay safe on public Wi‑Fi." },
-      "devices": { "desc": "Lock down phones and laptops, plan for loss or theft." },
-      "tools": { "desc": "Curated list of privacy-respecting apps and encryption basics." },
-      "advanced": { "desc": "DNS, OSI model, ports, protocols, and how the internet really works." }
+      "passwords": {
+        "desc": "Managers, MFA, and passkeys set up in minutes.",
+        "time": "10–15 min"
+      },
+      "phishing": {
+        "desc": "Spot red flags fast and recover safely if you clicked.",
+        "time": "5 min"
+      },
+      "browsing": { "desc": "Harden your browser and block trackers by default.", "time": "7 min" },
+      "social": {
+        "desc": "Choose private messengers and stay safe on public Wi‑Fi.",
+        "time": "6 min"
+      },
+      "devices": {
+        "desc": "Lock down phones and laptops, plan for loss or theft.",
+        "time": "8 min"
+      },
+      "tools": {
+        "desc": "Curated list of privacy-respecting apps and encryption basics.",
+        "time": "5 min"
+      },
+      "advanced": {
+        "desc": "DNS, OSI model, ports, protocols, and how the internet really works.",
+        "time": "10 min"
+      }
     },
     "security_vs_privacy": {
       "security": {
@@ -982,6 +1004,7 @@
     "visit": "Visit Website",
     "reset_progress": "Reset progress",
     "reset_confirm": "Reset all progress and quiz scores? This cannot be undone.",
+    "reset_confirm_button": "Reset everything",
     "quiz_next": "Next",
     "quiz_finish": "Finish",
     "quiz_score": "Score",
@@ -989,6 +1012,8 @@
     "quiz_question": "Question",
     "quiz_correct_fallback": "Correct!",
     "quiz_wrong_fallback": "Not quite. Review the tips above.",
+    "quiz_retake": "Retake quiz",
+    "cancel": "Cancel",
     "created_by": "Created with 🔒 by ",
     "recommended": "Recommended",
     "alternative": "Alternative"
@@ -1028,6 +1053,7 @@
       "encrypted": "Encrypted"
     },
     "mfa": {
+      "title": "Authentication factors",
       "explanation": "Authentication factors are different ways to prove your identity. Using 2+ factors means even if one is stolen, attackers still can't get in.",
       "knowledge": {
         "title": "What you KNOW",
@@ -1054,6 +1080,7 @@
       "server_blind": "Server can't read messages"
     },
     "tracker": {
+      "title": "Tracker blocking",
       "protected": "Trackers blocked",
       "exposed": "Trackers watching",
       "you": "You",
@@ -1107,6 +1134,7 @@
       "email_title": "Incoming Email",
       "from": "From",
       "subject": "Subject",
+      "subject_prefix": "⚠️ URGENT:",
       "subject_text": "Account Suspended",
       "greeting": "Dear Customer,",
       "body_text": "Your account will be closed in 12 hours unless you verify your identity immediately.",
@@ -1272,6 +1300,7 @@
     },
     "ipv": {
       "title": "IPv4 vs IPv6",
+      "vs": "vs",
       "v4_label": "IPv4",
       "v6_label": "IPv6",
       "v4_example": "192.168.1.1",

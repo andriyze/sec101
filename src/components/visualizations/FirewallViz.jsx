@@ -19,8 +19,8 @@ const FirewallViz = () => {
         }
         return [];
     });
-    const [packetId, setPacketId] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const packetIdRef = useRef(0);
     const intervalRef = useRef(null);
 
     const generatePacket = useCallback(() => {
@@ -29,14 +29,14 @@ const FirewallViz = () => {
         const port = ports[Math.floor(Math.random() * ports.length)];
 
         const newPacket = {
-            id: packetId,
+            id: packetIdRef.current,
             allowed,
             port,
             status: 'incoming'
         };
+        packetIdRef.current += 1;
 
         setPackets(prev => [...prev.slice(-4), newPacket]);
-        setPacketId(prev => prev + 1);
 
         // Update packet status
         setTimeout(() => {
@@ -54,7 +54,7 @@ const FirewallViz = () => {
         setTimeout(() => {
             setPackets(prev => prev.filter(p => p.id !== newPacket.id));
         }, 1800);
-    }, [packetId]);
+    }, []);
 
     // Handle play/pause
     useEffect(() => {

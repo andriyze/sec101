@@ -121,7 +121,7 @@ const IpVersionsViz = () => {
 
                     {/* VS Divider */}
                     <div className="ipv-divider">
-                        <span>vs</span>
+                        <span>{t('visualizations.ipv.vs')}</span>
                     </div>
 
                     {/* IPv6 */}

@@ -10,10 +10,11 @@ import ProtocolsViz from '../components/visualizations/ProtocolsViz';
 import FirewallViz from '../components/visualizations/FirewallViz';
 import TlsHandshakeViz from '../components/visualizations/TlsHandshakeViz';
 import IpVersionsViz from '../components/visualizations/IpVersionsViz';
+import { tArray } from '../i18n/safeTranslate';
 
 const Advanced = () => {
     const { t } = useTranslation();
-    const quizQuestions = t('advanced.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
+    const quizQuestions = tArray(t, 'advanced.quiz.questions');
 
     return (
         <div className="animate-fade-in">

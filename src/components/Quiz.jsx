@@ -1,27 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { QUIZ_UPDATED_EVENT } from '../storageKeys';
+import { isBetterScore, readStoredScore, shuffleIndices } from './quizUtils';
 
-const QUIZ_UPDATED_EVENT = 'sec101:quiz-updated';
-
-const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
+const QuizSession = ({ title, questions, storageKey, onComplete }) => {
     const { t } = useTranslation();
-    const shuffled = useMemo(() => questions.map((q) => ({ ...q })), [questions]);
+    const [order, setOrder] = useState(() => shuffleIndices(questions.length));
     const [current, setCurrent] = useState(0);
     const [selected, setSelected] = useState(null);
-    const [showResult, setShowResult] = useState(false);
     const [score, setScore] = useState(0);
-    const [bestScore, setBestScore] = useState(() => {
-        if (!storageKey || typeof window === 'undefined') return null;
-        const raw = window.localStorage.getItem(storageKey);
-        if (!raw) return null;
-        try {
-            return JSON.parse(raw);
-        } catch {
-            return null;
-        }
-    });
+    const [showResult, setShowResult] = useState(false);
+    const [bestScore, setBestScore] = useState(() => readStoredScore(storageKey));
 
-    const question = shuffled[current];
+    const restart = () => {
+        setOrder(shuffleIndices(questions.length));
+        setCurrent(0);
+        setSelected(null);
+        setScore(0);
+        setShowResult(false);
+    };
 
     useEffect(() => {
         if (!storageKey || typeof window === 'undefined') return undefined;
@@ -29,20 +26,15 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
         const refreshBestScore = (event) => {
             if (event.detail?.storageKey && event.detail.storageKey !== storageKey) return;
 
-            const raw = window.localStorage.getItem(storageKey);
-            if (!raw) {
+            const stored = readStoredScore(storageKey);
+            setBestScore(stored);
+            if (!stored) {
+                // Global reset cleared the stored score — start fresh.
+                setOrder(shuffleIndices(questions.length));
                 setCurrent(0);
                 setSelected(null);
-                setShowResult(false);
                 setScore(0);
-                setBestScore(null);
-                return;
-            }
-
-            try {
-                setBestScore(JSON.parse(raw));
-            } catch {
-                setBestScore(null);
+                setShowResult(false);
             }
         };
 
@@ -53,43 +45,50 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
             window.removeEventListener(QUIZ_UPDATED_EVENT, refreshBestScore);
             window.removeEventListener('storage', refreshBestScore);
         };
-    }, [storageKey]);
+    }, [questions.length, storageKey]);
+
+    const question = questions[order[current]];
 
     const onSelect = (index) => {
-        if (selected !== null) return;
+        if (selected !== null || showResult) return;
         setSelected(index);
         const isCorrect = index === question.answer;
         setScore((s) => s + (isCorrect ? 1 : 0));
     };
 
-    const next = () => {
-        if (current === shuffled.length - 1) {
-            setShowResult(true);
-            const payload = { score, total: shuffled.length };
-            const percent = (score / shuffled.length) * 100;
-            if (storageKey && typeof window !== 'undefined') {
-                const bestPercent = bestScore ? (bestScore.score / bestScore.total) * 100 : -1;
-                if (percent > bestPercent) {
-                    window.localStorage.setItem(storageKey, JSON.stringify(payload));
-                    setBestScore(payload);
-                }
+    const finish = () => {
+        if (showResult) return;
+        setShowResult(true);
+        const payload = { score, total: order.length };
+        const percent = (score / order.length) * 100;
+        if (storageKey && typeof window !== 'undefined') {
+            if (isBetterScore(payload, bestScore)) {
+                window.localStorage.setItem(storageKey, JSON.stringify(payload));
+                setBestScore(payload);
+            }
 
-                window.dispatchEvent(new CustomEvent(QUIZ_UPDATED_EVENT, {
-                    detail: { storageKey },
-                }));
-            }
-            if (percent >= 50 && onComplete) {
-                onComplete();
-            }
+            window.dispatchEvent(new CustomEvent(QUIZ_UPDATED_EVENT, {
+                detail: { storageKey },
+            }));
+        }
+        if (percent >= 50 && onComplete) {
+            onComplete();
+        }
+    };
+
+    const next = () => {
+        if (selected === null) return;
+        if (current === order.length - 1) {
+            finish();
         } else {
             setCurrent((c) => c + 1);
             setSelected(null);
         }
     };
 
-    // bestScore is initialized via lazy initializer above, no need for effect
-
     if (!question) return null;
+
+    const answeredCount = current + (selected !== null ? 1 : 0);
 
     return (
         <div className="card panel-solid">
@@ -97,10 +96,12 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
                 <div>
                     <h4 style={{ margin: 0 }}>{title}</h4>
                     <p style={{ margin: '0.2rem 0', color: 'var(--text-muted)' }}>
-                        {t('common.quiz_question')} {current + 1} / {shuffled.length}
+                        {t('common.quiz_question')} {current + 1} / {order.length}
                     </p>
                 </div>
-                <span className="pill">{Math.round((score / shuffled.length) * 100)}%</span>
+                {answeredCount > 0 && !showResult && (
+                    <span className="pill">{t('common.quiz_score')}: {score} / {answeredCount}</span>
+                )}
             </div>
             <p style={{ color: 'var(--text-main)', fontWeight: 600, marginBottom: '0.75rem' }}>{question.prompt}</p>
             <div className="quiz-options">
@@ -109,7 +110,7 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
                     const isWrong = selected === idx && idx !== question.answer;
                     return (
                         <button
-                            key={idx}
+                            key={opt}
                             className={`quiz-option ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}`}
                             onClick={() => onSelect(idx)}
                             aria-pressed={selected === idx}
@@ -120,7 +121,7 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
                 })}
             </div>
             {selected !== null && (
-                <div className="alert" style={{ marginTop: '0.75rem', borderColor: selected === question.answer ? '#00ff9d' : 'var(--accent)' }}>
+                <div className="alert" role="status" style={{ marginTop: '0.75rem', borderColor: selected === question.answer ? '#00ff9d' : 'var(--accent)' }}>
                     <div className="alert-content">
                         <p style={{ marginBottom: 0 }}>
                             {selected === question.answer ? question.correct || t('common.quiz_correct_fallback') : question.explainer || t('common.quiz_wrong_fallback')}
@@ -129,17 +130,23 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
                 </div>
             )}
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
-                <button
-                    className="btn btn-glass"
-                    onClick={next}
-                    disabled={selected === null && !showResult}
-                >
-                    {current === shuffled.length - 1 ? t('common.quiz_finish') : t('common.quiz_next')}
-                </button>
+                {showResult ? (
+                    <button className="btn btn-glass" onClick={restart}>
+                        {t('common.quiz_retake')}
+                    </button>
+                ) : (
+                    <button
+                        className="btn btn-glass"
+                        onClick={next}
+                        disabled={selected === null}
+                    >
+                        {current === order.length - 1 ? t('common.quiz_finish') : t('common.quiz_next')}
+                    </button>
+                )}
             </div>
             {showResult && (
-                <div className="pill pill-success" style={{ marginTop: '0.75rem', alignSelf: 'flex-start' }}>
-                    {t('common.quiz_score')}: {score} / {shuffled.length}
+                <div className="pill pill-success" role="status" style={{ marginTop: '0.75rem', alignSelf: 'flex-start' }}>
+                    {t('common.quiz_score')}: {score} / {order.length}
                 </div>
             )}
             {bestScore && (
@@ -148,6 +155,21 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
                 </div>
             )}
         </div>
+    );
+};
+
+const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
+    const { i18n } = useTranslation();
+    const safeQuestions = Array.isArray(questions) ? questions : [];
+
+    return (
+        <QuizSession
+            key={`${storageKey || title}:${i18n.resolvedLanguage || i18n.language}:${safeQuestions.length}`}
+            title={title}
+            questions={safeQuestions}
+            storageKey={storageKey}
+            onComplete={onComplete}
+        />
     );
 };
 

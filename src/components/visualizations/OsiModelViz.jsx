@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,6 @@ import { useAnimationControl } from './useAnimationControl';
 
 const OsiModelViz = () => {
     const { t } = useTranslation();
-    const [direction, setDirection] = useState('down'); // 'down' = sending, 'up' = receiving
 
     const layers = [
         { num: 7, key: 'application', icon: AppWindow, color: '#00f2ff' },
@@ -25,45 +24,16 @@ const OsiModelViz = () => {
         currentStep,
         isPlaying,
         totalSteps,
-        nextStep: baseNextStep,
-        prevStep: basePrevStep,
+        nextStep,
+        prevStep,
         goToStep,
         togglePlay,
         prefersReducedMotion
     } = useAnimationControl({
-        totalSteps: 7,
+        totalSteps: 14,
         interval: 800,
         loop: true
     });
-
-    // Enhanced next/prev that handle direction
-    const nextStep = () => {
-        if (direction === 'down') {
-            if (currentStep >= 6) {
-                setDirection('up');
-            }
-            baseNextStep();
-        } else {
-            if (currentStep <= 0) {
-                setDirection('down');
-            }
-            basePrevStep();
-        }
-    };
-
-    const prevStep = () => {
-        if (direction === 'down') {
-            if (currentStep <= 0) {
-                setDirection('up');
-            }
-            basePrevStep();
-        } else {
-            if (currentStep >= 6) {
-                setDirection('down');
-            }
-            baseNextStep();
-        }
-    };
 
     const layerVariants = {
         inactive: {
@@ -76,8 +46,8 @@ const OsiModelViz = () => {
         }
     };
 
-    // Map currentStep to layer index (when direction is down, step 0 = layer 0; when up, step 0 = layer 6)
-    const activeLayer = direction === 'down' ? currentStep : (6 - currentStep);
+    const direction = currentStep <= 6 ? 'down' : 'up';
+    const activeLayer = direction === 'down' ? currentStep : (13 - currentStep);
 
     return (
         <VizContainer title={t('visualizations.osi.title')}>

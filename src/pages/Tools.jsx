@@ -3,43 +3,44 @@ import { useTranslation } from 'react-i18next';
 import { Shield, Lock, Smartphone, Globe, KeyRound } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
+import { tArray } from '../i18n/safeTranslate';
 
 const Tools = () => {
     const { t } = useTranslation();
-    const quizQuestions = t('tools.quiz.questions', { returnObjects: true, defaultValue: [] }) || [];
+    const quizQuestions = tArray(t, 'tools.quiz.questions');
 
     const sections = [
         {
             title: t('tools.messengers.title'),
             icon: <Smartphone size={22} color="var(--primary)" />,
-            items: t('tools.messengers.items', { returnObjects: true })
+            items: tArray(t, 'tools.messengers.items')
         },
         {
             title: t('tools.passwords.title'),
             icon: <KeyRound size={22} color="var(--primary)" />,
-            items: t('tools.passwords.items', { returnObjects: true })
+            items: tArray(t, 'tools.passwords.items')
         },
         {
             title: t('tools.mfa.title'),
             icon: <Lock size={22} color="var(--primary)" />,
-            items: t('tools.mfa.items', { returnObjects: true })
+            items: tArray(t, 'tools.mfa.items')
         },
         {
             title: t('tools.os.title'),
             icon: <Shield size={22} color="var(--primary)" />,
-            items: t('tools.os.items', { returnObjects: true })
+            items: tArray(t, 'tools.os.items')
         },
         {
             title: t('tools.browsers.title'),
             icon: <Globe size={22} color="var(--primary)" />,
-            items: t('tools.browsers.items', { returnObjects: true })
+            items: tArray(t, 'tools.browsers.items')
         },
         {
             title: t('tools.encryption.title'),
             icon: <Lock size={22} color="var(--primary)" />,
             intro: t('tools.encryption.intro'),
-            items: t('tools.encryption.items', { returnObjects: true }),
-            takeaways: t('tools.encryption.takeaways', { returnObjects: true })
+            items: tArray(t, 'tools.encryption.items'),
+            takeaways: tArray(t, 'tools.encryption.takeaways')
         }
     ];
 

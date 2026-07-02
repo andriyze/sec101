@@ -3,17 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import ProgressBar from './ProgressBar';
-import { useProgress, TOPIC_ORDER } from '../hooks/useProgress';
-
-const TOPIC_LABELS = {
-    passwords: 'nav.passwords',
-    phishing: 'nav.phishing',
-    browsing: 'nav.browsing',
-    social: 'nav.social',
-    devices: 'nav.devices',
-    tools: 'nav.tools',
-    advanced: 'nav.advanced',
-};
+import { useProgress } from '../hooks/useProgress';
+import { TOPIC_LABEL_KEYS } from '../topics';
 
 const ProgressCard = () => {
     const { t } = useTranslation();
@@ -58,7 +49,7 @@ const ProgressCard = () => {
                     className="btn btn-primary"
                     style={{ marginTop: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                 >
-                    {t('progress.continue', { topic: t(TOPIC_LABELS[nextTopic]) })}
+                    {t('progress.continue', { topic: t(TOPIC_LABEL_KEYS[nextTopic]) })}
                     <ArrowRight size={18} />
                 </button>
             )}

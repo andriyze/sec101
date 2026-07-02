@@ -37,12 +37,13 @@ const PhishingEmailViz = () => {
 
     // Handle URL reveal for link step (step 3)
     useEffect(() => {
-        if (currentStep === 3) {
-            const timer = setTimeout(() => setShowingUrl(true), 500);
-            return () => clearTimeout(timer);
-        }
-        // Reset when leaving step 3
-        return () => setShowingUrl(false);
+        if (currentStep !== 3) return undefined;
+
+        const timer = setTimeout(() => setShowingUrl(true), 500);
+        return () => {
+            clearTimeout(timer);
+            setShowingUrl(false);
+        };
     }, [currentStep]);
 
     const isHighlighted = (position) => {
@@ -77,7 +78,7 @@ const PhishingEmailViz = () => {
     };
 
     return (
-        <VizContainer>
+        <VizContainer title={t('visualizations.phishing.email_title')}>
             <div className="phishing-viz-wrapper">
                 {/* Email mockup */}
                 <div className="phishing-email">
@@ -115,7 +116,7 @@ const PhishingEmailViz = () => {
                     >
                         <span className="phishing-field-label">{t('visualizations.phishing.subject')}:</span>
                         <span className="phishing-field-value phishing-urgent">
-                            ⚠️ URGENT: {t('visualizations.phishing.subject_text')}
+                            {t('visualizations.phishing.subject_prefix')} {t('visualizations.phishing.subject_text')}
                         </span>
                         <AnimatePresence>
                             {isHighlighted('subject') && (

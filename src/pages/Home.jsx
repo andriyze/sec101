@@ -14,13 +14,13 @@ const Home = () => {
     const nextTopic = getNextTopic();
 
     const topics = [
-        { path: '/passwords', icon: '🔑', label: t('nav.passwords'), desc: t('home.cards.passwords.desc'), time: '10–15 min' },
-        { path: '/phishing', icon: '✉️', label: t('nav.phishing'), desc: t('home.cards.phishing.desc'), time: '5 min' },
-        { path: '/browsing', icon: '🛡️', label: t('nav.browsing'), desc: t('home.cards.browsing.desc'), time: '7 min' },
-        { path: '/social', icon: '💬', label: t('nav.social'), desc: t('home.cards.social.desc'), time: '6 min' },
-        { path: '/devices', icon: '📱', label: t('nav.devices'), desc: t('home.cards.devices.desc'), time: '8 min' },
-        { path: '/tools', icon: '🔧', label: t('nav.tools'), desc: t('home.cards.tools.desc'), time: '5 min' },
-        { path: '/advanced', icon: '🎓', label: t('nav.advanced'), desc: t('home.cards.advanced.desc'), time: '10 min' },
+        { path: '/passwords', icon: '🔑', label: t('nav.passwords'), desc: t('home.cards.passwords.desc'), time: t('home.cards.passwords.time') },
+        { path: '/phishing', icon: '✉️', label: t('nav.phishing'), desc: t('home.cards.phishing.desc'), time: t('home.cards.phishing.time') },
+        { path: '/browsing', icon: '🛡️', label: t('nav.browsing'), desc: t('home.cards.browsing.desc'), time: t('home.cards.browsing.time') },
+        { path: '/social', icon: '💬', label: t('nav.social'), desc: t('home.cards.social.desc'), time: t('home.cards.social.time') },
+        { path: '/devices', icon: '📱', label: t('nav.devices'), desc: t('home.cards.devices.desc'), time: t('home.cards.devices.time') },
+        { path: '/tools', icon: '🔧', label: t('nav.tools'), desc: t('home.cards.tools.desc'), time: t('home.cards.tools.time') },
+        { path: '/advanced', icon: '🎓', label: t('nav.advanced'), desc: t('home.cards.advanced.desc'), time: t('home.cards.advanced.time') },
     ];
 
     return (
@@ -154,7 +154,7 @@ const Home = () => {
                                     </div>
                                 )}
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                                    <div className="icon-box" style={{ marginBottom: 0 }}>{topic.icon}</div>
+                                    <div className="icon-box" style={{ marginBottom: 0 }} aria-hidden="true">{topic.icon}</div>
                                     <div>
                                         <h3 style={{ margin: 0 }}>{topic.label}</h3>
                                         <div className="pill" style={{ marginTop: '0.3rem', fontSize: '0.85rem' }}>{topic.time}</div>
