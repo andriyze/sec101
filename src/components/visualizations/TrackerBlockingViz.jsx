@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import VizContainer from './VizContainer';
 import AnimationControls from './AnimationControls';
+import StepCaption from './StepCaption';
 import { useAnimationControl } from './useAnimationControl';
 import { tArray } from '../../i18n/safeTranslate';
 
@@ -104,7 +105,10 @@ const TrackerBlockingViz = () => {
     const currentSiteData = trackerDataTypes[sites[currentSite]?.name];
 
     return (
-        <VizContainer title={t('visualizations.tracker.title')}>
+        <VizContainer
+            title={t('visualizations.tracker.title')}
+            whyItMatters={t('visualizations.tracker.why_matters')}
+        >
             <div className="tracker-viz-wrapper">
                 {/* Header */}
                 <div className="tracker-header">
@@ -303,13 +307,10 @@ const TrackerBlockingViz = () => {
                     )}
                 </AnimatePresence>
 
-                {/* Explanation */}
-                <p className="tracker-explanation">
-                    {blocked
-                        ? t('visualizations.tracker.explanation_blocked')
-                        : t('visualizations.tracker.explanation_exposed')
-                    }
-                </p>
+                <StepCaption
+                    steps={tArray(t, 'visualizations.tracker.steps')}
+                    currentStep={currentStep}
+                />
 
                 <AnimationControls
                     currentStep={currentStep}

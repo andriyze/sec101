@@ -12,7 +12,14 @@ export const readStoredScore = (storageKey, storage = globalThis.window?.localSt
     const raw = storage.getItem(storageKey);
     if (!raw) return null;
     try {
-        return JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        const isValid = parsed
+            && typeof parsed.score === 'number'
+            && typeof parsed.total === 'number'
+            && parsed.total > 0
+            && parsed.score >= 0
+            && parsed.score <= parsed.total;
+        return isValid ? parsed : null;
     } catch {
         return null;
     }

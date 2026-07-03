@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { User, Users, Server, Lock, Unlock, EyeOff, ArrowRight } from 'lucide-react';
+import { User, Users, Server, Lock, Unlock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import VizContainer from './VizContainer';
 import AnimationControls from './AnimationControls';
+import StepCaption from './StepCaption';
 import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
 
 const E2eEncryptionViz = () => {
     const { t } = useTranslation();
+    const [mode, setMode] = useState('e2e');
+    const isE2e = mode === 'e2e';
 
     const {
         currentStep,
@@ -26,14 +30,20 @@ const E2eEncryptionViz = () => {
         autoPlay: false
     });
 
-    // Animation cycle: 0=start, 1=encrypting, 2=in-transit, 3=decrypting, 4=received
-    const getMessage = () => {
-        if (currentStep <= 0) return t('visualizations.e2e.message');
-        if (currentStep >= 4) return t('visualizations.e2e.message');
-        return '••••••••';
+    const handleModeChange = (nextMode) => {
+        if (nextMode === mode) return;
+        setMode(nextMode);
+        goToStep(0);
     };
 
-    const isEncrypted = currentStep >= 1 && currentStep <= 3;
+    // Animation cycle: 0=start, 1=encrypting, 2=in-transit, 3=decrypting, 4=received
+    const inTransit = currentStep >= 1 && currentStep <= 3;
+    const isEncrypted = isE2e && inTransit;
+
+    const getMessage = () => {
+        if (isEncrypted) return '••••••••';
+        return t('visualizations.e2e.message');
+    };
 
     const messageVariants = {
         initial: { opacity: 0, scale: 0.8 },
@@ -53,8 +63,29 @@ const E2eEncryptionViz = () => {
     };
 
     return (
-        <VizContainer title={t('visualizations.e2e.title')}>
+        <VizContainer
+            title={t('visualizations.e2e.title')}
+            whyItMatters={t('visualizations.e2e.why_matters')}
+        >
             <div className="e2e-viz-wrapper">
+                {/* Mode Toggle */}
+                <div className="viz-mode-toggle">
+                    <button
+                        className={!isE2e ? 'active' : ''}
+                        aria-pressed={!isE2e}
+                        onClick={() => handleModeChange('regular')}
+                    >
+                        {t('visualizations.e2e.mode_regular')}
+                    </button>
+                    <button
+                        className={isE2e ? 'active' : ''}
+                        aria-pressed={isE2e}
+                        onClick={() => handleModeChange('e2e')}
+                    >
+                        {t('visualizations.e2e.mode_e2e')}
+                    </button>
+                </div>
+
                 {/* Main Flow */}
                 <div className="e2e-flow">
                     {/* Sender */}
@@ -67,11 +98,11 @@ const E2eEncryptionViz = () => {
 
                     {/* Lock Icon */}
                     <motion.div
-                        style={{ color: currentStep === 1 ? 'var(--primary)' : 'var(--text-dim)' }}
-                        animate={!prefersReducedMotion && currentStep === 1 ? { scale: [1, 1.2, 1] } : {}}
+                        style={{ color: isE2e && currentStep === 1 ? 'var(--primary)' : 'var(--text-dim)' }}
+                        animate={!prefersReducedMotion && isE2e && currentStep === 1 ? { scale: [1, 1.2, 1] } : {}}
                         transition={{ duration: 0.3 }}
                     >
-                        <Lock size={16} />
+                        {isE2e ? <Lock size={16} /> : <Unlock size={16} />}
                     </motion.div>
 
                     {/* Arrow */}
@@ -110,8 +141,8 @@ const E2eEncryptionViz = () => {
 
                     {/* Unlock Icon */}
                     <motion.div
-                        style={{ color: currentStep === 3 ? 'var(--primary)' : 'var(--text-dim)' }}
-                        animate={!prefersReducedMotion && currentStep === 3 ? { scale: [1, 1.2, 1] } : {}}
+                        style={{ color: isE2e && currentStep === 3 ? 'var(--primary)' : 'var(--text-dim)' }}
+                        animate={!prefersReducedMotion && isE2e && currentStep === 3 ? { scale: [1, 1.2, 1] } : {}}
                         transition={{ duration: 0.3 }}
                     >
                         <Unlock size={16} />
@@ -129,15 +160,29 @@ const E2eEncryptionViz = () => {
                 {/* Server Note */}
                 <motion.div
                     className="e2e-server-note"
+                    style={!isE2e && inTransit ? {
+                        color: 'var(--accent)',
+                        border: '1px solid rgba(255, 0, 85, 0.35)',
+                    } : undefined}
                     animate={{
-                        opacity: isEncrypted ? 1 : 0.5,
+                        opacity: inTransit ? 1 : 0.5,
                     }}
                     transition={{ duration: 0.3 }}
                 >
                     <Server size={14} />
-                    <EyeOff size={12} />
-                    <span>{t('visualizations.e2e.server_blind')}</span>
+                    {isE2e ? <EyeOff size={12} /> : <Eye size={12} />}
+                    <span>
+                        {isE2e
+                            ? t('visualizations.e2e.server_blind')
+                            : t('visualizations.e2e.server_reads')
+                        }
+                    </span>
                 </motion.div>
+
+                <StepCaption
+                    steps={tArray(t, isE2e ? 'visualizations.e2e.steps' : 'visualizations.e2e.steps_regular')}
+                    currentStep={currentStep}
+                />
 
                 <AnimationControls
                     currentStep={currentStep}

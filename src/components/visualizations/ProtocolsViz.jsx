@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, Lock, Unlock, Check, X, Zap } from 'lucide-react';
 import VizContainer from './VizContainer';
 import AnimationControls from './AnimationControls';
+import StepCaption from './StepCaption';
 import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
 
 const ProtocolsViz = () => {
     const { t } = useTranslation();
@@ -23,7 +25,7 @@ const ProtocolsViz = () => {
         prefersReducedMotion
     } = useAnimationControl({
         totalSteps: 4,
-        interval: 1200,
+        interval: 4000,
         loop: true
     });
 
@@ -40,7 +42,10 @@ const ProtocolsViz = () => {
     };
 
     return (
-        <VizContainer title={t('visualizations.protocols.title')}>
+        <VizContainer
+            title={t('visualizations.protocols.title')}
+            whyItMatters={t('visualizations.protocols.why_matters')}
+        >
             <div className="protocols-viz-wrapper">
                 {/* Comparison toggle */}
                 <div className="protocols-toggle">
@@ -48,13 +53,13 @@ const ProtocolsViz = () => {
                         className={`protocols-toggle-btn ${comparison === 'http' ? 'active' : ''}`}
                         onClick={() => handleComparisonChange('http')}
                     >
-                        HTTP / HTTPS
+                        {t('visualizations.protocols.toggle_web')}
                     </button>
                     <button
                         className={`protocols-toggle-btn ${comparison === 'tcp' ? 'active' : ''}`}
                         onClick={() => handleComparisonChange('tcp')}
                     >
-                        TCP / UDP
+                        {t('visualizations.protocols.toggle_transport')}
                     </button>
                 </div>
 
@@ -173,6 +178,17 @@ const ProtocolsViz = () => {
                         </div>
                     </div>
                 )}
+
+                {/* Step narration (follows the active comparison mode) */}
+                <StepCaption
+                    steps={tArray(
+                        t,
+                        comparison === 'http'
+                            ? 'visualizations.protocols.steps_web'
+                            : 'visualizations.protocols.steps_transport'
+                    )}
+                    currentStep={currentStep}
+                />
 
                 {/* Animation Controls */}
                 <AnimationControls

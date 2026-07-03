@@ -42,12 +42,12 @@ const Devices = () => {
 
     useEffect(() => {
         const handleStorageReset = () => {
-            setCompleted(emptyChecklistState());
+            setCompleted(Array(checklistItems.length).fill(false));
         };
 
         window.addEventListener(STORAGE_RESET_EVENT, handleStorageReset);
         return () => window.removeEventListener(STORAGE_RESET_EVENT, handleStorageReset);
-    });
+    }, [checklistItems.length]);
 
     return (
         <div className="animate-fade-in">

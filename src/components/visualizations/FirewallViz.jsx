@@ -1,93 +1,54 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React from 'react';
 // eslint-disable-next-line no-unused-vars -- motion is used in JSX as motion.div
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Monitor, Shield, Globe, Check, X, Play, Pause } from 'lucide-react';
+import { Monitor, Shield, Globe, Check, X } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import StepCaption from './StepCaption';
+import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
+
+const RULES = [
+    { port: 443, allowed: true, labelKey: 'rule_web_secure' },
+    { port: 80, allowed: true, labelKey: 'rule_web' },
+    { port: 23, allowed: false, labelKey: 'rule_telnet' }
+];
+
+// Scripted packet for each step (steps 0 and 4 show no traveling packet)
+const STEP_PACKETS = {
+    1: { port: 443, allowed: true },
+    2: { port: 80, allowed: true },
+    3: { port: 23, allowed: false }
+};
 
 const FirewallViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const [packets, setPackets] = useState(() => {
-        // Initial state for reduced motion - show static example
-        if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            return [
-                { id: 1, allowed: true, port: 443, status: 'passed' },
-                { id: 2, allowed: false, port: 23, status: 'blocked' },
-            ];
-        }
-        return [];
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 5,
+        interval: 4000
     });
-    const [isPlaying, setIsPlaying] = useState(false);
-    const packetIdRef = useRef(0);
-    const intervalRef = useRef(null);
 
-    const generatePacket = useCallback(() => {
-        const allowed = Math.random() > 0.4; // 60% allowed
-        const ports = allowed ? [80, 443, 22] : [23, 3389, 8080];
-        const port = ports[Math.floor(Math.random() * ports.length)];
-
-        const newPacket = {
-            id: packetIdRef.current,
-            allowed,
-            port,
-            status: 'incoming'
-        };
-        packetIdRef.current += 1;
-
-        setPackets(prev => [...prev.slice(-4), newPacket]);
-
-        // Update packet status
-        setTimeout(() => {
-            setPackets(prev => prev.map(p =>
-                p.id === newPacket.id ? { ...p, status: 'checking' } : p
-            ));
-        }, 400);
-
-        setTimeout(() => {
-            setPackets(prev => prev.map(p =>
-                p.id === newPacket.id ? { ...p, status: allowed ? 'passed' : 'blocked' } : p
-            ));
-        }, 800);
-
-        setTimeout(() => {
-            setPackets(prev => prev.filter(p => p.id !== newPacket.id));
-        }, 1800);
-    }, []);
-
-    // Handle play/pause
-    useEffect(() => {
-        if (isPlaying && !prefersReducedMotion) {
-            intervalRef.current = setInterval(generatePacket, 2000);
-        } else {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
-                intervalRef.current = null;
-            }
-        }
-
-        return () => {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
-            }
-        };
-    }, [isPlaying, prefersReducedMotion, generatePacket]);
-
-    const togglePlay = () => {
-        if (prefersReducedMotion) return;
-        setIsPlaying(prev => !prev);
-    };
-
-    const packetVariants = {
-        incoming: { x: -80, opacity: 0 },
-        checking: { x: 0, opacity: 1, scale: 1.1 },
-        passed: { x: 100, opacity: 0.5 },
-        blocked: { x: 0, opacity: 0, scale: 0 }
-    };
+    const activePacket = STEP_PACKETS[currentStep];
+    const checkedPort = activePacket ? activePacket.port : null;
+    // Emphasize the shield/doorman on the intro and summary steps
+    const shieldEmphasized = currentStep === 0 || currentStep === 4;
 
     return (
-        <VizContainer title={t('visualizations.firewall.title')}>
+        <VizContainer
+            title={t('visualizations.firewall.title')}
+            whyItMatters={t('visualizations.firewall.why_matters')}
+        >
             <div className="firewall-viz-wrapper">
                 {/* Network zones */}
                 <div className="firewall-zones">
@@ -98,14 +59,45 @@ const FirewallViz = () => {
                     </div>
 
                     {/* Firewall */}
-                    <div className="firewall-wall">
+                    <motion.div
+                        className="firewall-wall"
+                        initial={false}
+                        animate={{
+                            scale: shieldEmphasized ? 1.04 : 1,
+                            boxShadow: shieldEmphasized
+                                ? '0 0 24px rgba(112, 0, 255, 0.45)'
+                                : '0 0 0px rgba(112, 0, 255, 0)'
+                        }}
+                        transition={{ duration: 0.5 }}
+                    >
                         <Shield size={28} color="var(--primary)" />
                         <div className="firewall-rules">
-                            <span className="firewall-rule allow">:443 ✓</span>
-                            <span className="firewall-rule allow">:80 ✓</span>
-                            <span className="firewall-rule deny">:23 ✗</span>
+                            {RULES.map((rule) => {
+                                const isChecking = checkedPort === rule.port;
+                                return (
+                                    <motion.span
+                                        key={rule.port}
+                                        className={`firewall-rule ${rule.allowed ? 'allow' : 'deny'}`}
+                                        initial={false}
+                                        animate={{
+                                            scale: isChecking ? 1.1 : 1,
+                                            boxShadow: isChecking
+                                                ? (rule.allowed
+                                                    ? '0 0 10px rgba(0, 255, 157, 0.6)'
+                                                    : '0 0 10px rgba(255, 0, 85, 0.6)')
+                                                : '0 0 0px rgba(0, 0, 0, 0)'
+                                        }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        :{rule.port} {rule.allowed ? '✓' : '✗'}
+                                        <span style={{ marginLeft: '0.35em', opacity: 0.85 }}>
+                                            {t(`visualizations.firewall.${rule.labelKey}`)}
+                                        </span>
+                                    </motion.span>
+                                );
+                            })}
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Internal */}
                     <div className="firewall-zone internal">
@@ -115,27 +107,53 @@ const FirewallViz = () => {
                 </div>
 
                 {/* Packet flow */}
-                <div className="firewall-packets">
-                    <AnimatePresence>
-                        {packets.map((packet) => (
-                            <motion.div
-                                key={packet.id}
-                                className={`firewall-packet ${packet.allowed ? 'allowed' : 'blocked'} ${packet.status}`}
-                                variants={packetVariants}
-                                initial="incoming"
-                                animate={packet.status}
-                                exit={{ opacity: 0 }}
-                                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                <div className="firewall-packets" style={{ gap: '1rem' }}>
+                    {activePacket && !prefersReducedMotion && (
+                        <motion.div
+                            key={`packet-${currentStep}`}
+                            className={`firewall-packet ${activePacket.allowed ? 'allowed' : 'blocked'}`}
+                            initial={{ x: -140, opacity: 0 }}
+                            animate={{
+                                x: activePacket.allowed
+                                    ? [-140, 0, 0, 140]
+                                    : [-140, 0, 0, -100],
+                                opacity: [0, 1, 1, activePacket.allowed ? 0.7 : 0.85]
+                            }}
+                            transition={{ duration: 3.4, times: [0, 0.3, 0.65, 1], ease: 'easeInOut' }}
+                        >
+                            <span className="firewall-packet-port">:{activePacket.port}</span>
+                            <motion.span
+                                className="firewall-checking"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
+                                transition={{ duration: 3.4, times: [0, 0.3, 0.38, 0.55, 0.63, 1] }}
                             >
-                                <span className="firewall-packet-port">:{packet.port}</span>
-                                {packet.status === 'checking' && (
-                                    <span className="firewall-checking">{t('visualizations.firewall.checking')}</span>
-                                )}
-                                {packet.status === 'passed' && <Check size={12} />}
-                                {packet.status === 'blocked' && <X size={12} />}
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
+                                {t('visualizations.firewall.checking')}
+                            </motion.span>
+                            <motion.span
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: [0, 0, 1] }}
+                                transition={{ duration: 3.4, times: [0, 0.63, 0.75] }}
+                                style={{ display: 'inline-flex', alignItems: 'center' }}
+                            >
+                                {activePacket.allowed ? <Check size={12} /> : <X size={12} />}
+                            </motion.span>
+                        </motion.div>
+                    )}
+
+                    {/* Summary step: one allowed + one blocked, shown statically */}
+                    {currentStep === 4 && (
+                        <>
+                            <div className="firewall-packet allowed" style={{ position: 'static' }}>
+                                <span className="firewall-packet-port">:443</span>
+                                <Check size={12} />
+                            </div>
+                            <div className="firewall-packet blocked" style={{ position: 'static' }}>
+                                <span className="firewall-packet-port">:23</span>
+                                <X size={12} />
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 {/* Legend */}
@@ -148,18 +166,23 @@ const FirewallViz = () => {
                     </span>
                 </div>
 
-                {/* Simple Play/Pause Control */}
-                <div className={`animation-controls ${prefersReducedMotion ? 'disabled' : ''}`}>
-                    <button
-                        className="animation-control-btn play-pause"
-                        onClick={togglePlay}
-                        disabled={prefersReducedMotion}
-                        aria-label={isPlaying ? t('controls.pause', 'Pause animation') : t('controls.play', 'Play animation')}
-                        title={isPlaying ? t('controls.pause', 'Pause') : t('controls.play', 'Play')}
-                    >
-                        {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-                    </button>
-                </div>
+                {/* Step narration */}
+                <StepCaption
+                    steps={tArray(t, 'visualizations.firewall.steps')}
+                    currentStep={currentStep}
+                />
+
+                {/* Animation Controls */}
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

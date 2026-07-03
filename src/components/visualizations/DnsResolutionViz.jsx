@@ -114,7 +114,7 @@ const DnsResolutionViz = () => {
     const showingResponse = currentStep === 4;
 
     return (
-        <VizContainer title={t('visualizations.dns.title')}>
+        <VizContainer title={t('visualizations.dns.title')} whyItMatters={t('visualizations.dns.why_matters')}>
             <div className="dns-viz-wrapper">
                 {/* Step Explanation Panel */}
                 <div className="dns-explanation-panel" aria-live="polite" aria-atomic="true">

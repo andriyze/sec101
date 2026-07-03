@@ -3643,3 +3643,96 @@ a.tool-list-item:focus-visible {
     height: 8px;
   }
 }
+
+/* Shared visualization step captions */
+.viz-step-caption {
+  background: rgba(0, 242, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.viz-step-caption-number {
+  font-size: 0.7rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.viz-step-caption-title {
+  font-size: 1rem;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.viz-step-caption-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.viz-why-matters {
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 255, 157, 0.05);
+  border: 1px solid rgba(0, 255, 157, 0.15);
+  border-radius: 6px;
+  margin-top: 0.75rem;
+}
+
+.viz-why-matters p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Interactive find-the-flags mode (phishing viz) */
+.viz-mode-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.viz-mode-toggle button {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 242, 255, 0.25);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.viz-mode-toggle button.active {
+  background: rgba(0, 242, 255, 0.12);
+  color: var(--text-main);
+  border-color: var(--primary);
+}
+
+.phishing-hotspot {
+  cursor: pointer;
+  border-radius: 4px;
+  transition:
+    outline 0.15s ease,
+    background 0.15s ease;
+  outline: 2px dashed transparent;
+}
+
+.phishing-hotspot:hover,
+.phishing-hotspot:focus-visible {
+  outline-color: rgba(0, 242, 255, 0.5);
+}
+
+.phishing-hotspot.found {
+  outline: 2px solid var(--accent);
+  background: rgba(255, 77, 109, 0.08);
+}

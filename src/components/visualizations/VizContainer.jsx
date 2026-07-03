@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const VizContainer = ({ title, description, children, className = '' }) => {
+const VizContainer = ({ title, description, whyItMatters, children, className = '' }) => {
     const { t } = useTranslation();
     const titleId = useId();
     const descriptionId = useId();
@@ -22,6 +22,11 @@ const VizContainer = ({ title, description, children, className = '' }) => {
             <div className="viz-content">
                 {children}
             </div>
+            {whyItMatters && (
+                <div className="viz-why-matters">
+                    <p>{whyItMatters}</p>
+                </div>
+            )}
         </figure>
     );
 };

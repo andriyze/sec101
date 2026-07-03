@@ -18,7 +18,12 @@ const mimeTypes = {
 };
 
 const resolveAssetPath = (pathname) => {
-    const decodedPath = decodeURIComponent(pathname.split('?')[0]);
+    let decodedPath;
+    try {
+        decodedPath = decodeURIComponent(pathname.split('?')[0]);
+    } catch {
+        return join(root, 'index.html');
+    }
     const normalized = normalize(decodedPath).replace(/^(\.\.[/\\])+/, '');
     const candidate = join(root, normalized);
 
@@ -34,24 +39,39 @@ const resolveAssetPath = (pathname) => {
 };
 
 const server = createServer((request, response) => {
-    const filePath = resolveAssetPath(request.url || '/');
-    const extension = extname(filePath);
+    try {
+        const filePath = resolveAssetPath(request.url || '/');
+        const extension = extname(filePath);
 
-    response.setHeader('Content-Type', mimeTypes[extension] || 'application/octet-stream');
-    response.setHeader('X-Content-Type-Options', 'nosniff');
+        response.setHeader('Content-Type', mimeTypes[extension] || 'application/octet-stream');
+        response.setHeader('X-Content-Type-Options', 'nosniff');
 
-    if (filePath.includes(`${sep}assets${sep}`)) {
-        response.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-    } else {
-        response.setHeader('Cache-Control', 'public, max-age=300');
+        if (filePath.includes(`${sep}assets${sep}`)) {
+            response.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else {
+            // The shell must revalidate on every load so a fresh deploy's
+            // hashed asset URLs are picked up immediately.
+            response.setHeader('Cache-Control', 'no-cache');
+        }
+
+        createReadStream(filePath)
+            .on('error', () => {
+                if (response.headersSent) {
+                    response.destroy();
+                    return;
+                }
+                response.writeHead(404);
+                response.end('Not found');
+            })
+            .pipe(response);
+    } catch {
+        if (response.headersSent) {
+            response.destroy();
+            return;
+        }
+        response.writeHead(500);
+        response.end('Internal server error');
     }
-
-    createReadStream(filePath)
-        .on('error', () => {
-            response.writeHead(404);
-            response.end('Not found');
-        })
-        .pipe(response);
 });
 
 server.listen(port, host, () => {

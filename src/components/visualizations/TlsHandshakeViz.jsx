@@ -222,6 +222,12 @@ const TlsHandshakeViz = () => {
                         {t('visualizations.tls.why_matters', 'Without TLS, passwords and personal data travel in plain text anyone can intercept. Always look for the padlock icon in your browser.')}
                     </p>
                 </div>
+
+                {/* Technical details toggle */}
+                <details className="dns-technical">
+                    <summary>{t('visualizations.tls.technical_title', 'Technical details')}</summary>
+                    <p>{t('visualizations.tls.technical_text', 'The steps above are the TLS 1.3 handshake: ClientHello (supported versions and cipher suites), ServerHello with the certificate, a Diffie–Hellman key exchange producing session keys, then symmetric encryption (e.g. AES-256) with integrity checks (HMAC). The whole exchange takes one round trip.')}</p>
+                </details>
             </div>
         </VizContainer>
     );

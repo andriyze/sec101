@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { ShieldAlert, ShieldCheck, Brain, Key, Fingerprint } from 'lucide-react';
 import VizContainer from './VizContainer';
 import AnimationControls from './AnimationControls';
+import StepCaption from './StepCaption';
 import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
 
 const MfaFactorsViz = () => {
     const { t } = useTranslation();
@@ -75,15 +77,11 @@ const MfaFactorsViz = () => {
     };
 
     return (
-        <VizContainer title={t('visualizations.mfa.title')}>
+        <VizContainer
+            title={t('visualizations.mfa.title')}
+            whyItMatters={t('visualizations.mfa.why_matters')}
+        >
             <div className="mfa-viz-wrapper">
-                {/* Explanation Header */}
-                <div className="mfa-header">
-                    <p className="mfa-explanation">
-                        {t('visualizations.mfa.explanation')}
-                    </p>
-                </div>
-
                 {/* Factors Row */}
                 <div className="mfa-factors-row">
                     {factors.map((factor) => {
@@ -153,6 +151,11 @@ const MfaFactorsViz = () => {
                         )}
                     </motion.div>
                 </AnimatePresence>
+
+                <StepCaption
+                    steps={tArray(t, 'visualizations.mfa.steps')}
+                    currentStep={currentStep}
+                />
 
                 <AnimationControls
                     currentStep={currentStep}

@@ -15,6 +15,10 @@ import { useTranslation } from 'react-i18next';
  * @param {boolean} props.disabled - Disable all controls (e.g., for reduced motion)
  * @param {boolean} props.showStepDots - Show step indicator dots (default: true)
  * @param {boolean} props.loop - Whether animation loops (affects button states)
+ * @param {number} props.dotCount - Render this many dots instead of totalSteps
+ *   (for visualizations where several steps map to one visual stage)
+ * @param {number} props.activeDot - Which dot is active when dotCount is used
+ * @param {function} props.onDotClick - Called with dot index when dotCount is used
  */
 const AnimationControls = ({
     currentStep,
@@ -26,12 +30,18 @@ const AnimationControls = ({
     onTogglePlay,
     disabled = false,
     showStepDots = true,
-    loop = true
+    loop = true,
+    dotCount,
+    activeDot,
+    onDotClick
 }) => {
     const { t } = useTranslation();
 
     const isFirstStep = currentStep === 0;
     const isLastStep = currentStep === totalSteps - 1;
+    const dots = dotCount ?? totalSteps;
+    const currentDot = dotCount != null ? activeDot : currentStep;
+    const handleDotClick = dotCount != null ? onDotClick : onGoToStep;
 
     return (
         <div className={`animation-controls ${disabled ? 'disabled' : ''}`}>
@@ -48,14 +58,14 @@ const AnimationControls = ({
 
             {/* Step dots */}
             {showStepDots && (
-                <div className="animation-step-dots" aria-label={t('controls.steps', 'Animation steps')}>
-                    {Array.from({ length: totalSteps }, (_, i) => (
+                <div className="animation-step-dots" role="group" aria-label={t('controls.steps', 'Animation steps')}>
+                    {Array.from({ length: dots }, (_, i) => (
                         <button
                             key={i}
-                            className={`animation-step-dot ${currentStep === i ? 'active' : ''} ${currentStep > i ? 'done' : ''}`}
-                            onClick={() => onGoToStep?.(i)}
+                            className={`animation-step-dot ${currentDot === i ? 'active' : ''} ${currentDot > i ? 'done' : ''}`}
+                            onClick={() => handleDotClick?.(i)}
                             disabled={disabled}
-                            aria-current={currentStep === i ? 'step' : undefined}
+                            aria-current={currentDot === i ? 'step' : undefined}
                             aria-label={t('controls.go_to_step', { step: i + 1, defaultValue: `Go to step ${i + 1}` })}
                             title={t('controls.step_n', { n: i + 1, defaultValue: `Step ${i + 1}` })}
                         />

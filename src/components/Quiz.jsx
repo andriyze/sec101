@@ -25,6 +25,9 @@ const QuizSession = ({ title, questions, storageKey, onComplete }) => {
 
         const refreshBestScore = (event) => {
             if (event.detail?.storageKey && event.detail.storageKey !== storageKey) return;
+            // Native cross-tab storage events carry the written key; ignore
+            // writes to unrelated keys (event.key is null on clear()).
+            if (event.type === 'storage' && event.key !== null && event.key !== storageKey) return;
 
             const stored = readStoredScore(storageKey);
             setBestScore(stored);
@@ -110,7 +113,7 @@ const QuizSession = ({ title, questions, storageKey, onComplete }) => {
                     const isWrong = selected === idx && idx !== question.answer;
                     return (
                         <button
-                            key={opt}
+                            key={idx}
                             className={`quiz-option ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}`}
                             onClick={() => onSelect(idx)}
                             aria-pressed={selected === idx}

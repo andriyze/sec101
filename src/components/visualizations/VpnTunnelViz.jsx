@@ -4,13 +4,47 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { User, Building2, Globe, Shield, Eye, EyeOff, Lock } from 'lucide-react';
 import VizContainer from './VizContainer';
-import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import AnimationControls from './AnimationControls';
+import StepCaption from './StepCaption';
+import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
 
 const VpnTunnelViz = () => {
     const { t } = useTranslation();
-    const prefersReducedMotion = usePrefersReducedMotion();
+
+    const {
+        currentStep,
+        isPlaying,
+        totalSteps,
+        nextStep,
+        prevStep,
+        goToStep,
+        togglePlay,
+        prefersReducedMotion
+    } = useAnimationControl({
+        totalSteps: 4,
+        interval: 5000,
+        loop: true,
+        autoPlay: false
+    });
 
     const sites = ['bank.com', 'email.com', 'social.com'];
+
+    // Step 0: "without VPN" row active. Steps 1-3: "with VPN" row active.
+    const vpnActive = currentStep >= 1;
+    const ispEmphasized = currentStep === 2;
+    const vpnServerEmphasized = currentStep === 3;
+
+    const rowStyle = (isActive) => ({
+        opacity: isActive ? 1 : 0.35,
+        transition: 'opacity 0.4s ease',
+    });
+
+    const emphasisStyle = (isEmphasized, color, glow) => ({
+        borderColor: isEmphasized ? color : undefined,
+        boxShadow: isEmphasized ? `0 0 15px ${glow}` : 'none',
+        transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+    });
 
     const packetVariants = {
         animate: (i) => ({
@@ -54,10 +88,13 @@ const VpnTunnelViz = () => {
     };
 
     return (
-        <VizContainer title={t('visualizations.vpn.title')}>
+        <VizContainer
+            title={t('visualizations.vpn.title')}
+            whyItMatters={t('visualizations.vpn.why_matters')}
+        >
             <div className="vpn-viz-wrapper">
                 {/* Without VPN Row */}
-                <div className="vpn-viz-row">
+                <div className="vpn-viz-row" style={rowStyle(!vpnActive)}>
                     <span className="vpn-viz-label no-vpn">{t('visualizations.vpn.without')}</span>
 
                     {/* User */}
@@ -70,7 +107,7 @@ const VpnTunnelViz = () => {
 
                     {/* Connection to ISP */}
                     <div className="viz-connection viz-connection-md">
-                        {!prefersReducedMotion && sites.map((site, i) => (
+                        {!prefersReducedMotion && !vpnActive && sites.map((site, i) => (
                             <motion.div
                                 key={`packet-${i}`}
                                 className="viz-packet visible"
@@ -115,7 +152,7 @@ const VpnTunnelViz = () => {
                 </div>
 
                 {/* With VPN Row */}
-                <div className="vpn-viz-row">
+                <div className="vpn-viz-row" style={rowStyle(vpnActive)}>
                     <span className="vpn-viz-label with-vpn">{t('visualizations.vpn.with')}</span>
 
                     {/* User */}
@@ -129,10 +166,10 @@ const VpnTunnelViz = () => {
                     {/* Encrypted Tunnel */}
                     <motion.div
                         className="viz-connection encrypted viz-connection-lg"
-                        variants={!prefersReducedMotion ? glowVariants : undefined}
-                        animate={!prefersReducedMotion ? 'animate' : undefined}
+                        variants={!prefersReducedMotion && vpnActive ? glowVariants : undefined}
+                        animate={!prefersReducedMotion && vpnActive ? 'animate' : undefined}
                     >
-                        {!prefersReducedMotion && [0, 1].map((i) => (
+                        {!prefersReducedMotion && vpnActive && [0, 1].map((i) => (
                             <motion.div
                                 key={`enc-packet-${i}`}
                                 className="viz-packet encrypted"
@@ -147,9 +184,12 @@ const VpnTunnelViz = () => {
                     </motion.div>
 
                     {/* ISP (can't see) */}
-                    <div className="viz-node">
+                    <div
+                        className="viz-node"
+                        style={emphasisStyle(ispEmphasized, 'var(--primary)', 'rgba(0, 242, 255, 0.35)')}
+                    >
                         <div className="viz-node-icon" style={{ background: 'rgba(255, 255, 255, 0.05)' }}>
-                            <Building2 size={20} color="var(--text-dim)" />
+                            <Building2 size={20} color={ispEmphasized ? 'var(--primary)' : 'var(--text-dim)'} />
                         </div>
                         <span className="viz-node-label">{t('visualizations.vpn.isp')}</span>
                         <div className="viz-isp-sees">
@@ -168,11 +208,30 @@ const VpnTunnelViz = () => {
                     <div className="viz-connection viz-connection-xs" />
 
                     {/* VPN Server */}
-                    <div className="viz-node" style={{ borderColor: 'var(--primary)' }}>
+                    <div
+                        className="viz-node"
+                        style={{
+                            borderColor: vpnServerEmphasized ? 'var(--accent)' : 'var(--primary)',
+                            boxShadow: vpnServerEmphasized ? '0 0 15px rgba(255, 0, 85, 0.3)' : 'none',
+                            transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+                        }}
+                    >
                         <div className="viz-node-icon">
-                            <Shield size={20} color="var(--primary)" />
+                            <Shield size={20} color={vpnServerEmphasized ? 'var(--accent)' : 'var(--primary)'} />
                         </div>
                         <span className="viz-node-label">{t('visualizations.vpn.vpn_server')}</span>
+                        {vpnServerEmphasized && (
+                            <div className="viz-isp-sees">
+                                <span className="viz-isp-sees-label">
+                                    <Eye size={10} /> {t('visualizations.vpn.sees')}
+                                </span>
+                                <div className="viz-isp-sees-content">
+                                    {sites.map((site) => (
+                                        <span key={site} className="viz-site-tag">{site}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* Connection to Internet */}
@@ -186,6 +245,22 @@ const VpnTunnelViz = () => {
                         <span className="viz-node-label">{t('visualizations.vpn.internet')}</span>
                     </div>
                 </div>
+
+                <StepCaption
+                    steps={tArray(t, 'visualizations.vpn.steps')}
+                    currentStep={currentStep}
+                />
+
+                <AnimationControls
+                    currentStep={currentStep}
+                    totalSteps={totalSteps}
+                    isPlaying={isPlaying}
+                    onPrev={prevStep}
+                    onNext={nextStep}
+                    onGoToStep={goToStep}
+                    onTogglePlay={togglePlay}
+                    disabled={prefersReducedMotion}
+                />
             </div>
         </VizContainer>
     );

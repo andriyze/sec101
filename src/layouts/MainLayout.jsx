@@ -11,6 +11,8 @@ const MainLayout = () => {
     const location = useLocation();
     const { isTopicCompleted, resetProgress } = useProgress();
     const mainRef = useRef(null);
+    const dialogRef = useRef(null);
+    const cancelButtonRef = useRef(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
         typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
     );
@@ -64,13 +66,12 @@ const MainLayout = () => {
     }, []);
 
     const currentNav = navItems.find((item) => item.path === location.pathname);
+    const currentPageLabel = currentNav && !currentNav.isHome ? currentNav.label : null;
 
     useEffect(() => {
         document.documentElement.lang = i18n.language === 'ua' ? 'uk' : 'en';
-        document.title = currentNav?.isHome || !currentNav
-            ? t('app.title')
-            : `${currentNav.label} · ${t('app.title')}`;
-    }, [currentNav, i18n.language, t]);
+        document.title = currentPageLabel ? `${currentPageLabel} · ${t('app.title')}` : t('app.title');
+    }, [currentPageLabel, i18n.language, t]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -85,14 +86,37 @@ const MainLayout = () => {
     useEffect(() => {
         if (!showResetConfirm) return undefined;
 
+        const previouslyFocused = document.activeElement;
+        cancelButtonRef.current?.focus();
+
         const handleKeyDown = (event) => {
             if (event.key === 'Escape') {
                 setShowResetConfirm(false);
+                return;
+            }
+            if (event.key !== 'Tab') return;
+
+            const focusables = dialogRef.current?.querySelectorAll('button');
+            if (!focusables?.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            if (previouslyFocused instanceof HTMLElement) {
+                previouslyFocused.focus();
+            }
+        };
     }, [showResetConfirm]);
 
     return (
@@ -231,6 +255,7 @@ const MainLayout = () => {
             {showResetConfirm && (
                 <div className="modal-backdrop" role="presentation" onMouseDown={() => setShowResetConfirm(false)}>
                     <div
+                        ref={dialogRef}
                         className="modal-panel"
                         role="dialog"
                         aria-modal="true"
@@ -241,7 +266,7 @@ const MainLayout = () => {
                         <h2 id="reset-dialog-title">{t('common.reset_progress')}</h2>
                         <p id="reset-dialog-desc">{t('common.reset_confirm')}</p>
                         <div className="modal-actions">
-                            <button className="btn btn-glass" onClick={() => setShowResetConfirm(false)}>
+                            <button ref={cancelButtonRef} className="btn btn-glass" onClick={() => setShowResetConfirm(false)}>
                                 {t('common.cancel')}
                             </button>
                             <button className="btn btn-primary" onClick={confirmResetProgress}>

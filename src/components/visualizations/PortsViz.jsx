@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Building2, Mail, Globe, Terminal, Lock, Server } from 'lucide-react';
 import VizContainer from './VizContainer';
 import AnimationControls from './AnimationControls';
+import StepCaption from './StepCaption';
 import { useAnimationControl } from './useAnimationControl';
+import { tArray } from '../../i18n/safeTranslate';
 
 const PortsViz = () => {
     const { t } = useTranslation();
@@ -29,10 +31,11 @@ const PortsViz = () => {
         prefersReducedMotion
     } = useAnimationControl({
         totalSteps: ports.length,
-        interval: 2500,
+        interval: 4000,
         loop: true
     });
 
+    // Step order matches visualizations.ports.steps: 80, 443, 22, 25, 53
     const activePort = currentStep;
 
     const visitorVariants = {
@@ -52,7 +55,10 @@ const PortsViz = () => {
     };
 
     return (
-        <VizContainer title={t('visualizations.ports.title')}>
+        <VizContainer
+            title={t('visualizations.ports.title')}
+            whyItMatters={t('visualizations.ports.why_matters')}
+        >
             <div className="ports-viz-wrapper">
                 {/* Building header */}
                 <div className="ports-building-header">
@@ -113,6 +119,12 @@ const PortsViz = () => {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Step narration */}
+                <StepCaption
+                    steps={tArray(t, 'visualizations.ports.steps')}
+                    currentStep={currentStep}
+                />
 
                 {/* Animation Controls */}
                 <AnimationControls
