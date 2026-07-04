@@ -15,6 +15,8 @@ import { tArray } from '../i18n/safeTranslate';
 const Advanced = () => {
     const { t } = useTranslation();
     const quizQuestions = tArray(t, 'advanced.quiz.questions');
+    const webSecurityItems = tArray(t, 'advanced.web_security.items');
+    const webSecurityFlow = tArray(t, 'advanced.web_security.flow_steps');
 
     return (
         <div className="animate-fade-in">
@@ -87,6 +89,42 @@ const Advanced = () => {
                 </div>
                 <p style={{ marginBottom: '1.5rem', color: 'var(--text-muted)' }}>{t('advanced.ipv.intro')}</p>
                 <IpVersionsViz />
+            </section>
+
+            {/* Web App Security Section */}
+            <section className="section">
+                <div className="section-title" style={{ marginBottom: '1rem' }}>
+                    <Shield size={24} color="var(--primary)" /> <h3 style={{ margin: 0 }}>{t('advanced.web_security.title')}</h3>
+                </div>
+                <p style={{ marginBottom: '1.5rem', color: 'var(--text-muted)' }}>{t('advanced.web_security.intro')}</p>
+
+                <div className="grid grid-cols-2 gap-6">
+                    {webSecurityItems.map(item => (
+                        <div key={item.title} className="card panel-solid">
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                                <div className="icon-box" style={{ marginBottom: 0, fontSize: '0.95rem', fontWeight: 700 }}>
+                                    {item.tag}
+                                </div>
+                                <h4 style={{ margin: 0 }}>{item.title}</h4>
+                            </div>
+                            <p style={{ color: 'var(--text-muted)', marginBottom: '0.75rem' }}>{item.desc}</p>
+                            <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                                {(item.points || []).map(point => (
+                                    <li key={point} style={{ marginBottom: '0.25rem' }}>{point}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="card panel-solid" style={{ marginTop: '1.5rem', borderLeft: '4px solid var(--primary)' }}>
+                    <h4 style={{ marginBottom: '0.75rem' }}>{t('advanced.web_security.flow_title')}</h4>
+                    <ol style={{ paddingLeft: '1.2rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                        {webSecurityFlow.map(step => (
+                            <li key={step} style={{ marginBottom: '0.35rem' }}>{step}</li>
+                        ))}
+                    </ol>
+                </div>
             </section>
 
             {/* Quiz */}

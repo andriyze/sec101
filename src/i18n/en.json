@@ -1055,6 +1055,101 @@
       "title": "IPv4 vs IPv6",
       "intro": "The internet is running out of IPv4 addresses. IPv6 is the new standard with virtually unlimited addresses, but the transition is still ongoing."
     },
+    "web_security": {
+      "title": "Web App Security Basics",
+      "intro": "These ideas explain many real website bugs. You do not need to memorize attack names first; focus on what the browser sends, what the server must check, and where untrusted input must stay as data.",
+      "items": [
+        {
+          "tag": "ID",
+          "title": "Cookies, sessions, and tokens",
+          "desc": "HTTP does not remember users by itself, so sites use cookies or tokens to recognize that the same browser is logged in. A session cookie is like a temporary badge, not a place to store a password.",
+          "points": [
+            "HttpOnly keeps page JavaScript from reading a cookie.",
+            "Secure means the cookie is sent only over HTTPS.",
+            "SameSite limits when cookies are sent with cross-site requests."
+          ]
+        },
+        {
+          "tag": "WEB",
+          "title": "Same-origin policy and CORS",
+          "desc": "A browser origin is protocol + domain + port. The same-origin policy usually stops JavaScript from one origin from reading private data from another origin.",
+          "points": [
+            "CORS is a server's controlled permission for selected cross-origin reads.",
+            "CORS is not login, authorization, or a firewall.",
+            "Some cross-site requests can still be sent, so servers still need CSRF defenses."
+          ]
+        },
+        {
+          "tag": "API",
+          "title": "REST APIs",
+          "desc": "A REST API is a structured way for apps and servers to work with resources over HTTP. The method and status code should tell a clear story.",
+          "points": [
+            "GET reads; POST creates or performs an action; PUT/PATCH update; DELETE removes.",
+            "Every request must be checked: who is calling, what they may do, and whether the input is valid.",
+            "HTTPS protects API credentials while they travel over the network."
+          ]
+        },
+        {
+          "tag": "JS",
+          "title": "XSS",
+          "desc": "Cross-site scripting happens when attacker-controlled content runs as JavaScript inside a trusted page. Then the page can act with the user's access.",
+          "points": [
+            "Treat user input as data, not HTML or code.",
+            "Use safe output encoding, safe DOM APIs, and sanitizing for any allowed HTML.",
+            "Content Security Policy can reduce damage, but it does not replace fixing the bug."
+          ]
+        },
+        {
+          "tag": "REQ",
+          "title": "CSRF",
+          "desc": "Cross-site request forgery abuses the fact that browsers may attach login cookies automatically. A malicious page tries to make the victim's browser send a real request.",
+          "points": [
+            "Use anti-CSRF tokens for state-changing actions.",
+            "Set SameSite cookies where possible.",
+            "Re-check intent for sensitive actions like password, email, or payment changes."
+          ]
+        },
+        {
+          "tag": "DB",
+          "title": "SQL injection",
+          "desc": "SQL injection happens when untrusted input is joined into a database command. The database may read it as instructions instead of plain text.",
+          "points": [
+            "Use parameterized queries or prepared statements.",
+            "Do not build SQL by joining strings with user input.",
+            "Least-privilege database accounts limit damage if a bug slips through."
+          ]
+        },
+        {
+          "tag": "HDR",
+          "title": "Security headers",
+          "desc": "Security headers are instructions a server sends so the browser can enforce safer behavior. They are guardrails, not a replacement for server-side checks.",
+          "points": [
+            "HSTS tells browsers to use HTTPS for that site.",
+            "CSP limits where scripts and other content may load from.",
+            "Frame, referrer, and permissions policies reduce common browser-side risks."
+          ]
+        },
+        {
+          "tag": "FILE",
+          "title": "Content types and file uploads",
+          "desc": "Content-Type tells the browser how to interpret a response, and file uploads bring untrusted bytes into the system. Names and extensions can lie.",
+          "points": [
+            "Validate type, size, and content on the server.",
+            "Store uploads outside executable web paths when possible.",
+            "Return files with safe content types and download headers when needed."
+          ]
+        }
+      ],
+      "flow_title": "How these ideas connect",
+      "flow_steps": [
+        "A user logs in; the server returns a session cookie or token.",
+        "The browser includes that credential on later requests according to cookie and storage rules.",
+        "Same-origin policy and CORS control which pages can read API responses in the browser.",
+        "APIs check method, authentication, authorization, content type, and input.",
+        "Security headers tell the browser how strictly to handle the response.",
+        "Output encoding and parameterized queries keep user input as data, not code."
+      ]
+    },
     "quiz": {
       "title": "Advanced Networking Quiz",
       "questions": [
@@ -1144,6 +1239,61 @@
           "answer": 1,
           "correct": "Encrypted DNS protects the trip between you and the DNS resolver.",
           "explainer": "Your resolver still receives the query. Encrypted DNS is a privacy improvement, not invisibility."
+        },
+        {
+          "prompt": "What is a session cookie usually for?",
+          "options": [
+            "Helping the server recognize a browser that already logged in",
+            "Storing the user's password inside every web page",
+            "Making HTTPS unnecessary"
+          ],
+          "answer": 0,
+          "correct": "A session cookie is a temporary identifier that helps the site remember this browser is logged in.",
+          "explainer": "Treat session cookies and tokens like badges. If someone steals one, they may be able to act as that session."
+        },
+        {
+          "prompt": "What does the same-origin policy protect against?",
+          "options": [
+            "One site's JavaScript freely reading another site's private data",
+            "A router using the wrong Wi-Fi channel",
+            "A password manager creating a long password"
+          ],
+          "answer": 0,
+          "correct": "The browser uses origin boundaries to limit what a page's JavaScript can read.",
+          "explainer": "CORS can loosen that rule for specific cross-origin API reads, but it is not a login system."
+        },
+        {
+          "prompt": "What is XSS in a web app?",
+          "options": [
+            "Attacker-controlled JavaScript running inside a trusted page",
+            "A firewall blocking all network traffic",
+            "A database server losing internet access"
+          ],
+          "answer": 0,
+          "correct": "XSS means the trusted page ends up running script controlled by an attacker.",
+          "explainer": "A key defense is to treat user input as data and encode or sanitize it before display."
+        },
+        {
+          "prompt": "What is CSRF trying to abuse?",
+          "options": [
+            "A logged-in browser automatically sending cookies with a real request",
+            "A weak Wi-Fi password",
+            "A DNS server returning an IP address"
+          ],
+          "answer": 0,
+          "correct": "CSRF tries to trick a victim's browser into sending a request while their login is still active.",
+          "explainer": "Anti-CSRF tokens, SameSite cookies, and re-checking sensitive actions help stop it."
+        },
+        {
+          "prompt": "What is the standard defense against SQL injection?",
+          "options": [
+            "Parameterized queries or prepared statements",
+            "Adding more CSS to the page",
+            "Turning off HTTPS"
+          ],
+          "answer": 0,
+          "correct": "Parameterized queries keep user input separate from the SQL command.",
+          "explainer": "String-building database queries with untrusted input is the dangerous pattern."
         }
       ]
     }
