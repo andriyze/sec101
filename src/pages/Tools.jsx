@@ -30,6 +30,7 @@ const Tools = () => {
       icon: <Shield size={22} color="var(--primary)" />,
       intro: t('tools.os.intro'),
       items: tArray(t, 'tools.os.items'),
+      collapsible: true,
     },
     {
       title: t('tools.browsers.title'),
@@ -45,6 +46,68 @@ const Tools = () => {
     },
   ]
 
+  const renderToolItems = (items) =>
+    items.map((tool, i) => {
+      const content = (
+        <>
+          <div className="tool-list-icon" aria-hidden="true">
+            {tool.emoji}
+          </div>
+          <div className="tool-list-copy">
+            <h4>{tool.name}</h4>
+            <p>{tool.desc}</p>
+          </div>
+          {tool.link && <span className="tool-list-action">{t('common.visit')}</span>}
+        </>
+      )
+
+      return tool.link ? (
+        <a
+          key={i}
+          className="tool-list-item"
+          href={tool.link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {content}
+        </a>
+      ) : (
+        <div key={i} className="tool-list-item">
+          {content}
+        </div>
+      )
+    })
+
+  const renderSectionHeading = (section) => (
+    <>
+      {section.icon}
+      <h3 style={{ margin: 0 }}>{section.title}</h3>
+    </>
+  )
+
+  const renderSectionBody = (section) => (
+    <>
+      {section.intro && (
+        <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+          {section.intro}
+        </p>
+      )}
+      <div className="tool-list">{renderToolItems(section.items)}</div>
+      {section.takeaways && (
+        <div style={{ marginTop: '0.75rem' }}>
+          <h4 style={{ marginBottom: '0.35rem' }}>{t('tools.encryption.takeaways_title')}</h4>
+          <ul style={{ paddingLeft: '1.2rem' }}>
+            {section.takeaways.map((item, i) => (
+              <li key={i} style={{ marginBottom: '0.3rem' }}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
+  )
+
   return (
     <div className="animate-fade-in">
       <div className="section-header">
@@ -59,65 +122,25 @@ const Tools = () => {
       <div className="grid grid-cols-2 gap-6">
         {sections.map((section, idx) => (
           <div key={idx} className="tool-section panel-solid">
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                marginBottom: '0.5rem',
-              }}
-            >
-              {section.icon}
-              <h3 style={{ margin: 0 }}>{section.title}</h3>
-            </div>
-            {section.intro && (
-              <p style={{ marginBottom: '1rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-                {section.intro}
-              </p>
-            )}
-            <div className="tool-list">
-              {section.items.map((tool, i) => {
-                const content = (
-                  <>
-                    <div className="tool-list-icon" aria-hidden="true">
-                      {tool.emoji}
-                    </div>
-                    <div className="tool-list-copy">
-                      <h4>{tool.name}</h4>
-                      <p>{tool.desc}</p>
-                    </div>
-                    {tool.link && <span className="tool-list-action">{t('common.visit')}</span>}
-                  </>
-                )
-
-                return tool.link ? (
-                  <a
-                    key={i}
-                    className="tool-list-item"
-                    href={tool.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {content}
-                  </a>
-                ) : (
-                  <div key={i} className="tool-list-item">
-                    {content}
-                  </div>
-                )
-              })}
-            </div>
-            {section.takeaways && (
-              <div style={{ marginTop: '0.75rem' }}>
-                <h4 style={{ marginBottom: '0.35rem' }}>{t('tools.encryption.takeaways_title')}</h4>
-                <ul style={{ paddingLeft: '1.2rem' }}>
-                  {section.takeaways.map((item, i) => (
-                    <li key={i} style={{ marginBottom: '0.3rem' }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {section.collapsible ? (
+              <details className="tool-section-collapsible">
+                <summary>{renderSectionHeading(section)}</summary>
+                <div className="tool-section-collapsible-body">{renderSectionBody(section)}</div>
+              </details>
+            ) : (
+              <>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    marginBottom: '0.5rem',
+                  }}
+                >
+                  {renderSectionHeading(section)}
+                </div>
+                {renderSectionBody(section)}
+              </>
             )}
           </div>
         ))}

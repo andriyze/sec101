@@ -42,8 +42,8 @@ const MainLayout = () => {
 
     const navItems = [
         { path: '/', label: t('nav.home'), icon: Shield, isHome: true },
-        { path: '/passwords', label: t('nav.passwords'), icon: ChevronRight, topicId: 'passwords' },
         { path: '/phishing', label: t('nav.phishing'), icon: ChevronRight, topicId: 'phishing' },
+        { path: '/passwords', label: t('nav.passwords'), icon: ChevronRight, topicId: 'passwords' },
         { path: '/browsing', label: t('nav.browsing'), icon: ChevronRight, topicId: 'browsing' },
         { path: '/social', label: t('nav.social'), icon: ChevronRight, topicId: 'social' },
         { path: '/devices', label: t('nav.devices'), icon: ChevronRight, topicId: 'devices' },

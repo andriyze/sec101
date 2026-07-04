@@ -1074,6 +1074,26 @@ a.tool-list-item:focus-visible {
   white-space: nowrap;
 }
 
+.tool-section-collapsible summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: revert;
+}
+
+.tool-section-collapsible summary h3 {
+  margin: 0;
+}
+
+.tool-section-collapsible[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+.tool-section-collapsible-body {
+  margin-top: 0.75rem;
+}
+
 /* Visualization Components */
 .viz-container {
   margin: 1.5rem 0;

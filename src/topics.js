@@ -1,6 +1,6 @@
 export const TOPICS = [
-    { id: 'passwords', path: '/passwords', labelKey: 'nav.passwords' },
     { id: 'phishing', path: '/phishing', labelKey: 'nav.phishing' },
+    { id: 'passwords', path: '/passwords', labelKey: 'nav.passwords' },
     { id: 'browsing', path: '/browsing', labelKey: 'nav.browsing' },
     { id: 'social', path: '/social', labelKey: 'nav.social' },
     { id: 'devices', path: '/devices', labelKey: 'nav.devices' },

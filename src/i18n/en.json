@@ -133,7 +133,7 @@
         "desc": "Good first rung on Android/Chrome. Using the built-in manager is far better than password reuse."
       },
       "apple": {
-        "desc": "Apple ecosystem option. Works across Apple devices and via Chrome extension on other platforms."
+        "desc": "Built into iPhone, iPad, and Mac — a good first rung if you're all-Apple. Works on Windows via the iCloud Passwords extension."
       }
     },
     "bitwarden_setup": {
@@ -466,7 +466,7 @@
         },
         {
           "title": "Viber",
-          "desc": "Viber uses end-to-end encryption for chats, but account safety still depends on your phone number, device lock, backups, and scam resistance."
+          "desc": "Viber uses end-to-end encryption for chats, but account safety still depends on your phone number, device lock, backups, and scam resistance. Communities and public accounts are not end-to-end encrypted."
         }
       ]
     },
@@ -529,7 +529,7 @@
           "prompt": "Why is Signal recommended over WhatsApp?",
           "options": [
             "Signal has more features",
-            "Signal doesn't share metadata with Meta and is truly private",
+            "Signal is run by a nonprofit and keeps metadata to a minimum",
             "Signal is faster"
           ],
           "answer": 1,
@@ -997,7 +997,7 @@
           ],
           "answer": 1,
           "correct": "Symmetric encryption uses the same key to lock and unlock data—like a safe with one key.",
-          "explainer": "Modern phones use device-protected keys to encrypt data when locked. A strong PIN or passcode still matters."
+          "explainer": "Symmetric encryption uses one shared key to lock and unlock — fast, and used for things like encrypting your files and disk. Asymmetric encryption uses a key pair instead."
         },
         {
           "prompt": "Why use a password manager instead of remembering passwords?",
