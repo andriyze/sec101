@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Cpu, Globe, Server, Network, Shield, Lock, Wifi } from 'lucide-react';
+import { Cpu, Globe, Server, Network, Shield, Lock, Wifi, Lightbulb } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
 import DnsResolutionViz from '../components/visualizations/DnsResolutionViz';
@@ -108,6 +108,12 @@ const Advanced = () => {
                                 <h4 style={{ margin: 0 }}>{item.title}</h4>
                             </div>
                             <p style={{ color: 'var(--text-muted)', marginBottom: '0.75rem' }}>{item.desc}</p>
+                            {item.analogy && (
+                                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                                    <Lightbulb size={14} color="var(--primary)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
+                                    <span style={{ fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{item.analogy}</span>
+                                </div>
+                            )}
                             <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                                 {(item.points || []).map(point => (
                                     <li key={point} style={{ marginBottom: '0.25rem' }}>{point}</li>

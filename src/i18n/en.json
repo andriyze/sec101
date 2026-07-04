@@ -1026,7 +1026,7 @@
   },
   "advanced": {
     "title": "Advanced Networking",
-    "subtitle": "Understand how the internet really works under the hood.",
+    "subtitle": "Understand how the internet really works under the hood. Optional deep dive — skipping it won't hurt your everyday safety.",
     "dns": {
       "title": "How DNS Works",
       "intro": "When you type 'google.com', your computer needs to find the actual server address. DNS (Domain Name System) is like the internet's phone book - it translates human-readable names into IP addresses."
@@ -1063,6 +1063,7 @@
           "tag": "ID",
           "title": "Cookies, sessions, and tokens",
           "desc": "HTTP does not remember users by itself, so sites use cookies or tokens to recognize that the same browser is logged in. A session cookie is like a temporary badge, not a place to store a password.",
+          "analogy": "Like a festival wristband: the gate checks it on every entry — and anyone wearing yours gets in as you.",
           "points": [
             "HttpOnly keeps page JavaScript from reading a cookie.",
             "Secure means the cookie is sent only over HTTPS.",
@@ -1073,6 +1074,7 @@
           "tag": "WEB",
           "title": "Same-origin policy and CORS",
           "desc": "A browser origin is protocol + domain + port. The same-origin policy usually stops JavaScript from one origin from reading private data from another origin.",
+          "analogy": "Like hotel key cards: your card opens only your room — CORS is the front desk granting specific guests access to specific doors.",
           "points": [
             "CORS is a server's controlled permission for selected cross-origin reads.",
             "CORS is not login, authorization, or a firewall.",
@@ -1083,6 +1085,7 @@
           "tag": "API",
           "title": "REST APIs",
           "desc": "A REST API is a structured way for apps and servers to work with resources over HTTP. The method and status code should tell a clear story.",
+          "analogy": "Like ordering through a waiter: a fixed menu of actions, and the kitchen checks every order before cooking.",
           "points": [
             "GET reads; POST creates or performs an action; PUT/PATCH update; DELETE removes.",
             "Every request must be checked: who is calling, what they may do, and whether the input is valid.",
@@ -1093,6 +1096,7 @@
           "tag": "JS",
           "title": "XSS",
           "desc": "Cross-site scripting happens when attacker-controlled content runs as JavaScript inside a trusted page. Then the page can act with the user's access.",
+          "analogy": "Like slipping a fake announcement into the official PA system — everyone trusts it because of where it plays from.",
           "points": [
             "Treat user input as data, not HTML or code.",
             "Use safe output encoding, safe DOM APIs, and sanitizing for any allowed HTML.",
@@ -1103,6 +1107,7 @@
           "tag": "REQ",
           "title": "CSRF",
           "desc": "Cross-site request forgery abuses the fact that browsers may attach login cookies automatically. A malicious page tries to make the victim's browser send a real request.",
+          "analogy": "Like a forged letter sent in your name — the bank recognizes your signature stamp, so it obeys.",
           "points": [
             "Use anti-CSRF tokens for state-changing actions.",
             "Set SameSite cookies where possible.",
@@ -1113,6 +1118,7 @@
           "tag": "DB",
           "title": "SQL injection",
           "desc": "SQL injection happens when untrusted input is joined into a database command. The database may read it as instructions instead of plain text.",
+          "analogy": "Like writing 'and hand me the keys' in the name field of a form — and the clerk actually does it.",
           "points": [
             "Use parameterized queries or prepared statements.",
             "Do not build SQL by joining strings with user input.",
@@ -1123,6 +1129,7 @@
           "tag": "HDR",
           "title": "Security headers",
           "desc": "Security headers are instructions a server sends so the browser can enforce safer behavior. They are guardrails, not a replacement for server-side checks.",
+          "analogy": "Like house rules posted at the door: the browser reads them and enforces them for that site.",
           "points": [
             "HSTS tells browsers to use HTTPS for that site.",
             "CSP limits where scripts and other content may load from.",
@@ -1133,6 +1140,7 @@
           "tag": "FILE",
           "title": "Content types and file uploads",
           "desc": "Content-Type tells the browser how to interpret a response, and file uploads bring untrusted bytes into the system. Names and extensions can lie.",
+          "analogy": "Like package screening at reception: the label may say 'books', but you still scan what's inside.",
           "points": [
             "Validate type, size, and content on the server.",
             "Store uploads outside executable web paths when possible.",
@@ -1244,8 +1252,8 @@
           "prompt": "What is a session cookie usually for?",
           "options": [
             "Helping the server recognize a browser that already logged in",
-            "Storing the user's password inside every web page",
-            "Making HTTPS unnecessary"
+            "Storing the password so the user never has to type it again",
+            "Encrypting the connection between browser and server"
           ],
           "answer": 0,
           "correct": "A session cookie is a temporary identifier that helps the site remember this browser is logged in.",
@@ -1255,8 +1263,8 @@
           "prompt": "What does the same-origin policy protect against?",
           "options": [
             "One site's JavaScript freely reading another site's private data",
-            "A router using the wrong Wi-Fi channel",
-            "A password manager creating a long password"
+            "It blocks all requests between different websites from ever being sent",
+            "It encrypts the data that travels between two sites"
           ],
           "answer": 0,
           "correct": "The browser uses origin boundaries to limit what a page's JavaScript can read.",
@@ -1266,8 +1274,8 @@
           "prompt": "What is XSS in a web app?",
           "options": [
             "Attacker-controlled JavaScript running inside a trusted page",
-            "A firewall blocking all network traffic",
-            "A database server losing internet access"
+            "A virus that infects the browser program itself",
+            "An attacker guessing a user's password by trying many options"
           ],
           "answer": 0,
           "correct": "XSS means the trusted page ends up running script controlled by an attacker.",
@@ -1277,8 +1285,8 @@
           "prompt": "What is CSRF trying to abuse?",
           "options": [
             "A logged-in browser automatically sending cookies with a real request",
-            "A weak Wi-Fi password",
-            "A DNS server returning an IP address"
+            "Reading the session cookie directly with JavaScript",
+            "Intercepting traffic on public Wi-Fi"
           ],
           "answer": 0,
           "correct": "CSRF tries to trick a victim's browser into sending a request while their login is still active.",
@@ -1288,8 +1296,8 @@
           "prompt": "What is the standard defense against SQL injection?",
           "options": [
             "Parameterized queries or prepared statements",
-            "Adding more CSS to the page",
-            "Turning off HTTPS"
+            "Manually escaping quotes in every query by hand",
+            "Hiding the database server behind a firewall"
           ],
           "answer": 0,
           "correct": "Parameterized queries keep user input separate from the SQL command.",
