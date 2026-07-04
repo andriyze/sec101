@@ -15,11 +15,13 @@ const RULES = [
     { port: 23, allowed: false, labelKey: 'rule_telnet' }
 ];
 
-// Scripted packet for each step (steps 0 and 4 show no traveling packet)
+// Scripted packet for each step (steps 0 and 4 show no traveling packet).
+// Steps 1-2 are outbound browsing (network → internet), matching the captions;
+// step 3 is an unwanted inbound connection that gets blocked.
 const STEP_PACKETS = {
-    1: { port: 443, allowed: true },
-    2: { port: 80, allowed: true },
-    3: { port: 23, allowed: false }
+    1: { port: 443, allowed: true, outbound: true },
+    2: { port: 80, allowed: true, outbound: true },
+    3: { port: 23, allowed: false, outbound: false }
 };
 
 const FirewallViz = () => {
@@ -112,11 +114,11 @@ const FirewallViz = () => {
                         <motion.div
                             key={`packet-${currentStep}`}
                             className={`firewall-packet ${activePacket.allowed ? 'allowed' : 'blocked'}`}
-                            initial={{ x: -140, opacity: 0 }}
+                            initial={{ x: activePacket.outbound ? 140 : -140, opacity: 0 }}
                             animate={{
-                                x: activePacket.allowed
-                                    ? [-140, 0, 0, 140]
-                                    : [-140, 0, 0, -100],
+                                x: activePacket.outbound
+                                    ? (activePacket.allowed ? [140, 0, 0, -140] : [140, 0, 0, 100])
+                                    : (activePacket.allowed ? [-140, 0, 0, 140] : [-140, 0, 0, -100]),
                                 opacity: [0, 1, 1, activePacket.allowed ? 0.7 : 0.85]
                             }}
                             transition={{ duration: 3.4, times: [0, 0.3, 0.65, 1], ease: 'easeInOut' }}
