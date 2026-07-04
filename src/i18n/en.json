@@ -209,6 +209,17 @@
           "answer": 2,
           "correct": "Reuse = chain breach. Use unique, manager-generated passwords.",
           "explainer": "One breach shouldn’t open every other account."
+        },
+        {
+          "prompt": "You learn that a site you use leaked its password database. What matters most?",
+          "options": [
+            "Change that password everywhere you reused it, and turn on 2FA",
+            "Nothing — the site will fix the leak on their side",
+            "Stop using the internet for a week until it calms down"
+          ],
+          "answer": 0,
+          "correct": "The leaked password is now being tried against your other accounts — rotation plus 2FA closes that door.",
+          "explainer": "Attackers feed leaked passwords into other sites automatically (credential stuffing). Unique passwords turn a breach into a non-event."
         }
       ]
     },
@@ -319,6 +330,19 @@
         "On shared computers, stick to passwords + MFA instead of passkeys.",
         "Passkey portability is improving but not universal. Some platforms now support export (e.g., to Bitwarden), but check before relying on it."
       ]
+    },
+    "breaches": {
+      "title": "Data breaches: when a site leaks your password",
+      "intro": "Breaches happen to sites, not to you — even a perfect password can leak from a hacked service. What matters is how fast you respond.",
+      "items": [
+        "Check your email at haveibeenpwned.com — it lists known breaches that included your accounts.",
+        "If the breached site’s password was reused anywhere else, change it everywhere. This is why unique passwords matter.",
+        "Turn on 2FA for the breached account — a leaked password alone then isn’t enough.",
+        "Expect follow-up phishing: scammers use breach data to write convincing “reset your password” emails."
+      ],
+      "manager_note": "Password managers and browsers do this automatically: Bitwarden’s reports, Chrome’s password checkup, and Apple’s Passwords app all flag leaked passwords.",
+      "hibp_label": "Check your email in known breaches",
+      "not_your_fault": "A breach is the service’s failure, not yours. Don’t feel bad — just rotate the password and move on."
     }
   },
   "browsing": {
@@ -420,6 +444,17 @@
           "answer": 0,
           "correct": "The banner asks for consent to tracking cookies. Rejecting is usually the more private choice.",
           "explainer": "Necessary cookies (login, cart) work regardless of your choice — the banner is about tracking, not safety or functionality."
+        },
+        {
+          "prompt": "Your bank’s site suddenly shows “Your connection is not private”. What should you do?",
+          "options": [
+            "Stop — don’t proceed; try again later or from another network",
+            "Click “Advanced → proceed”, since you need to pay a bill today",
+            "Refresh until the warning disappears, then log in quickly"
+          ],
+          "answer": 0,
+          "correct": "Never push through this warning on a site where you log in or pay.",
+          "explainer": "The warning means the encryption can’t be trusted right now. On public Wi‑Fi it may just be the network’s login page — but the answer is still to not enter credentials through it."
         }
       ]
     },
@@ -475,6 +510,37 @@
         }
       ],
       "tip": "If “Reject all” takes one click — click it. If the banner is a maze, don’t waste minutes: your tracker blocker is doing the real work anyway."
+    },
+    "warnings": {
+      "title": "Scary browser warnings, decoded",
+      "intro": "Sometimes the browser itself stops you with a full-screen warning. Here is what each one means — and when “proceed anyway” is a bad idea.",
+      "items": [
+        {
+          "emoji": "🔓",
+          "title": "“Your connection is not private”",
+          "desc": "The encryption on this connection can’t be trusted right now — the site’s certificate is broken, expired, or someone may be interfering. On café or hotel Wi‑Fi it often just means you must open the network’s login page first.",
+          "action": "Never proceed to a bank, email, or shopping site through this warning. Try again later or on another network."
+        },
+        {
+          "emoji": "🚫",
+          "title": "“Deceptive site ahead”",
+          "desc": "The red screen means the address is on a known list of phishing or malware sites. It is rarely wrong.",
+          "action": "Close the tab. If you got the link from a message, treat that message as a scam."
+        },
+        {
+          "emoji": "⬇️",
+          "title": "“This file may harm your device”",
+          "desc": "The browser flags downloads that are rarely downloaded, disguised as documents, or known to be malicious.",
+          "action": "Only keep it if you chose the download from a source you trust — never for “invoices” or “delivery notes” you didn’t ask for."
+        },
+        {
+          "emoji": "🎤",
+          "title": "Permission pop-ups",
+          "desc": "Sites must ask before using your camera, microphone, location, or sending notifications. A news site asking for notifications is annoying; a random site asking for your camera is a red flag.",
+          "action": "Default to Block. You can always allow later — a site that truly needs it will ask again."
+        }
+      ],
+      "tip": "These warnings are the browser doing its job. Clicking through them “just this once” is how most malware gets invited in."
     }
   },
   "social": {
@@ -1195,6 +1261,17 @@
             "Store uploads outside executable web paths when possible.",
             "Return files with safe content types and download headers when needed."
           ]
+        },
+        {
+          "tag": "URL",
+          "title": "IDOR: changing the ID in a URL",
+          "desc": "Insecure Direct Object Reference: a page shows object number 1041, you change the address to 1042 and see someone else’s data. The server trusted the ID instead of checking who is asking.",
+          "analogy": "Like a coat check: hand over ticket 42 and ask for coat 43 — a good attendant checks the ticket is yours, a bad one just hands over the coat.",
+          "points": [
+            "Authorization must be checked on every object access, not just at login.",
+            "Random, unguessable IDs help, but they are not authorization.",
+            "If you stumble on this in a real site, stop and report it — don’t keep browsing others’ data."
+          ]
         }
       ],
       "flow_title": "How these ideas connect",
@@ -1351,6 +1428,17 @@
           "answer": 0,
           "correct": "Parameterized queries keep user input separate from the SQL command.",
           "explainer": "String-building database queries with untrusted input is the dangerous pattern."
+        },
+        {
+          "prompt": "You change ?order=1041 to ?order=1042 in a URL and see a stranger’s order. What is this?",
+          "options": [
+            "An IDOR — the server isn’t checking who may view each object",
+            "Normal behavior — anything in a URL is public information",
+            "An XSS attack against your browser"
+          ],
+          "answer": 0,
+          "correct": "That’s an Insecure Direct Object Reference: the server trusted the ID instead of checking authorization.",
+          "explainer": "The fix is server-side: verify on every request that the logged-in user owns the object. And if you find one for real — report it, don’t explore."
         }
       ]
     }

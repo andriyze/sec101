@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '../components/Card';
-import { Globe, Shield, EyeOff, Settings, Cookie, Lightbulb } from 'lucide-react';
+import { Globe, Shield, EyeOff, Settings, Cookie, Lightbulb, AlertTriangle, CheckCircle } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
 import TrackerBlockingViz from '../components/visualizations/TrackerBlockingViz';
@@ -12,6 +12,7 @@ const Browsing = () => {
     const quizQuestions = tArray(t, 'browsing.quiz.questions');
     const quickSettings = tArray(t, 'browsing.quick_settings.items');
     const cookieItems = tArray(t, 'browsing.cookies.items');
+    const warningItems = tArray(t, 'browsing.warnings.items');
     const hardeningKeys = ['brave', 'firefox', 'tor'];
 
     return (
@@ -80,6 +81,33 @@ const Browsing = () => {
                 <div className="alert alert-info" style={{ marginTop: '1.5rem' }}>
                     <Lightbulb size={20} color="var(--primary)" style={{ flexShrink: 0 }} />
                     <p style={{ margin: 0 }}>{t('browsing.cookies.tip')}</p>
+                </div>
+            </section>
+
+            {/* Scary browser warnings, decoded */}
+            <section className="section">
+                <div className="section-title" style={{ marginBottom: '0.5rem' }}>
+                    <AlertTriangle size={24} color="var(--accent)" /> <h3 style={{ margin: 0 }}>{t('browsing.warnings.title')}</h3>
+                </div>
+                <p className="section-subtitle" style={{ marginBottom: '1.2rem' }}>{t('browsing.warnings.intro')}</p>
+
+                <div className="grid grid-cols-2 gap-6">
+                    {warningItems.map((item, i) => (
+                        <div key={i} className="card panel-solid">
+                            <div className="icon-box" aria-hidden="true">{item.emoji}</div>
+                            <h4 style={{ margin: '0.75rem 0 0.5rem' }}>{item.title}</h4>
+                            <p style={{ color: 'var(--text-muted)', margin: 0 }}>{item.desc}</p>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '0.6rem' }}>
+                                <CheckCircle size={14} color="#00ff9d" style={{ flexShrink: 0 }} />
+                                <span style={{ fontSize: '0.9rem', color: 'var(--text-main)', fontWeight: 500 }}>{item.action}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="alert alert-info" style={{ marginTop: '1.5rem' }}>
+                    <Lightbulb size={20} color="var(--primary)" style={{ flexShrink: 0 }} />
+                    <p style={{ margin: 0 }}>{t('browsing.warnings.tip')}</p>
                 </div>
             </section>
 

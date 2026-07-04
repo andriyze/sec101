@@ -9,6 +9,7 @@ import {
   Fingerprint,
   Key,
   AlertTriangle,
+  ShieldAlert,
 } from 'lucide-react'
 import Quiz from '../components/Quiz'
 import TopicCompletionCard from '../components/TopicCompletionCard'
@@ -177,6 +178,45 @@ const Passwords = () => {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Data breaches */}
+      <section className="section">
+        <div className="section-header">
+          <div className="section-title">
+            <ShieldAlert size={24} color="var(--accent)" />
+            <h3 style={{ margin: 0 }}>{t('passwords.breaches.title')}</h3>
+          </div>
+          <p className="section-subtitle">{t('passwords.breaches.intro')}</p>
+        </div>
+
+        <div className="card panel-solid">
+          <ol style={{ paddingLeft: '1.2rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+            {tArray(t, 'passwords.breaches.items').map((item, i) => (
+              <li key={i} style={{ marginBottom: '0.35rem' }}>
+                {item}
+              </li>
+            ))}
+          </ol>
+          <a
+            className="btn btn-primary"
+            href="https://haveibeenpwned.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', textDecoration: 'none' }}
+          >
+            <ShieldAlert size={18} />
+            {t('passwords.breaches.hibp_label')}
+          </a>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.75rem', marginBottom: 0 }}>
+            {t('passwords.breaches.manager_note')}
+          </p>
+        </div>
+
+        <div className="alert alert-info" style={{ marginTop: '1.5rem' }}>
+          <ShieldCheck size={20} color="var(--primary)" style={{ flexShrink: 0 }} />
+          <p style={{ margin: 0 }}>{t('passwords.breaches.not_your_fault')}</p>
         </div>
       </section>
 
