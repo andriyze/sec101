@@ -4,6 +4,7 @@ import { Mail, AlertTriangle, CheckCircle, Shield } from 'lucide-react'
 import Quiz from '../components/Quiz'
 import TopicCompletionCard from '../components/TopicCompletionCard'
 import PhishingEmailViz from '../components/visualizations/PhishingEmailViz'
+import UrlAnatomyViz from '../components/visualizations/UrlAnatomyViz'
 import { tArray, tObject } from '../i18n/safeTranslate'
 
 const Phishing = () => {
@@ -53,6 +54,10 @@ const Phishing = () => {
             ))}
           </ul>
         </div>
+      </section>
+
+      <section className="section">
+        <UrlAnatomyViz />
       </section>
 
       <section className="section">

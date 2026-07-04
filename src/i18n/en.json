@@ -409,6 +409,17 @@
           "answer": 0,
           "correct": "Tracker blockers reduce tracking, but they do not make you invisible.",
           "explainer": "A site you log into can still know it is you, and fingerprinting can still link some visits."
+        },
+        {
+          "prompt": "A cookie banner asks you to “Accept all”. What is the banner actually about?",
+          "options": [
+            "Consent to tracking — “Reject all” is usually the more private choice",
+            "Site safety — accepting confirms the site is secure",
+            "Making the site work — rejecting breaks login and shopping carts"
+          ],
+          "answer": 0,
+          "correct": "The banner asks for consent to tracking cookies. Rejecting is usually the more private choice.",
+          "explainer": "Necessary cookies (login, cart) work regardless of your choice — the banner is about tracking, not safety or functionality."
         }
       ]
     },
@@ -437,6 +448,33 @@
           "Do not resize the window or install extensions."
         ]
       }
+    },
+    "cookies": {
+      "title": "Cookies, plainly",
+      "intro": "Every site asks you to “accept cookies”. Here is what that actually means — and what to click.",
+      "items": [
+        {
+          "emoji": "🍪",
+          "title": "What a cookie is",
+          "desc": "A small note a site stores in your browser so it can remember you: that you’re logged in, what’s in your cart, which language you chose. Without cookies you’d be logged out on every click."
+        },
+        {
+          "emoji": "🏠",
+          "title": "First-party vs third-party",
+          "desc": "First-party cookies come from the site you’re on and mostly make it work. Third-party cookies come from other companies embedded in the page — that’s the cross-site tracking you saw in the tracker demo."
+        },
+        {
+          "emoji": "🪧",
+          "title": "What the banner really asks",
+          "desc": "The banner is about consent to tracking — not about safety. “Reject all” or “necessary only” is usually the more private choice, and the site still works: login and cart cookies don’t need your consent."
+        },
+        {
+          "emoji": "🧹",
+          "title": "Should you clear cookies?",
+          "desc": "Clearing cookies logs you out of everything — it can fix a misbehaving site, but it isn’t a security ritual. A tracker blocker protects you continuously without the hassle."
+        }
+      ],
+      "tip": "If “Reject all” takes one click — click it. If the banner is a maze, don’t waste minutes: your tracker blocker is doing the real work anyway."
     }
   },
   "social": {
@@ -822,6 +860,17 @@
           "answer": 1,
           "correct": "Do not pay or negotiate. Preserve evidence and get help.",
           "explainer": "Blackmailers use shame and isolation. Evidence and support give you options."
+        },
+        {
+          "prompt": "Which of these links actually belongs to PayPal?",
+          "options": [
+            "https://www.paypal.com/security",
+            "https://paypal.com.account-verify.ru/login",
+            "https://secure-paypal-support.com/help"
+          ],
+          "answer": 0,
+          "correct": "Read from the first single slash backwards: the owner is paypal.com.",
+          "explainer": "In the other two the real owners are account-verify.ru and secure-paypal-support.com — the word “paypal” anywhere else in the address means nothing."
         }
       ]
     },
@@ -2004,6 +2053,38 @@
         }
       ],
       "why_matters": "Your devices switch between the two automatically — nothing to configure. It’s simply why internet addresses come in two shapes."
+    },
+    "url": {
+      "title": "Reading a Link: URL Anatomy",
+      "scheme_label": "Connection",
+      "subdomain_label": "Subdomain",
+      "domain_label": "Owner (real domain)",
+      "path_label": "Path & parameters",
+      "legit_label": "Real example",
+      "scam_label": "Scam example",
+      "steps": [
+        {
+          "title": "An address, read in a strange order",
+          "text": "A web address has parts, like a postal address. The catch: the part that tells you WHO you’re visiting is not at the start — and scammers exploit exactly that."
+        },
+        {
+          "title": "https:// — the sealed envelope",
+          "text": "This part only says the connection is encrypted (the padlock). It says nothing about who is on the other end — scam sites use https too."
+        },
+        {
+          "title": "The owner: right before the first slash",
+          "text": "Read from the first single slash backwards: example.com is the owner. Everything to its left — like shop. — is just a room inside the owner’s building, and the owner can name rooms anything."
+        },
+        {
+          "title": "After the slash: the owner’s story",
+          "text": "The path and everything after ? is whatever the site wants to write. Seeing paypal.com or your bank’s name here means nothing at all."
+        },
+        {
+          "title": "Now the scam test",
+          "text": "paypal.com.secure-check.ru — read from the first slash backwards: the owner is secure-check.ru. The “paypal.com” at the start is just a room name designed to fool you."
+        }
+      ],
+      "why_matters": "One habit beats most phishing: before you tap, find the first single slash and read the owner to its left. If it isn’t the company you expect, stop."
     }
   }
 }
