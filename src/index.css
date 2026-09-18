@@ -1167,7 +1167,7 @@ a.tool-list-item:focus-visible {
 }
 
 .viz-connection-xs {
-  width: 40px;
+  width: 30px;
 }
 .viz-connection-sm {
   width: 60px;
@@ -1176,11 +1176,12 @@ a.tool-list-item:focus-visible {
   width: 120px;
 }
 .viz-connection-lg {
-  width: 150px;
+  width: 120px;
 }
 
 .viz-packet {
   position: absolute;
+  left: 0;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -1190,7 +1191,7 @@ a.tool-list-item:focus-visible {
   font-size: 0.6rem;
   font-weight: 600;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 }
 
 .viz-packet.visible {
@@ -1222,6 +1223,7 @@ a.tool-list-item:focus-visible {
   background: rgba(0, 242, 255, 0.2);
   color: var(--primary);
   font-family: monospace;
+  white-space: nowrap;
 }
 
 .viz-info-box {
@@ -1258,6 +1260,7 @@ a.tool-list-item:focus-visible {
   flex-wrap: wrap;
   gap: 0.25rem;
   justify-content: center;
+  max-width: 160px;
 }
 
 .viz-site-tag {
@@ -1267,6 +1270,7 @@ a.tool-list-item:focus-visible {
   background: rgba(255, 0, 85, 0.2);
   color: var(--accent);
   font-family: monospace;
+  white-space: nowrap;
 }
 
 .viz-encrypted-tag {
@@ -1278,12 +1282,14 @@ a.tool-list-item:focus-visible {
   display: flex;
   align-items: center;
   gap: 0.2rem;
+  white-space: nowrap;
 }
 
 /* VPN Visualization specific */
 .vpn-viz-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
   width: 100%;
 }
@@ -1291,17 +1297,23 @@ a.tool-list-item:focus-visible {
 .vpn-viz-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.5rem;
   position: relative;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
   padding: 1rem 0;
 }
 
+.vpn-viz-row .viz-node,
+.vpn-viz-row .viz-connection {
+  flex-shrink: 0;
+}
+
 .vpn-viz-label {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
+  margin-right: 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.25rem 0.5rem;
@@ -2050,12 +2062,18 @@ a.tool-list-item:focus-visible {
     display: none;
   }
 
-  .vpn-viz-label {
-    position: static;
-    transform: none;
-    margin-bottom: 0.5rem;
+  .vpn-viz-row {
     width: 100%;
-    text-align: center;
+  }
+
+  .vpn-viz-row .viz-connection-md {
+    width: 100px;
+    min-width: 100px;
+  }
+
+  .vpn-viz-row .viz-connection-lg {
+    width: 130px;
+    min-width: 130px;
   }
 
   .vpn-viz-wrapper {

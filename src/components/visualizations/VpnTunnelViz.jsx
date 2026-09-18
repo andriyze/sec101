@@ -49,12 +49,13 @@ const VpnTunnelViz = () => {
 
     const packetVariants = {
         animate: (i) => ({
-            x: [0, 60],
+            left: ['2%', '98%'],
             opacity: [0, 1, 1, 0],
             transition: {
-                duration: 2.5,
-                delay: i * 1.2,
+                duration: 1.6,
+                delay: i * 1.7,
                 repeat: Infinity,
+                repeatDelay: 3.5,
                 ease: 'linear',
             },
         }),
@@ -62,12 +63,13 @@ const VpnTunnelViz = () => {
 
     const encryptedPacketVariants = {
         animate: (i) => ({
-            x: [0, 80],
+            left: ['2%', '98%'],
             opacity: [0, 1, 1, 0],
             transition: {
-                duration: 3,
-                delay: i * 1.5,
+                duration: 1.8,
+                delay: i * 2.2,
                 repeat: Infinity,
+                repeatDelay: 2.6,
                 ease: 'linear',
             },
         }),
@@ -111,13 +113,12 @@ const VpnTunnelViz = () => {
                         {!prefersReducedMotion && !vpnActive && sites.map((site, i) => (
                             <motion.div
                                 key={`packet-${i}`}
-                                className="viz-packet visible"
+                                className="viz-packet visible labelled"
                                 custom={i}
                                 variants={packetVariants}
                                 animate="animate"
-                                style={{ left: 0 }}
                             >
-                                {site.charAt(0).toUpperCase()}
+                                {site}
                             </motion.div>
                         ))}
                     </div>
@@ -149,6 +150,14 @@ const VpnTunnelViz = () => {
                             <Globe size={20} color="var(--primary)" />
                         </div>
                         <span className="viz-node-label">{t('visualizations.vpn.internet')}</span>
+                        <div className="viz-isp-sees">
+                            <span className="viz-isp-sees-label">
+                                <Eye size={10} /> {t('visualizations.vpn.site_sees')}
+                            </span>
+                            <div className="viz-isp-sees-content">
+                                <span className="viz-site-tag">{t('visualizations.vpn.your_ip')}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -177,7 +186,6 @@ const VpnTunnelViz = () => {
                                 custom={i}
                                 variants={encryptedPacketVariants}
                                 animate="animate"
-                                style={{ left: 0 }}
                             >
                                 <Lock size={12} />
                             </motion.div>
@@ -244,6 +252,14 @@ const VpnTunnelViz = () => {
                             <Globe size={20} color="var(--primary)" />
                         </div>
                         <span className="viz-node-label">{t('visualizations.vpn.internet')}</span>
+                        <div className="viz-isp-sees">
+                            <span className="viz-isp-sees-label">
+                                <Eye size={10} /> {t('visualizations.vpn.site_sees')}
+                            </span>
+                            <div className="viz-isp-sees-content">
+                                <span className="viz-ip-tag">{t('visualizations.vpn.vpn_ip')}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
