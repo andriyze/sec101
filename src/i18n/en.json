@@ -1524,7 +1524,10 @@
           "text": "The destinations don’t disappear — the VPN provider may see them instead. A VPN moves your trust; pick a provider you actually trust."
         }
       ],
-      "why_matters": "On public Wi‑Fi (cafés, airports) a VPN also shields you from strangers on the same network."
+      "why_matters": "On public Wi‑Fi (cafés, airports) a VPN also shields you from strangers on the same network.",
+      "site_sees": "website sees:",
+      "your_ip": "your IP",
+      "vpn_ip": "VPN's IP"
     },
     "mfa": {
       "title": "Authentication factors",
@@ -2035,7 +2038,10 @@
           "text": "Video calls and games use UDP: losing a frame beats freezing the call."
         }
       ],
-      "why_matters": "You don’t choose these — apps do. But the padlock (HTTPS) is yours to check before typing a password."
+      "why_matters": "You don’t choose these — apps do. But the padlock (HTTPS) is yours to check before typing a password.",
+      "you": "You",
+      "website": "Website",
+      "received": "received"
     },
     "firewall": {
       "title": "Firewall Protection",
