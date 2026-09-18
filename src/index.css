@@ -2178,85 +2178,162 @@ a.tool-list-item:focus-visible {
   width: 100%;
 }
 
-.dns-flow {
+.dns-map {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  margin: 0 auto;
+  font-family: inherit;
+  overflow: visible;
+}
+
+.dns-map-link {
+  fill: none;
+  stroke: var(--border-light);
+  stroke-width: 1.5;
+  opacity: 0.55;
+  transition:
+    stroke 0.3s ease,
+    opacity 0.3s ease,
+    stroke-width 0.3s ease;
+}
+
+.dns-map-arrow.done .dns-map-link {
+  opacity: 0.9;
+}
+
+.dns-map-arrow.q.done .dns-map-link {
+  stroke: rgba(0, 242, 255, 0.45);
+}
+
+.dns-map-arrow.a.done .dns-map-link {
+  stroke: rgba(0, 255, 157, 0.45);
+}
+
+.dns-map-arrow.active .dns-map-link {
+  opacity: 1;
+  stroke-width: 2.5;
+}
+
+.dns-map-arrow.q.active .dns-map-link {
+  stroke: var(--primary);
+  filter: drop-shadow(0 0 4px var(--primary-glow));
+}
+
+.dns-map-arrow.a.active .dns-map-link {
+  stroke: #00ff9d;
+  filter: drop-shadow(0 0 4px rgba(0, 255, 157, 0.6));
+}
+
+.dns-map-badge circle {
+  fill: var(--bg-dark);
+  stroke: var(--border-light);
+  stroke-width: 1;
+  transition: stroke 0.3s ease;
+}
+
+.dns-map-badge text {
+  fill: var(--text-dim);
+  font-size: 9.5px;
+  font-weight: 600;
+  transition: fill 0.3s ease;
+}
+
+.dns-map-arrow.active .dns-map-badge circle {
+  fill: var(--bg-card);
+}
+
+.dns-map-arrow.q.active .dns-map-badge circle {
+  stroke: var(--primary);
+}
+
+.dns-map-arrow.a.active .dns-map-badge circle {
+  stroke: #00ff9d;
+}
+
+.dns-map-arrow.active .dns-map-badge text {
+  fill: var(--text-main);
+}
+
+.dns-map-dot {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.dns-map-ring {
+  fill: var(--bg-card);
+  stroke: var(--node-color, var(--border-light));
+  stroke-width: 2;
+  transition: filter 0.3s ease;
+}
+
+.dns-map-node.active .dns-map-ring {
+  filter: drop-shadow(0 0 8px var(--node-color, var(--primary)));
+}
+
+.dns-map-label {
+  fill: var(--text-muted);
+  font-size: 11.5px;
+  transition: fill 0.3s ease;
+}
+
+.dns-map.compact .dns-map-label {
+  font-size: 12.5px;
+}
+
+.dns-map-node.active .dns-map-label {
+  fill: var(--text-main);
+  font-weight: 600;
+}
+
+.dns-map-cached rect {
+  fill: rgba(0, 255, 157, 0.12);
+  stroke: rgba(0, 255, 157, 0.6);
+  stroke-width: 1;
+}
+
+.dns-map-cached text {
+  fill: #00ff9d;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.dns-map-legend {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.25rem;
-  overflow-x: auto;
-  padding: 1rem 0;
-}
-
-.dns-node {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem;
-  border-radius: 10px;
-  background: var(--bg-card);
-  border: 2px solid var(--border-light);
-  min-width: 70px;
-  text-align: center;
-  transition: var(--transition-fast);
+  gap: 0.5rem 1.25rem;
+  font-size: 0.72rem;
+  color: var(--text-dim);
 }
 
-.dns-node.active {
-  transform: scale(1.05);
-}
-
-.dns-node-icon {
-  width: 36px;
-  height: 36px;
-  display: flex;
+.dns-map-legend-item {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(0, 242, 255, 0.1);
+  gap: 0.35rem;
 }
 
-.dns-node-label {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.dns-connection {
-  display: flex;
-  align-items: center;
-  position: relative;
+.dns-map-swatch {
+  display: inline-block;
+  width: 18px;
   height: 3px;
-  min-width: 30px;
-  background: var(--border-light);
   border-radius: 2px;
 }
 
-.dns-packet {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 0.55rem;
-  font-weight: 600;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.dns-packet.query {
-  width: 20px;
-  height: 20px;
+.dns-map-swatch.q {
   background: var(--primary);
-  color: var(--bg-dark);
-  box-shadow: 0 0 8px var(--primary-glow);
 }
 
-.dns-packet.response {
-  width: 20px;
-  height: 20px;
+.dns-map-swatch.a {
   background: #00ff9d;
-  color: var(--bg-dark);
-  box-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+}
+
+.dns-map-legend-note {
+  flex-basis: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
 }
 
 .dns-query-display {
@@ -2298,48 +2375,6 @@ a.tool-list-item:focus-visible {
 
 .dns-response-text strong {
   color: #00ff9d;
-}
-
-.dns-connection-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--border-light);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.dns-steps {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.dns-step {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  transition: var(--transition-fast);
-}
-
-.dns-step.active {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: rgba(0, 242, 255, 0.1);
-}
-
-.dns-step.done {
-  border-color: #00ff9d;
-  color: var(--bg-dark);
-  background: #00ff9d;
 }
 
 /* DNS Explanation Panel - NEW */
@@ -2400,16 +2435,6 @@ a.tool-list-item:focus-visible {
   font-size: 0.75rem;
   color: var(--secondary);
   text-align: left;
-}
-
-.dns-packet-wrapper {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .dns-packet-status {
@@ -3365,29 +3390,6 @@ a.tool-list-item:focus-visible {
 
 /* Advanced Visualizations Mobile Responsive */
 @media (max-width: 768px) {
-  .dns-flow {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .dns-node {
-    min-width: 60px;
-    padding: 0.5rem;
-  }
-
-  .dns-node-icon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .dns-node-label {
-    font-size: 0.6rem;
-  }
-
-  .dns-connection {
-    min-width: 20px;
-  }
-
   .osi-layer {
     padding: 0.5rem;
     gap: 0.5rem;

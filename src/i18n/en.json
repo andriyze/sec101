@@ -1831,7 +1831,11 @@
           "packet": "Saved for next time"
         }
       },
-      "why_matters": "DNS is why changing one setting — your DNS provider — can block many unwanted domains network-wide. Devices or apps can bypass it if they use their own DNS settings."
+      "why_matters": "DNS is why changing one setting — your DNS provider — can block many unwanted domains network-wide. Devices or apps can bypass it if they use their own DNS settings.",
+      "legend_question": "question",
+      "legend_answer": "answer",
+      "hub_note": "The resolver does all the asking; the other servers only answer.",
+      "cached": "remembered"
     },
     "osi": {
       "title": "OSI Model",
