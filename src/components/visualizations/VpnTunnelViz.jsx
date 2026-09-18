@@ -13,6 +13,7 @@ const VpnTunnelViz = () => {
     const { t } = useTranslation();
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -88,7 +89,7 @@ const VpnTunnelViz = () => {
     };
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.vpn.title')}
             whyItMatters={t('visualizations.vpn.why_matters')}
         >

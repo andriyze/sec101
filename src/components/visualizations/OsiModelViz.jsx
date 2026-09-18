@@ -24,6 +24,7 @@ const OsiModelViz = () => {
     ];
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -72,14 +73,11 @@ const OsiModelViz = () => {
         : 'none';
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.osi.title')}
             whyItMatters={t('visualizations.osi.why_matters')}
         >
             <div className="osi-viz-wrapper">
-                {/* Per-step narration */}
-                <StepCaption steps={captions} currentStep={currentStep} />
-
                 {/* Direction indicator */}
                 <div className="osi-direction">
                     <motion.div
@@ -144,6 +142,9 @@ const OsiModelViz = () => {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Per-step narration */}
+                <StepCaption steps={captions} currentStep={currentStep} />
 
                 {/* Animation Controls: 7 dots (one per layer), 14 steps for prev/next */}
                 <AnimationControls

@@ -28,6 +28,7 @@ const FirewallViz = () => {
     const { t } = useTranslation();
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -47,7 +48,7 @@ const FirewallViz = () => {
     const shieldEmphasized = currentStep === 0 || currentStep === 4;
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.firewall.title')}
             whyItMatters={t('visualizations.firewall.why_matters')}
         >

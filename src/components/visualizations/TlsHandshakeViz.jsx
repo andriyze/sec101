@@ -21,6 +21,7 @@ const TlsHandshakeViz = () => {
   const { t } = useTranslation()
 
   const {
+    vizRef,
     currentStep,
     isPlaying,
     totalSteps,
@@ -135,7 +136,7 @@ const TlsHandshakeViz = () => {
   const isSecure = currentStep === 3
 
   return (
-    <VizContainer title={t('visualizations.tls.title')}>
+    <VizContainer ref={vizRef} title={t('visualizations.tls.title')}>
       <div className="tls-viz-wrapper">
         {/* Step Explanation Panel */}
         <div className="tls-explanation-panel" aria-live="polite" aria-atomic="true">

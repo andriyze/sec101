@@ -1,23 +1,39 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useId } from 'react';
 import { usePrefersReducedMotion } from './usePrefersReducedMotion';
+import { registerViz, activateViz, releaseViz } from './vizScheduler';
 
 /**
- * Hook for controlling visualization animations with play/pause and step navigation
+ * Hook for controlling visualization animations with play/pause and step navigation.
+ *
+ * Attach the returned `vizRef` to the visualization's container (VizContainer accepts it
+ * as `ref`). With `autoPlayOnView` (default) the figure starts playing when it is the most
+ * visible visualization on screen and pauses when another one takes over or it scrolls
+ * away; only one visualization animates at a time. Manual controls always win: stepping or
+ * pausing keeps the figure paused until it leaves the viewport, pressing play makes it the
+ * active one.
+ *
  * @param {Object} options
  * @param {number} options.totalSteps - Total number of steps in the animation
  * @param {number} options.interval - Auto-advance interval in ms (default: 4000)
  * @param {boolean} options.loop - Whether to loop back to start (default: true)
  * @param {number} options.initialStep - Starting step (default: 0)
- * @param {boolean} options.autoPlay - Start playing automatically (default: false)
+ * @param {boolean} options.autoPlay - Start playing immediately, regardless of visibility (default: false)
+ * @param {boolean} options.autoPlayOnView - Play while this is the most visible figure (default: true)
  */
 export const useAnimationControl = ({
     totalSteps,
     interval = 4000,
     loop = true,
     initialStep = 0,
-    autoPlay = false
+    autoPlay = false,
+    autoPlayOnView = true
 } = {}) => {
     const prefersReducedMotion = usePrefersReducedMotion();
+    const vizId = useId();
+    const vizRef = useRef(null);
+    // Set once the user stepped or paused by hand; cleared when the figure scrolls away.
+    const userPausedRef = useRef(false);
+
     const [currentStep, setCurrentStep] = useState(() => {
         // For reduced motion, show final state immediately
         if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -58,13 +74,31 @@ export const useAnimationControl = ({
         return clearAnimationInterval;
     }, [isPlaying, interval, totalSteps, loop, prefersReducedMotion, clearAnimationInterval]);
 
+    // Let the page-wide scheduler start and stop this figure based on visibility.
+    useEffect(() => {
+        const el = vizRef.current;
+        if (!autoPlayOnView || prefersReducedMotion || !el) return undefined;
+        return registerViz(vizId, {
+            el,
+            onPlay: () => { if (!userPausedRef.current) setIsPlaying(true); },
+            onPause: () => setIsPlaying(false),
+            onLeave: () => { userPausedRef.current = false; }
+        });
+    }, [vizId, autoPlayOnView, prefersReducedMotion]);
+
     const reducedMotionStep = Math.max(0, totalSteps - 1);
     const effectiveCurrentStep = prefersReducedMotion ? reducedMotionStep : currentStep;
     const effectiveIsPlaying = prefersReducedMotion ? false : isPlaying;
 
+    const holdManually = useCallback(() => {
+        userPausedRef.current = true;
+        releaseViz(vizId);
+        setIsPlaying(false);
+    }, [vizId]);
+
     // Go to next step (pauses auto-play)
     const nextStep = useCallback(() => {
-        setIsPlaying(false);
+        holdManually();
         setCurrentStep((prev) => {
             const next = prev + 1;
             if (next >= totalSteps) {
@@ -72,11 +106,11 @@ export const useAnimationControl = ({
             }
             return next;
         });
-    }, [totalSteps, loop]);
+    }, [totalSteps, loop, holdManually]);
 
     // Go to previous step (pauses auto-play)
     const prevStep = useCallback(() => {
-        setIsPlaying(false);
+        holdManually();
         setCurrentStep((prev) => {
             const next = prev - 1;
             if (next < 0) {
@@ -84,38 +118,40 @@ export const useAnimationControl = ({
             }
             return next;
         });
-    }, [totalSteps, loop]);
+    }, [totalSteps, loop, holdManually]);
 
     // Jump to specific step (pauses auto-play)
     const goToStep = useCallback((step) => {
-        setIsPlaying(false);
+        holdManually();
         setCurrentStep(Math.max(0, Math.min(step, totalSteps - 1)));
-    }, [totalSteps]);
+    }, [totalSteps, holdManually]);
+
+    // Play: this figure becomes the active one
+    const play = useCallback(() => {
+        if (prefersReducedMotion) return;
+        userPausedRef.current = false;
+        setIsPlaying(true);
+        if (autoPlayOnView) activateViz(vizId);
+    }, [prefersReducedMotion, autoPlayOnView, vizId]);
+
+    // Pause
+    const pause = useCallback(() => {
+        holdManually();
+    }, [holdManually]);
 
     // Toggle play/pause
     const togglePlay = useCallback(() => {
         if (prefersReducedMotion) return;
-        setIsPlaying((prev) => !prev);
-    }, [prefersReducedMotion]);
+        if (isPlaying) pause(); else play();
+    }, [prefersReducedMotion, isPlaying, pause, play]);
 
-    // Play
-    const play = useCallback(() => {
-        if (prefersReducedMotion) return;
-        setIsPlaying(true);
-    }, [prefersReducedMotion]);
-
-    // Pause
-    const pause = useCallback(() => {
-        setIsPlaying(false);
-    }, []);
-
-    // Reset to beginning
+    // Reset to beginning (keeps the current playing state)
     const reset = useCallback(() => {
         setCurrentStep(0);
-        setIsPlaying(autoPlay && !prefersReducedMotion);
-    }, [autoPlay, prefersReducedMotion]);
+    }, []);
 
     return {
+        vizRef,
         currentStep: effectiveCurrentStep,
         isPlaying: effectiveIsPlaying,
         isFirstStep: effectiveCurrentStep === 0,

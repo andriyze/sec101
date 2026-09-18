@@ -15,6 +15,7 @@ const E2eEncryptionViz = () => {
     const isE2e = mode === 'e2e';
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -63,7 +64,7 @@ const E2eEncryptionViz = () => {
     };
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.e2e.title')}
             whyItMatters={t('visualizations.e2e.why_matters')}
         >

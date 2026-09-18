@@ -11,6 +11,7 @@ const DnsResolutionViz = () => {
   const { t } = useTranslation()
 
   const {
+    vizRef,
     currentStep,
     isPlaying,
     totalSteps,
@@ -160,7 +161,7 @@ const DnsResolutionViz = () => {
   const showingResponse = currentStep === 4
 
   return (
-    <VizContainer
+    <VizContainer ref={vizRef}
       title={t('visualizations.dns.title')}
       whyItMatters={t('visualizations.dns.why_matters')}
     >

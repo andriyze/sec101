@@ -14,6 +14,7 @@ const ProtocolsViz = () => {
     const [comparison, setComparison] = useState('http'); // 'http' or 'tcp'
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -42,7 +43,7 @@ const ProtocolsViz = () => {
     };
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.protocols.title')}
             whyItMatters={t('visualizations.protocols.why_matters')}
         >

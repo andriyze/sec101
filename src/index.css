@@ -1100,6 +1100,7 @@ a.tool-list-item:focus-visible {
   overflow: hidden;
   max-width: 100%;
   min-width: 0;
+  scroll-margin-top: 5rem;
 }
 
 .viz-title {

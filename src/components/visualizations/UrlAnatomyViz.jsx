@@ -43,6 +43,7 @@ const UrlAnatomyViz = () => {
     const { t } = useTranslation();
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -134,7 +135,7 @@ const UrlAnatomyViz = () => {
     const legendColor = (part) => (part === 'domain' && isScamStep ? '#ff4d6d' : partColors[part]);
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.url.title')}
             whyItMatters={t('visualizations.url.why_matters')}
         >

@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const VizContainer = ({ title, description, whyItMatters, children, className = '' }) => {
+const VizContainer = ({ title, description, whyItMatters, children, className = '', ref }) => {
     const { t } = useTranslation();
     const titleId = useId();
     const descriptionId = useId();
@@ -13,6 +13,7 @@ const VizContainer = ({ title, description, whyItMatters, children, className = 
 
     return (
         <figure
+            ref={ref}
             className={`card panel-solid viz-container ${className}`}
             aria-labelledby={title ? titleId : undefined}
             aria-describedby={descriptionId}

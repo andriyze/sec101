@@ -13,6 +13,7 @@ const IpVersionsViz = () => {
     const { t } = useTranslation();
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -71,7 +72,7 @@ const IpVersionsViz = () => {
     );
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.ipv.title')}
             whyItMatters={t('visualizations.ipv.why_matters')}
         >

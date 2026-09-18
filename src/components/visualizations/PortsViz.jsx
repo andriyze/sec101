@@ -21,6 +21,7 @@ const PortsViz = () => {
     ];
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -55,7 +56,7 @@ const PortsViz = () => {
     };
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.ports.title')}
             whyItMatters={t('visualizations.ports.why_matters')}
         >

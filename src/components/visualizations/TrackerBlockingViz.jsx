@@ -17,6 +17,7 @@ const TrackerBlockingViz = () => {
     const { t } = useTranslation();
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -105,7 +106,7 @@ const TrackerBlockingViz = () => {
     const currentSiteData = trackerDataTypes[sites[currentSite]?.name];
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.tracker.title')}
             whyItMatters={t('visualizations.tracker.why_matters')}
         >

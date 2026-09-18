@@ -13,6 +13,7 @@ const MfaFactorsViz = () => {
     const { t } = useTranslation();
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -77,7 +78,7 @@ const MfaFactorsViz = () => {
     };
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.mfa.title')}
             whyItMatters={t('visualizations.mfa.why_matters')}
         >

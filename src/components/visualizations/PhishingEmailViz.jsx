@@ -24,6 +24,7 @@ const PhishingEmailViz = () => {
     const [lastFound, setLastFound] = useState(null);
 
     const {
+        vizRef,
         currentStep,
         isPlaying,
         totalSteps,
@@ -146,7 +147,7 @@ const PhishingEmailViz = () => {
     const greetingStyle = { display: 'inline-block', padding: '2px 6px', borderRadius: '4px', border: '1px solid transparent' };
 
     return (
-        <VizContainer
+        <VizContainer ref={vizRef}
             title={t('visualizations.phishing.email_title')}
             whyItMatters={t('visualizations.phishing.why_matters')}
         >
