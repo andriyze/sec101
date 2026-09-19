@@ -2416,6 +2416,93 @@
         }
       ],
       "why_matters": "One habit beats most phishing: before you tap, find the first single slash and read the owner to its left. If it isn’t the company you expect, stop."
+    },
+    "ai_modes": {
+      "title": "Chat, RAG or agent: what happens after you press Enter",
+      "you": "You",
+      "model": "Model",
+      "answer": "Answer",
+      "search": "Search",
+      "docs": "Documents",
+      "tools": "Tools",
+      "action": "Action",
+      "lane_chat": "Chat",
+      "lane_rag": "RAG",
+      "lane_agent": "Agent",
+      "question": "“What is our refund policy?”",
+      "chat_answer": "“Usually 30 days…”",
+      "chat_tag": "from memory, may be outdated",
+      "rag_hit": "refunds.pdf, p. 2",
+      "rag_answer": "“14 days, see refunds.pdf”",
+      "rag_tag": "with a source",
+      "agent_tool1": "search_docs",
+      "agent_tool2": "send_email",
+      "agent_answer": "Emailed the customer",
+      "agent_tag": "an action, not just an answer",
+      "steps": [
+        {
+          "title": "You ask a question",
+          "text": "The same words go into three very different machines."
+        },
+        {
+          "title": "Chat answers from memory",
+          "text": "The model has only its training data and your message. Nothing is looked up, so the detail can be stale or invented."
+        },
+        {
+          "title": "RAG searches first",
+          "text": "A search finds the most relevant passages in your documents and pastes them into the prompt."
+        },
+        {
+          "title": "RAG answers with a source",
+          "text": "The model answers from the passages it was given. Good systems show which document, so you can check."
+        },
+        {
+          "title": "The agent plans and calls tools",
+          "text": "It searches the documents, reads the result, decides what to do next, and can call another tool."
+        },
+        {
+          "title": "The agent acts",
+          "text": "Here it sends an email. An answer you read is one thing; an action taken in your name needs a permission step."
+        }
+      ]
+    },
+    "prompt_flow": {
+      "title": "Where your prompt goes",
+      "device": "Your device",
+      "provider": "Provider servers",
+      "logs": "Stored chats",
+      "training": "Model training",
+      "tools": "Tools & plugins",
+      "packet": "my address is 12 Green St…",
+      "transit": "HTTPS",
+      "watcher": "Wi‑Fi and ISP see only scrambled bytes",
+      "retention": "kept for days to years",
+      "toggle_on": "Training: on",
+      "toggle_off": "Training: off",
+      "not_used": "not used for training",
+      "tools_note": "web search, connected apps",
+      "steps": [
+        {
+          "title": "You type a prompt",
+          "text": "Say it includes your address. From here on, every stop keeps a copy."
+        },
+        {
+          "title": "Encrypted on the way",
+          "text": "HTTPS scrambles it in transit. Your Wi‑Fi and internet provider cannot read it. The chatbot provider can, because it has to."
+        },
+        {
+          "title": "Stored by the provider",
+          "text": "Chats stay on the provider’s servers for days to years, depending on plan and settings. Staff and legal requests can reach stored chats."
+        },
+        {
+          "title": "The training toggle",
+          "text": "With training on, your chat may become part of the next model. Flip the switch in the figure, then find the real one in your app’s data settings."
+        },
+        {
+          "title": "Tools and plugins see it too",
+          "text": "If the assistant searches the web or uses a connected app to answer, that part of your prompt is sent to a third party as well."
+        }
+      ]
     }
   }
 }

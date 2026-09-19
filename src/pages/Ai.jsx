@@ -17,6 +17,8 @@ import TopicCompletionCard from '../components/TopicCompletionCard'
 import PersistedChecklist from '../components/PersistedChecklist'
 import { AI_CHECKLIST_STORAGE_KEY, AI_AGENT_CHECKLIST_STORAGE_KEY } from '../storageKeys'
 import { tArray } from '../i18n/safeTranslate'
+import AiModesViz from '../components/visualizations/AiModesViz'
+import PromptDataFlowViz from '../components/visualizations/PromptDataFlowViz'
 
 const SectionTitle = ({ icon, color, children }) => (
   <div className="section-title" style={{ marginBottom: '0.5rem' }}>
@@ -96,6 +98,7 @@ const Ai = () => {
         <p className="section-subtitle" style={{ marginBottom: '1.2rem' }}>
           {t('ai.modes.intro')}
         </p>
+        <AiModesViz />
         <EmojiCards items={tArray(t, 'ai.modes.cards')} />
       </section>
 
@@ -152,6 +155,7 @@ const Ai = () => {
         <p className="section-subtitle" style={{ marginBottom: '1.2rem' }}>
           {t('ai.data_flow.intro')}
         </p>
+        <PromptDataFlowViz />
         <div className="card panel-solid">
           <ol style={{ paddingLeft: '1.2rem', margin: 0 }}>
             {tArray(t, 'ai.data_flow.items').map((item, i) => (
