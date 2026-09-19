@@ -40,13 +40,6 @@ const Home = () => {
       time: t('home.cards.passwords.time'),
     },
     {
-      path: '/devices',
-      icon: '📱',
-      label: t('nav.devices'),
-      desc: t('home.cards.devices.desc'),
-      time: t('home.cards.devices.time'),
-    },
-    {
       path: '/browsing',
       icon: '🛡️',
       label: t('nav.browsing'),
@@ -59,6 +52,13 @@ const Home = () => {
       label: t('nav.social'),
       desc: t('home.cards.social.desc'),
       time: t('home.cards.social.time'),
+    },
+    {
+      path: '/devices',
+      icon: '📱',
+      label: t('nav.devices'),
+      desc: t('home.cards.devices.desc'),
+      time: t('home.cards.devices.time'),
     },
     {
       path: '/tools',
@@ -111,7 +111,10 @@ const Home = () => {
             {hasStarted ? t('progress.continue_learning') : t('progress.start')}
           </button>
           {!hasStarted && (
-            <button onClick={() => navigate('/phishing')} className="btn btn-glass">
+            <button
+              onClick={() => document.getElementById('topics')?.scrollIntoView({ behavior: 'smooth' })}
+              className="btn btn-glass"
+            >
               <Sparkles size={18} /> {t('home.cta.quickstart')}
             </button>
           )}
@@ -260,7 +263,7 @@ const Home = () => {
         </p>
       </div>
 
-      <div className="section">
+      <div className="section" id="topics">
         <div className="section-header" style={{ alignItems: 'center' }}>
           <div className="section-title">
             <Sparkles size={22} color="var(--primary)" />

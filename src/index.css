@@ -13,7 +13,8 @@
 
   --text-main: #ffffff;
   --text-muted: #a0a0b0;
-  --text-dim: #606070;
+  --text-dim: #8d8da0; /* 5:1 on the page background */
+  --secondary-text: #a98bff; /* readable purple for text; --secondary stays for borders and glows */
 
   --border-light: rgba(255, 255, 255, 0.1);
   --border-glow: rgba(255, 255, 255, 0.2);
@@ -459,7 +460,7 @@ a:hover {
 }
 
 .sidebar.closed + .main-content {
-  margin-left: 80px;
+  margin-left: 0;
 }
 
 .sidebar-backdrop {
@@ -1460,7 +1461,7 @@ a.tool-list-item:focus-visible {
 .e2e-message.encrypted {
   background: rgba(112, 0, 255, 0.15);
   border: 1px solid rgba(112, 0, 255, 0.3);
-  color: var(--secondary);
+  color: var(--secondary-text);
   font-family: monospace;
   letter-spacing: 1px;
 }
@@ -2470,7 +2471,7 @@ a.tool-list-item:focus-visible {
   background: rgba(112, 0, 255, 0.1);
   border-radius: 6px;
   font-size: 0.75rem;
-  color: var(--secondary);
+  color: var(--secondary-text);
   text-align: left;
 }
 
@@ -3497,7 +3498,7 @@ a.tool-list-item:focus-visible {
   border-radius: 6px;
   font-size: 0.75rem;
   font-style: italic;
-  color: var(--secondary);
+  color: var(--secondary-text);
 }
 
 .tls-why-matters {
@@ -4924,6 +4925,7 @@ a.tool-list-item:focus-visible {
 }
 
 .animation-control-btn {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4969,11 +4971,28 @@ a.tool-list-item:focus-visible {
 .animation-step-dots {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 14px;
   min-width: 0;
 }
 
+/* Finger-sized hit areas (44px tall) around the small visible controls */
+.animation-control-btn::before,
+.animation-step-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+.animation-step-dot::before {
+  width: 24px;
+}
+
 .animation-step-dot {
+  position: relative;
   width: 10px;
   height: 10px;
   border-radius: 50%;

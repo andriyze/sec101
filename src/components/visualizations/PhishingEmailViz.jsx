@@ -297,7 +297,7 @@ const PhishingEmailViz = () => {
 
                 {/* Caption slot: tour narration, or find-mode hint / revealed flag */}
                 {isFindMode ? (
-                    <div className="viz-step-caption" aria-live="polite" aria-atomic="true">
+                    <div className="viz-step-caption" aria-live={isPlaying ? 'off' : 'polite'} aria-atomic="true">
                         {lastFound === null ? (
                             <p className="viz-step-caption-text">{t('visualizations.phishing.find.hint')}</p>
                         ) : (
@@ -317,7 +317,7 @@ const PhishingEmailViz = () => {
                         </div>
                     </div>
                 ) : (
-                    <StepCaption steps={steps} currentStep={currentStep} />
+                    <StepCaption steps={steps} currentStep={currentStep} isPlaying={isPlaying} />
                 )}
 
                 {/* Red flags legend (tour mode only — find mode would spoil the hunt) */}
@@ -354,7 +354,7 @@ const PhishingEmailViz = () => {
                         onNext={nextStep}
                         onGoToStep={goToStep}
                         onTogglePlay={togglePlay}
-                        disabled={prefersReducedMotion}
+                        playDisabled={prefersReducedMotion}
                     />
                 )}
             </div>

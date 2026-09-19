@@ -86,8 +86,9 @@ export const useAnimationControl = ({
         });
     }, [vizId, autoPlayOnView, prefersReducedMotion]);
 
-    const reducedMotionStep = Math.max(0, totalSteps - 1);
-    const effectiveCurrentStep = prefersReducedMotion ? reducedMotionStep : currentStep;
+    // Reduced motion: start on the final state and never autoplay, but every step stays
+  // reachable through the controls so the narration is not lost.
+  const effectiveCurrentStep = currentStep
     const effectiveIsPlaying = prefersReducedMotion ? false : isPlaying;
 
     const holdManually = useCallback(() => {

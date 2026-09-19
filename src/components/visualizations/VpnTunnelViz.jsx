@@ -265,7 +265,7 @@ const VpnTunnelViz = () => {
 
                 <StepCaption
                     steps={tArray(t, 'visualizations.vpn.steps')}
-                    currentStep={currentStep}
+                    currentStep={currentStep} isPlaying={isPlaying}
                 />
 
                 <AnimationControls
@@ -276,7 +276,7 @@ const VpnTunnelViz = () => {
                     onNext={nextStep}
                     onGoToStep={goToStep}
                     onTogglePlay={togglePlay}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>

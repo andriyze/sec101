@@ -12,7 +12,8 @@ import { useTranslation } from 'react-i18next';
  * @param {function} props.onNext - Called when next button clicked
  * @param {function} props.onGoToStep - Called with step index when dot clicked
  * @param {function} props.onTogglePlay - Called when play/pause clicked
- * @param {boolean} props.disabled - Disable all controls (e.g., for reduced motion)
+ * @param {boolean} props.disabled - Disable all controls
+ * @param {boolean} props.playDisabled - Disable only autoplay (reduced motion): stepping stays available
  * @param {boolean} props.showStepDots - Show step indicator dots (default: true)
  * @param {boolean} props.loop - Whether animation loops (affects button states)
  * @param {number} props.dotCount - Render this many dots instead of totalSteps
@@ -29,6 +30,7 @@ const AnimationControls = ({
     onGoToStep,
     onTogglePlay,
     disabled = false,
+    playDisabled = false,
     showStepDots = true,
     loop = true,
     dotCount,
@@ -88,9 +90,9 @@ const AnimationControls = ({
             <button
                 className="animation-control-btn play-pause"
                 onClick={onTogglePlay}
-                disabled={disabled}
+                disabled={disabled || playDisabled}
                 aria-label={isPlaying ? t('controls.pause', 'Pause animation') : t('controls.play', 'Play animation')}
-                title={isPlaying ? t('controls.pause', 'Pause') : t('controls.play', 'Play')}
+                title={playDisabled ? t('controls.play_reduced_motion', 'Autoplay is off because your system prefers reduced motion') : isPlaying ? t('controls.pause', 'Pause') : t('controls.play', 'Play')}
             >
                 {isPlaying ? <Pause size={16} /> : <Play size={16} />}
             </button>

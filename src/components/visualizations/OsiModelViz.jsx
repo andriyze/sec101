@@ -144,7 +144,7 @@ const OsiModelViz = () => {
                 </div>
 
                 {/* Per-step narration */}
-                <StepCaption steps={captions} currentStep={currentStep} />
+                <StepCaption steps={captions} currentStep={currentStep} isPlaying={isPlaying} />
 
                 {/* Animation Controls: 7 dots (one per layer), 14 steps for prev/next */}
                 <AnimationControls
@@ -158,7 +158,7 @@ const OsiModelViz = () => {
                     dotCount={7}
                     activeDot={activeLayer}
                     onDotClick={(i) => goToStep(i)}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>

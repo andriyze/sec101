@@ -310,7 +310,7 @@ const TrackerBlockingViz = () => {
 
                 <StepCaption
                     steps={tArray(t, 'visualizations.tracker.steps')}
-                    currentStep={currentStep}
+                    currentStep={currentStep} isPlaying={isPlaying}
                 />
 
                 <AnimationControls
@@ -321,7 +321,7 @@ const TrackerBlockingViz = () => {
                     onNext={nextStep}
                     onGoToStep={goToStep}
                     onTogglePlay={togglePlay}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>

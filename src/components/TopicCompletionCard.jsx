@@ -51,7 +51,7 @@ const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
         };
     }, [quizStorageKey]);
 
-    const quizPassed = quizScore >= 50;
+    const quizPassed = quizScore >= 70;
     const isComplete = isTopicCompleted(topicId);
     const nextTopic = getNextTopic();
     const isAllComplete = completedCount === totalCount;

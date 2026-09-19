@@ -318,7 +318,7 @@ const DnsResolutionViz = () => {
         </div>
 
         {/* Step explanation */}
-        <div className="dns-explanation-panel" aria-live="polite" aria-atomic="true">
+        <div className="dns-explanation-panel" aria-live={isPlaying ? 'off' : 'polite'} aria-atomic="true">
           <div className="dns-step-header">
             <span className="dns-step-number">
               {t('visualizations.dns.step_of', { current: currentStep + 1, total: 5 })}
@@ -353,7 +353,7 @@ const DnsResolutionViz = () => {
           onNext={nextStep}
           onGoToStep={goToStep}
           onTogglePlay={togglePlay}
-          disabled={prefersReducedMotion}
+          playDisabled={prefersReducedMotion}
         />
 
         <details className="dns-technical">

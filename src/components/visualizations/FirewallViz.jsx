@@ -172,7 +172,7 @@ const FirewallViz = () => {
                 {/* Step narration */}
                 <StepCaption
                     steps={tArray(t, 'visualizations.firewall.steps')}
-                    currentStep={currentStep}
+                    currentStep={currentStep} isPlaying={isPlaying}
                 />
 
                 {/* Animation Controls */}
@@ -184,7 +184,7 @@ const FirewallViz = () => {
                     onNext={nextStep}
                     onGoToStep={goToStep}
                     onTogglePlay={togglePlay}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>

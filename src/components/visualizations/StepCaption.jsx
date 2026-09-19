@@ -6,14 +6,16 @@ import { useTranslation } from 'react-i18next';
  * @param {Object} props
  * @param {Array<{title: string, text: string}>} props.steps - One caption per animation step
  * @param {number} props.currentStep - Current step index (0-based)
+ * @param {boolean} props.isPlaying - While autoplaying, caption changes are not announced to
+ *   screen readers; only steps the reader chose are
  */
-const StepCaption = ({ steps = [], currentStep = 0 }) => {
+const StepCaption = ({ steps = [], currentStep = 0, isPlaying = false }) => {
     const { t } = useTranslation();
     const step = steps[currentStep];
     if (!step) return null;
 
     return (
-        <div className="viz-step-caption" aria-live="polite" aria-atomic="true">
+        <div className="viz-step-caption" aria-live={isPlaying ? 'off' : 'polite'} aria-atomic="true">
             <span className="viz-step-caption-number">
                 {t('controls.step_n', { n: currentStep + 1, defaultValue: `Step ${currentStep + 1}` })} / {steps.length}
             </span>

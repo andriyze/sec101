@@ -123,7 +123,7 @@ const TlsHandshakeViz = () => {
         </div>
 
         {/* Step explanation */}
-        <div className="tls-explanation-panel" aria-live="polite" aria-atomic="true">
+        <div className="tls-explanation-panel" aria-live={isPlaying ? 'off' : 'polite'} aria-atomic="true">
           <div className="tls-step-header">
             <span className="tls-step-number">
               {t('visualizations.tls.step_of', { current: currentStep + 1, total: 4 })}
@@ -165,7 +165,7 @@ const TlsHandshakeViz = () => {
           onNext={nextStep}
           onGoToStep={goToStep}
           onTogglePlay={togglePlay}
-          disabled={prefersReducedMotion}
+          playDisabled={prefersReducedMotion}
         />
 
         <div className="tls-why-matters">

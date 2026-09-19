@@ -182,7 +182,7 @@ const E2eEncryptionViz = () => {
 
                 <StepCaption
                     steps={tArray(t, isE2e ? 'visualizations.e2e.steps' : 'visualizations.e2e.steps_regular')}
-                    currentStep={currentStep}
+                    currentStep={currentStep} isPlaying={isPlaying}
                 />
 
                 <AnimationControls
@@ -193,7 +193,7 @@ const E2eEncryptionViz = () => {
                     onNext={nextStep}
                     onGoToStep={goToStep}
                     onTogglePlay={togglePlay}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>

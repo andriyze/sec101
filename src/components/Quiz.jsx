@@ -82,7 +82,7 @@ const QuizSession = ({ title, questions, storageKey, onComplete }) => {
         })
       )
     }
-    if (percent >= 50 && onComplete) {
+    if (percent >= 70 && onComplete) {
       onComplete()
     }
   }

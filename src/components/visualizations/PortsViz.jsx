@@ -138,7 +138,7 @@ const PortsViz = () => {
           </div>
         </LayoutGroup>
 
-        <StepCaption steps={tArray(t, 'visualizations.ports.steps')} currentStep={currentStep} />
+        <StepCaption steps={tArray(t, 'visualizations.ports.steps')} currentStep={currentStep} isPlaying={isPlaying} />
 
         <AnimationControls
           currentStep={currentStep}
@@ -148,7 +148,7 @@ const PortsViz = () => {
           onNext={nextStep}
           onGoToStep={goToStep}
           onTogglePlay={togglePlay}
-          disabled={prefersReducedMotion}
+          playDisabled={prefersReducedMotion}
         />
       </div>
     </VizContainer>

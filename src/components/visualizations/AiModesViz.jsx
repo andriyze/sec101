@@ -140,7 +140,7 @@ const AiModesViz = () => {
           )
         })}
 
-        <StepCaption steps={tArray(t, 'visualizations.ai_modes.steps')} currentStep={currentStep} />
+        <StepCaption steps={tArray(t, 'visualizations.ai_modes.steps')} currentStep={currentStep} isPlaying={isPlaying} />
 
         <AnimationControls
           currentStep={currentStep}
@@ -150,7 +150,7 @@ const AiModesViz = () => {
           onNext={nextStep}
           onGoToStep={goToStep}
           onTogglePlay={togglePlay}
-          disabled={prefersReducedMotion}
+          playDisabled={prefersReducedMotion}
         />
       </div>
     </VizContainer>

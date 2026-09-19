@@ -183,7 +183,7 @@ const IpVersionsViz = () => {
                 {/* Step narration */}
                 <StepCaption
                     steps={tArray(t, 'visualizations.ipv.steps')}
-                    currentStep={currentStep}
+                    currentStep={currentStep} isPlaying={isPlaying}
                 />
 
                 {/* Animation Controls */}
@@ -195,7 +195,7 @@ const IpVersionsViz = () => {
                     onNext={nextStep}
                     onGoToStep={goToStep}
                     onTogglePlay={togglePlay}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>

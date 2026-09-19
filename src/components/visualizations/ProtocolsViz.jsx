@@ -271,7 +271,7 @@ const ProtocolsViz = () => {
             t,
             web ? 'visualizations.protocols.steps_web' : 'visualizations.protocols.steps_transport'
           )}
-          currentStep={currentStep}
+          currentStep={currentStep} isPlaying={isPlaying}
         />
 
         <AnimationControls
@@ -282,7 +282,7 @@ const ProtocolsViz = () => {
           onNext={nextStep}
           onGoToStep={goToStep}
           onTogglePlay={togglePlay}
-          disabled={prefersReducedMotion}
+          playDisabled={prefersReducedMotion}
         />
       </div>
     </VizContainer>

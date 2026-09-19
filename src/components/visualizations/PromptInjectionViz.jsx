@@ -86,7 +86,7 @@ const PromptInjectionViz = () => {
           </button>
         </div>
 
-        <div className={`pi-transcript ${guarded ? 'guarded' : 'naive'}`} aria-live="polite">
+        <div className={`pi-transcript ${guarded ? 'guarded' : 'naive'}`} aria-live={isPlaying ? 'off' : 'polite'}>
           <AnimatePresence initial={false}>
             {turns
               .filter(turn => turn.step <= currentStep)
@@ -142,7 +142,7 @@ const PromptInjectionViz = () => {
 
         <StepCaption
           steps={tArray(t, `visualizations.injection.steps_${mode}`)}
-          currentStep={currentStep}
+          currentStep={currentStep} isPlaying={isPlaying}
         />
 
         <AnimationControls
@@ -153,7 +153,7 @@ const PromptInjectionViz = () => {
           onNext={nextStep}
           onGoToStep={goToStep}
           onTogglePlay={togglePlay}
-          disabled={prefersReducedMotion}
+          playDisabled={prefersReducedMotion}
         />
       </div>
     </VizContainer>

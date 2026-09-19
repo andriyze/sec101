@@ -196,7 +196,7 @@ const UrlAnatomyViz = () => {
                 </div>
 
                 {/* Step narration */}
-                <StepCaption steps={tArray(t, 'visualizations.url.steps')} currentStep={currentStep} />
+                <StepCaption steps={tArray(t, 'visualizations.url.steps')} currentStep={currentStep} isPlaying={isPlaying} />
 
                 {/* Animation Controls */}
                 <AnimationControls
@@ -207,7 +207,7 @@ const UrlAnatomyViz = () => {
                     onNext={nextStep}
                     onGoToStep={goToStep}
                     onTogglePlay={togglePlay}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>

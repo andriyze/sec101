@@ -131,7 +131,7 @@ const McpTopologyViz = () => {
           </div>
         </div>
 
-        <StepCaption steps={tArray(t, 'visualizations.mcp.steps')} currentStep={currentStep} />
+        <StepCaption steps={tArray(t, 'visualizations.mcp.steps')} currentStep={currentStep} isPlaying={isPlaying} />
 
         <AnimationControls
           currentStep={currentStep}
@@ -141,7 +141,7 @@ const McpTopologyViz = () => {
           onNext={nextStep}
           onGoToStep={goToStep}
           onTogglePlay={togglePlay}
-          disabled={prefersReducedMotion}
+          playDisabled={prefersReducedMotion}
         />
       </div>
     </VizContainer>

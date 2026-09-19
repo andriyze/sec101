@@ -155,7 +155,7 @@ const MfaFactorsViz = () => {
 
                 <StepCaption
                     steps={tArray(t, 'visualizations.mfa.steps')}
-                    currentStep={currentStep}
+                    currentStep={currentStep} isPlaying={isPlaying}
                 />
 
                 <AnimationControls
@@ -166,7 +166,7 @@ const MfaFactorsViz = () => {
                     onNext={nextStep}
                     onGoToStep={goToStep}
                     onTogglePlay={togglePlay}
-                    disabled={prefersReducedMotion}
+                    playDisabled={prefersReducedMotion}
                 />
             </div>
         </VizContainer>
