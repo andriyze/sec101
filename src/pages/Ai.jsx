@@ -20,6 +20,8 @@ import { tArray } from '../i18n/safeTranslate'
 import AiModesViz from '../components/visualizations/AiModesViz'
 import PromptDataFlowViz from '../components/visualizations/PromptDataFlowViz'
 import PromptInjectionViz from '../components/visualizations/PromptInjectionViz'
+import McpTopologyViz from '../components/visualizations/McpTopologyViz'
+import McpLiveDemo from '../components/McpLiveDemo'
 
 const SectionTitle = ({ icon, color, children }) => (
   <div className="section-title" style={{ marginBottom: '0.5rem' }}>
@@ -111,6 +113,7 @@ const Ai = () => {
         <p className="section-subtitle" style={{ marginBottom: '1.2rem' }}>
           {t('ai.mcp.intro')}
         </p>
+        <McpTopologyViz />
         <div className="card panel-solid">
           <ul style={{ paddingLeft: '1.2rem', margin: 0 }}>
             {tArray(t, 'ai.mcp.points').map((item, i) => (
@@ -120,6 +123,7 @@ const Ai = () => {
             ))}
           </ul>
         </div>
+        <McpLiveDemo />
       </section>
 
       {/* Prompt injection */}

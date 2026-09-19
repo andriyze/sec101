@@ -1235,7 +1235,13 @@
         "loading": "Calling the server…",
         "error": "The server could not be reached. Try again in a moment.",
         "result_label": "Response",
-        "tools_label": "Tools the server offers"
+        "tools_label": "Tools the server offers",
+        "request_label": "Request sent (JSON-RPC over HTTPS)",
+        "monthly_total": "Total monthly payment",
+        "pi": "Principal and interest",
+        "rate": "Rate used",
+        "region": "Region preset",
+        "raw": "Raw response"
       }
     },
     "injection": {
@@ -2586,6 +2592,50 @@
         {
           "title": "An honest answer",
           "text": "You get the summary and a note about the hidden instructions. Remove any one ingredient and the attack fails."
+        }
+      ]
+    },
+    "mcp": {
+      "title": "MCP: one plug, many servers",
+      "host": "AI app (host)",
+      "model": "Model",
+      "client": "MCP client",
+      "server_files": "Files server",
+      "server_calendar": "Calendar server",
+      "server_a3sec": "a3sec.net server",
+      "backend_files": "your disk",
+      "backend_calendar": "your calendar",
+      "backend_a3sec": "mortgage calculator",
+      "user_prompt": "“What would a $400k home cost per month?”",
+      "tool_call": "mortgage_quote { price: 400000, country: \"US\" }",
+      "dialog": "Allow mortgage_quote on a3sec.net server?",
+      "allow_once": "Allow once",
+      "always": "Always allow",
+      "deny": "Deny",
+      "sees": "server sees: price 400000, country US",
+      "result": "≈ $3,200 / month",
+      "answer": "“About $3,200 a month with 5% down at today’s average rate.”",
+      "discover": "tools/list",
+      "steps": [
+        {
+          "title": "The app discovers the tools",
+          "text": "On startup the MCP client asks every connected server what it offers. Each answer is a list of tools with names, descriptions and the arguments they take."
+        },
+        {
+          "title": "You ask a question",
+          "text": "You never name a tool. You just ask, and the app shows the model the tool descriptions it collected."
+        },
+        {
+          "title": "The model picks a tool",
+          "text": "From the descriptions it chooses mortgage_quote and fills in the arguments. Whatever it puts there will be sent to that server."
+        },
+        {
+          "title": "The app asks you first",
+          "text": "A good host shows the tool and the server before calling. Read it. “Allow once” keeps you in the loop; “Always allow” hands that decision over for good."
+        },
+        {
+          "title": "The server does the work",
+          "text": "The request goes to a3sec.net, the calculator runs, and the result comes back for the model to phrase. The server saw the arguments, and nothing else."
         }
       ]
     }
