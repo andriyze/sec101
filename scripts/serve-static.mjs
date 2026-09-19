@@ -17,6 +17,22 @@ const mimeTypes = {
     '.webp': 'image/webp',
 };
 
+// Sent on every response. Scripts and styles are our own bundle; framer-motion writes inline
+// style attributes, hence 'unsafe-inline' for styles only. The one cross-origin call is the
+// live MCP demo on the AI page, which talks to a3sec.net.
+const securityHeaders = {
+    'Content-Security-Policy':
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; " +
+        "font-src 'self'; connect-src 'self' https://www.a3sec.net; object-src 'none'; frame-ancestors 'none'; " +
+        "base-uri 'self'; form-action 'self'",
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+};
+
 const resolveAssetPath = (pathname) => {
     let decodedPath;
     try {
@@ -44,7 +60,9 @@ const server = createServer((request, response) => {
         const extension = extname(filePath);
 
         response.setHeader('Content-Type', mimeTypes[extension] || 'application/octet-stream');
-        response.setHeader('X-Content-Type-Options', 'nosniff');
+        for (const [name, value] of Object.entries(securityHeaders)) {
+            response.setHeader(name, value);
+        }
 
         if (filePath.includes(`${sep}assets${sep}`)) {
             response.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
