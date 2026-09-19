@@ -50,7 +50,7 @@
     "preview_title": "Explore the essentials",
     "preview_subtitle": "Short guides with checklists and links you can act on now.",
     "cta": {
-      "quickstart": "Start with phishing"
+      "quickstart": "Browse all topics"
     },
     "cards": {
       "passwords": {
@@ -224,13 +224,13 @@
           ],
           "answer": 0,
           "correct": "The leaked password is now being tried against your other accounts — rotation plus 2FA closes that door.",
-          "explainer": "Attackers feed leaked passwords into other sites automatically (credential stuffing). Unique passwords turn a breach into a non-event."
+          "explainer": "Attackers feed leaked passwords into other sites automatically (credential stuffing). Unique passwords mean one leaked password can’t open your other accounts."
         }
       ]
     },
     "mfa": {
       "title": "Multi-Factor Authentication (MFA)",
-      "subtitle": "The single most important setting to enable.",
+      "subtitle": "One of the most important settings to enable.",
       "intro": "MFA adds a second lock to your account. A stolen password is much less useful when the attacker also needs your phone, app, or security key.",
       "time": "5 minutes per account",
       "backup": "Always save recovery/backup codes",
@@ -247,7 +247,7 @@
         },
         "apps": {
           "title": "Authenticator Apps",
-          "desc": "Good default. Scan a QR code, get a new 6-digit code every 30 seconds, and keep access even when offline."
+          "desc": "Good default. Scan a QR code, get a new 6-digit code every 30 seconds, and keep access even when offline. A code can still be phished if you type it into a fake site, which is why passkeys are better."
         },
         "hardware": {
           "title": "Hardware Keys (YubiKey)",
@@ -379,7 +379,7 @@
       "title": "Secure Browsers",
       "brave": "Good default for daily browsing. Blocks ads and trackers out of the box.",
       "firefox": "Good alternative. Requires manual hardening for best privacy.",
-      "tor": "For maximum anonymity only. Slow. Don't use for regular browsing."
+      "tor": "For when hiding who and where you are matters more than speed. Slower, and some sites break. Logging into your usual accounts tells that site who you are."
     },
     "quiz": {
       "title": "Safe browsing quiz",
@@ -484,7 +484,7 @@
         "title": "Tor basics (2 min)",
         "steps": [
           "Use for sensitive browsing only; avoid logging into personal accounts.",
-          "Keep Security Level at \"Safer\" or \"Safest\" for less fingerprinting.",
+          "Set Security Level to \"Safer\" or \"Safest\": it switches off risky page features.",
           "Do not resize the window or install extensions."
         ]
       }
@@ -506,7 +506,7 @@
         {
           "emoji": "🪧",
           "title": "What the banner really asks",
-          "desc": "The banner is about consent to tracking — not about safety. “Reject all” or “necessary only” is usually the more private choice, and the site still works: login and cart cookies don’t need your consent."
+          "desc": "The banner is about consent to tracking — not about safety. “Reject all” or “necessary only” is usually the more private choice, and the site still works: login and cart cookies usually don’t need your consent (rules vary by country)."
         },
         {
           "emoji": "🧹",
@@ -529,7 +529,7 @@
         {
           "emoji": "🚫",
           "title": "“Deceptive site ahead”",
-          "desc": "The red screen means the address is on a known list of phishing or malware sites. It is rarely wrong.",
+          "desc": "The red screen means the address is on a known list of phishing or malware sites. It is right far more often than not — if you are sure it’s a mistake, check the address carefully before going on.",
           "action": "Close the tab. If you got the link from a message, treat that message as a scam."
         },
         {
@@ -558,7 +558,7 @@
         "desc": "Imagine sending a letter in a locked steel box. You have the key, and only the recipient has the key. The mailman (the app server) delivers the box but cannot open it. That is E2EE. Standard messaging is like a postcard—anyone handling it can read it."
       },
       "signal": {
-        "title": "Signal - The Gold Standard",
+        "title": "Signal — the safe default",
         "desc": "Best default for private conversations: end-to-end encrypted, open source, nonprofit, and designed to keep server-side metadata minimal."
       },
       "whatsapp": {
@@ -585,7 +585,7 @@
         "Signal: minimal metadata stored (message content and contacts protected; only registration date and last connection may be disclosed if legally compelled).",
         "WhatsApp/iMessage: metadata like who/when can be collected.",
         "Telegram: default cloud chats are stored in Telegram Cloud; Secret Chats are the privacy mode.",
-        "SMS: no encryption; assume everything is visible to carrier."
+        "SMS: not end-to-end encrypted; assume your carrier can read it."
       ]
     },
     "verification": {
@@ -625,7 +625,7 @@
       "title": "Private Email",
       "why": "Keeping Gmail is fine for most people if you add strong 2FA. Proton Mail is useful when stored-mail privacy and Proton-to-Proton E2EE matter.",
       "proton": {
-        "desc": "Strong privacy-focused email. Stored mail uses zero-access encryption, and mail between Proton users is end-to-end encrypted."
+        "desc": "Strong privacy-focused email. Stored mail uses zero-access encryption, and mail between Proton users is end-to-end encrypted. Mail to other providers is protected on the way (TLS), not end-to-end."
       },
       "gmail": {
         "desc": "Gmail is convenient and secure. Add 2FA on the Accounts page; use a privacy-focused account when message content privacy matters."
@@ -708,7 +708,7 @@
       "title": "iOS Apps",
       "signal": "Signal: Encrypted messaging.",
       "bitwarden": "Bitwarden: Open-source password manager.",
-      "onion": "Onion Browser: Tor for iOS."
+      "onion": "Onion Browser: uses the Tor network on iPhone, but Apple’s rules mean it can’t match Tor Browser’s protections."
     },
     "android_apps": {
       "title": "Android Apps",
@@ -733,7 +733,7 @@
     "lost_device": {
       "title": "If your device is lost/stolen",
       "steps": [
-        "Use Find My / Find My Device to lock and locate, then erase if unrecoverable.",
+        "Use Find My / Find My Device to lock and locate, then erase if unrecoverable. Don’t remove the phone from your Apple/Google account — that switches off its theft protection.",
         "Change passwords for email + banking first; revoke old sessions.",
         "Notify your carrier (SIM swap risk) and your bank if applicable."
       ]
@@ -863,7 +863,7 @@
         "Do not pay and do not negotiate.",
         "Preserve evidence: screenshots, usernames, links, wallet/card details, and timestamps.",
         "Tell a trusted adult or friend immediately; isolation helps the blackmailer.",
-        "Report the account on the platform and use StopNCII.org for adult intimate images when applicable.",
+        "Report the account on the platform. To get images taken down: Take It Down (takeitdown.ncmec.org) if you were under 18 in them, StopNCII.org if you were an adult.",
         "If you are in immediate danger or a minor is involved, contact local emergency help or cyberpolice."
       ]
     },
@@ -882,7 +882,7 @@
         "If you entered credit card info, call the bank to block/replace the card.",
         "If you gave a code to a caller, treat the account as compromised and contact the real service from its official app/site.",
         "If friends are receiving messages from you, post a short warning and secure the account before replying to everyone.",
-        "If you downloaded a file: Disconnect from Wi-Fi and run an antivirus scan."
+        "Downloaded a file but never opened it? Delete it and move on. Opened or ran it? Stop using that device for anything important, disconnect it from the internet, run a trusted antivirus scan, and change important passwords from another device."
       ]
     },
     "quiz": {
@@ -941,7 +941,7 @@
           ],
           "answer": 0,
           "correct": "Read from the first single slash backwards: the owner is paypal.com.",
-          "explainer": "In the other two the real owners are account-verify.ru and secure-paypal-support.com — the word “paypal” anywhere else in the address means nothing."
+          "explainer": "In the other two the real owners are account-verify.ru and secure-paypal-support.com — the word “paypal” anywhere else in the address means nothing. Not sure where the owner’s name ends? Skip the link and open the site from its app or a bookmark."
         }
       ]
     },
@@ -1067,7 +1067,7 @@
         {
           "name": "Tor Browser",
           "emoji": "🧅",
-          "desc": "Maximum anonymity; uses Tor network by default.",
+          "desc": "Built for anonymity; sends everything through the Tor network.",
           "link": "https://www.torproject.org/download/"
         }
       ]
@@ -1079,7 +1079,7 @@
         {
           "name": "One key (symmetric)",
           "emoji": "🔐",
-          "desc": "Like a safe with one key. You lock your data, and only someone with the same key can open it. Your phone uses this to protect everything when locked."
+          "desc": "Like a safe with one key. You lock your data, and only someone with the same key can open it. Your phone uses this idea (with many keys) to protect everything when locked."
         },
         {
           "name": "Two keys (asymmetric)",
@@ -1162,7 +1162,7 @@
         {
           "emoji": "🎚️",
           "title": "Find the training toggle",
-          "desc": "Consumer apps may use your chats to improve their models unless you switch it off. Look under data or privacy settings, and use a temporary chat for anything sensitive."
+          "desc": "Consumer apps may use your chats to improve their models unless you switch it off. Look under data or privacy settings. A temporary chat keeps less history, but it is not a safe place for secrets."
         },
         {
           "emoji": "🔑",
@@ -1204,7 +1204,7 @@
         {
           "emoji": "💬",
           "title": "Chat",
-          "desc": "The model answers from what it learned during training plus your message. It cannot look anything up, so it can be out of date or simply made up."
+          "desc": "The model answers from what it learned during training plus your message. On its own it cannot look anything up (many chat apps add search or tools on top), so it can be out of date or simply made up."
         },
         {
           "emoji": "📚",
@@ -1222,14 +1222,14 @@
       "title": "MCP: the USB-C port for AI",
       "intro": "Model Context Protocol is a standard way for an AI app to plug into tools: your files, your calendar, a company database, a public API. One plug, many servers.",
       "points": [
-        "The host is the app you talk to. It contains the model and an MCP client.",
+        "The host is the app you talk to. It runs the conversation with the model and holds the MCP client.",
         "Each MCP server offers tools (actions), resources (data) and prompts. The app lists them first, then the model chooses.",
         "Every tool call is a request the server can see. If the model puts your data into the arguments, the server receives it.",
-        "The permission prompt is the moment that matters. Read what the tool will do before you allow it, and prefer “allow once”."
+        "The permission prompt is your moment of control — good apps ask before a tool runs. Read what the tool will do before you allow it, and prefer “allow once”."
       ],
       "live": {
         "title": "Try it for real",
-        "desc": "The a3sec.net site runs a small public MCP server. The buttons below send a real request to it from your browser. No data about you is included.",
+        "desc": "The a3sec.net site runs a small public MCP server. The buttons below send a fixed request to it from your browser. The request contains nothing you typed here; like any web request, the server still sees your IP address.",
         "list_button": "List the server’s tools",
         "call_button": "Call mortgage_quote for a $400,000 home",
         "loading": "Calling the server…",
@@ -1265,7 +1265,7 @@
           "desc": "Any tool that can send: email, a web request, a link the model can write into the answer."
         }
       ],
-      "trifecta_note": "All three together let a stranger act through your agent. Remove any one and the attack fails.",
+      "trifecta_note": "All three together let a stranger steal data through your agent. Remove any one and this kind of theft fails. Other tricks are still possible, which is why the permissions and the confirmation step still matter.",
       "defenses_title": "What good agents and careful users do",
       "defenses": [
         "Treat fetched content as data, never as instructions. Good agents show it quarantined and say when it looked like a command.",
@@ -1280,7 +1280,7 @@
       "items": [
         "Encrypted on the way (HTTPS), so the Wi‑Fi and your provider cannot read it.",
         "Stored on the provider’s servers for days to years, depending on the plan and your settings.",
-        "Possibly used for training unless the toggle is off or you are on a business plan.",
+        "Possibly used for training. Whether it is depends on the product, your account type and the toggle, so check the settings of the app you use.",
         "Sent onward to any tool or plugin the assistant uses to answer, such as web search or a connected app."
       ]
     },
@@ -1351,7 +1351,7 @@
           ],
           "answer": 1,
           "correct": "That is prompt injection: content becomes commands.",
-          "explainer": "Private data plus untrusted content plus a tool that can send. Remove any one ingredient and the attack fails."
+          "explainer": "Private data plus untrusted content plus a tool that can send. Remove any one ingredient and this kind of theft fails."
         },
         {
           "prompt": "An agent asks permission to call “send_email” while you only asked for a summary. What is the right move?",
@@ -1387,7 +1387,7 @@
     },
     "osi": {
       "title": "The OSI Model",
-      "intro": "The OSI model breaks down network communication into 7 layers. Each layer has a specific job, making troubleshooting and understanding easier. Remember: 'Please Do Not Throw Sausage Pizza Away'."
+      "intro": "The OSI model breaks down network communication into 7 layers. Each layer has a specific job, making troubleshooting and understanding easier. It is a way of thinking about the journey, not a literal list of programs — real networks blur the lines. Remember: 'Please Do Not Throw Sausage Pizza Away'."
     },
     "ports": {
       "title": "Understanding Ports",
@@ -1399,7 +1399,7 @@
     },
     "firewall": {
       "title": "How Firewalls Work",
-      "intro": "A firewall is like a security guard for your network. It checks all incoming and outgoing traffic and decides what to allow or block based on security rules."
+      "intro": "A firewall is like a security guard for your network. It can check incoming and outgoing traffic and decides, by its rules, what to let through and what to block."
     },
     "tls": {
       "title": "SSL/TLS Handshake",
@@ -1407,7 +1407,7 @@
     },
     "ipv": {
       "title": "IPv4 vs IPv6",
-      "intro": "The internet is running out of IPv4 addresses. IPv6 is the new standard with virtually unlimited addresses, but the transition is still ongoing."
+      "intro": "The internet is running out of IPv4 addresses. IPv6 is its successor with virtually unlimited addresses, but the switch is still ongoing."
     },
     "web_security": {
       "title": "Web App Security Basics",
@@ -1719,12 +1719,13 @@
     "go_to_step": "Go to step {{step}}",
     "step_n": "Step {{n}}",
     "play": "Play animation",
-    "pause": "Pause animation"
+    "pause": "Pause animation",
+    "play_reduced_motion": "Autoplay is off because your system prefers reduced motion"
   },
   "completion": {
     "quiz_required": "Complete the Quiz",
-    "quiz_required_desc": "Pass the quiz above (50%+) to unlock topic completion.",
-    "current_score": "Current score: {{score}}% — need 50%",
+    "quiz_required_desc": "Pass the quiz above (70%+) to unlock topic completion.",
+    "current_score": "Current score: {{score}}% — need 70%",
     "quiz_passed": "Quiz Passed! ({{score}}%)",
     "ready_to_complete": "Ready to move on? Mark this topic as complete.",
     "mark_complete": "Mark Topic Complete",
@@ -1763,7 +1764,7 @@
           "text": "The destinations don’t disappear — the VPN provider may see them instead. A VPN moves your trust; pick a provider you actually trust."
         }
       ],
-      "why_matters": "On public Wi‑Fi (cafés, airports) a VPN also shields you from strangers on the same network.",
+      "why_matters": "On public Wi‑Fi (cafés, airports) HTTPS already protects what you send; a VPN adds cover for which sites you visit and for apps that don’t use HTTPS.",
       "site_sees": "website sees:",
       "your_ip": "your IP",
       "vpn_ip": "VPN's IP"
@@ -1805,7 +1806,7 @@
           "text": "Two factors is the practical minimum for email and banking. Use an authenticator app instead of SMS when you can."
         }
       ],
-      "why_matters": "Most account takeovers start with a stolen password. MFA is the single highest-impact switch you can flip."
+      "why_matters": "Most account takeovers start with a stolen password. MFA is one of the highest-impact switches you can flip. Strongest to weakest: passkey or security key, then an authenticator app, then SMS."
     },
     "e2e": {
       "title": "End-to-End Encryption",
@@ -1823,7 +1824,7 @@
         },
         {
           "title": "Locked before it leaves",
-          "text": "Your device scrambles the message. Only your friend’s device holds the key to unscramble it."
+          "text": "Your device scrambles the message. Only your friend’s devices hold the key to unscramble it."
         },
         {
           "title": "Crossing the internet",
@@ -1875,7 +1876,7 @@
       "trackers_blocked": "Trackers Blocked",
       "third_party_desc": "Third-party trackers are small pieces of code from outside companies hidden inside websites. When the same company’s tracker sits on many sites, it can follow you across all of them.",
       "trackers_on": "Trackers on {{site}}:",
-      "blocker_desc": "With a tracker blocker like uBlock Origin, these scripts are blocked. The website still works, but trackers can't collect data.",
+      "blocker_desc": "With a tracker blocker like uBlock Origin, these scripts are blocked. The website usually works as before; now and then a login or a video breaks because it was bundled with a tracker — allow that one site rather than switching the blocker off.",
       "profile_header": "Your Profile (As Trackers See You)",
       "cross_site": "Cross-site tracking: {{count}} sites linked",
       "blocked_message": "Many third-party trackers are blocked. Your browsing is more private, but not invisible.",
@@ -1958,7 +1959,7 @@
         },
         {
           "title": "Sites still work",
-          "text": "Pages load normally — often faster. Only the watching parts are gone."
+          "text": "Pages load normally — often faster. Only the watching parts are gone. Rarely, a login or a video needs a one-site exception."
         },
         {
           "title": "Nothing to sell",
@@ -1999,11 +2000,11 @@
         },
         {
           "title": "Manufactured panic",
-          "text": "“URGENT! 12 hours!” — scams rush you so you act before you think. Real companies almost never threaten deadlines by email."
+          "text": "“URGENT! 12 hours!” — scams rush you so you act before you think. Real companies send deadlines too, so urgency alone proves nothing; urgency plus a link, a code or a payment request is the warning sign."
         },
         {
           "title": "Generic greeting",
-          "text": "“Dear Customer” — a company you have an account with knows your name. Mass-sent scams don’t."
+          "text": "“Dear Customer” — a small clue, not proof: some real newsletters are generic too. Together with the other signs, it adds up."
         },
         {
           "title": "The link lies",
@@ -2021,7 +2022,7 @@
         "found_count": "Found {{found}} of {{total}} red flags",
         "found_all": "All 5 found! You’re ready for the real thing."
       },
-      "why_matters": "Phishing is how most people actually get hacked — not by genius hackers, but by one convincing email on a busy day."
+      "why_matters": "Phishing is one of the most common ways people lose accounts and money — not to genius hackers, but to one convincing message on a busy day."
     },
     "dns": {
       "title": "DNS Resolution",
@@ -2061,8 +2062,8 @@
         "4": {
           "title": "The source of truth",
           "short": "Google’s server has the number",
-          "detail": "Google’s own name server gives the definitive answer: 142.250.185.78. It’s authoritative — Google controls it.",
-          "role": "The authoritative server is the author of the record — the one place the answer truly lives.",
+          "detail": "Google’s own name server gives the definitive answer — one of its addresses, 142.250.185.78. It’s authoritative — Google controls it.",
+          "role": "The authoritative server is the author of the record — where the answer truly comes from (usually a few copies, for reliability).",
           "packet": "Answer: 142.250.185.78"
         },
         "5": {
@@ -2129,7 +2130,7 @@
         },
         {
           "title": "Cut into numbered pieces",
-          "text": "Long messages are split into numbered chunks, so lost pieces can be re-sent and order restored."
+          "text": "Long messages are split into numbered chunks, so lost pieces can be re-sent and order restored. That’s how TCP works; UDP just sends."
         },
         {
           "title": "Address the envelope",
@@ -2226,7 +2227,7 @@
           "text": "Door 53 (DNS) answers “what number is google.com?” — the internet’s address-book service."
         }
       ],
-      "why_matters": "One building (your computer, one IP address) hosts many services — the port number is just which door to knock on. A firewall protects you by keeping unused doors shut."
+      "why_matters": "One building (your computer, one IP address) hosts many services — the port number is just which door to knock on. A firewall protects you by keeping unused doors shut. Any service can sit behind any door number, so the number is a habit, not a guarantee."
     },
     "protocols": {
       "title": "Protocol Comparison",
@@ -2256,7 +2257,7 @@
         },
         {
           "title": "The padlock",
-          "text": "That seal is the padlock in your address bar. No padlock — type nothing sensitive."
+          "text": "That seal is the padlock next to the address (Chrome shows a small settings icon instead). No https — type nothing sensitive."
         }
       ],
       "steps_transport": [
@@ -2307,7 +2308,7 @@
         },
         {
           "title": "Telnet? Turned away.",
-          "text": "Door 23 is an obsolete remote-control entrance with no lock. It’s not on the list — blocked, no exceptions."
+          "text": "Door 23 is an obsolete remote-control entrance with no lock. It’s not on this firewall’s list, so it’s blocked. Every firewall has its own list."
         },
         {
           "title": "On duty around the clock",
@@ -2336,10 +2337,10 @@
           "sent": ["Ways to scramble", "A random number"]
         },
         "2": {
-          "title": "Prove who you are",
-          "short": "The site shows its ID",
-          "detail": "The site replies with its certificate — an ID card vouched for by an authority your browser already trusts. Fakes get caught here.",
-          "analogy": "Like checking a passport against the official registry",
+          "title": "Prove you own this address",
+          "short": "The site proves the address is really its own",
+          "detail": "The site shows a certificate: proof, vouched for by an authority your browser trusts, that it really controls this address. That stops someone on the network from posing as the site. It does not prove the site is honest — a scam site can have a valid certificate for its own address.",
+          "analogy": "Like a genuine passport: it proves who someone is, not whether you should trust them",
           "sent": ["Chosen code style", "ID certificate"]
         },
         "3": {
@@ -2352,7 +2353,7 @@
         "4": {
           "title": "The padlock appears",
           "short": "Everything is now scrambled",
-          "detail": "From this moment, everything you send — passwords, cards, messages — is scrambled with that secret. This is what the padlock in your address bar means.",
+          "detail": "From this moment, everything you send — passwords, cards, messages — is scrambled with that secret. This is what the padlock (or Chrome’s small settings icon) next to the address means.",
           "analogy": "Like switching to a private language only you two speak",
           "sent": ["Private channel active"]
         }
@@ -2389,7 +2390,7 @@
           "text": "IPv6 has 2^128 addresses, about 3.4 x 10^38. That removes address scarcity, but firewalls and privacy settings still matter."
         }
       ],
-      "why_matters": "Your devices switch between the two automatically — nothing to configure. It’s simply why internet addresses come in two shapes."
+      "why_matters": "Your devices switch between the two automatically — usually nothing to configure. It’s simply why internet addresses come in two shapes."
     },
     "url": {
       "title": "Reading a Link: URL Anatomy",
@@ -2410,7 +2411,7 @@
         },
         {
           "title": "The owner: right before the first slash",
-          "text": "Read from the first single slash backwards: example.com is the owner. Everything to its left — like shop. — is just a room inside the owner’s building, and the owner can name rooms anything."
+          "text": "Read from the first single slash backwards: example.com is the owner. Some countries use two-part endings, so in bank.com.ua the owner is bank.com.ua, not com.ua. Everything further left — like shop. — is just a room inside the owner’s building, and the owner can name rooms anything."
         },
         {
           "title": "After the slash: the owner’s story",
@@ -2421,7 +2422,7 @@
           "text": "paypal.com.secure-check.ru — read from the first slash backwards: the owner is secure-check.ru. The “paypal.com” at the start is just a room name designed to fool you."
         }
       ],
-      "why_matters": "One habit beats most phishing: before you tap, find the first single slash and read the owner to its left. If it isn’t the company you expect, stop."
+      "why_matters": "One habit beats most phishing: before you tap, find the first single slash and read the owner to its left. If it isn’t the company you expect, stop. If the address looks long or confusing, don’t puzzle it out — open the company from its app or your bookmark instead."
     },
     "ai_modes": {
       "title": "Chat, RAG or agent: what happens after you press Enter",
@@ -2452,7 +2453,7 @@
         },
         {
           "title": "Chat answers from memory",
-          "text": "The model has only its training data and your message. Nothing is looked up, so the detail can be stale or invented."
+          "text": "The model has only its training data and your message. On its own, nothing is looked up, so the detail can be stale or invented."
         },
         {
           "title": "RAG searches first",
@@ -2490,7 +2491,7 @@
       "steps": [
         {
           "title": "You type a prompt",
-          "text": "Say it includes your address. From here on, every stop keeps a copy."
+          "text": "Say it includes your address. Let’s follow where it can be read, and where it may be kept."
         },
         {
           "title": "Encrypted on the way",
@@ -2498,7 +2499,7 @@
         },
         {
           "title": "Stored by the provider",
-          "text": "Chats stay on the provider’s servers for days to years, depending on plan and settings. Staff and legal requests can reach stored chats."
+          "text": "Chats stay on the provider’s servers — for how long depends on the product and your settings. Staff and legal requests can reach stored chats."
         },
         {
           "title": "The training toggle",
@@ -2591,7 +2592,7 @@
         },
         {
           "title": "An honest answer",
-          "text": "You get the summary and a note about the hidden instructions. Remove any one ingredient and the attack fails."
+          "text": "You get the summary and a note about the hidden instructions. Remove any one ingredient and this kind of theft fails."
         }
       ]
     },
@@ -2635,7 +2636,7 @@
         },
         {
           "title": "The server does the work",
-          "text": "The request goes to a3sec.net, the calculator runs, and the result comes back for the model to phrase. The server saw the arguments, and nothing else."
+          "text": "The request goes to a3sec.net, the calculator runs, and the result comes back for the model to phrase. The server saw the arguments plus the usual details any web request carries, like your IP address. It did not get your conversation."
         }
       ]
     }
