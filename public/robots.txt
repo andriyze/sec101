@@ -1,0 +1,5 @@
+# sec101.a3sec.net: every polite crawler and AI assistant is welcome.
+User-agent: *
+Disallow:
+
+Sitemap: https://sec101.a3sec.net/sitemap.xml

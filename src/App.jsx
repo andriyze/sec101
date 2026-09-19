@@ -19,27 +19,34 @@ const PageFallback = () => (
   </div>
 );
 
+/** The route tree without a router: the browser wraps it in BrowserRouter, the prerender script in a StaticRouter. */
+export function AppRoutes() {
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<PageFallback />}>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="passwords" element={<Passwords />} />
+            <Route path="phishing" element={<Phishing />} />
+            <Route path="browsing" element={<Browsing />} />
+            <Route path="social" element={<Social />} />
+            <Route path="devices" element={<Devices />} />
+            <Route path="tools" element={<Tools />} />
+            <Route path="ai" element={<Ai />} />
+            <Route path="advanced" element={<Advanced />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <ErrorBoundary>
-        <Suspense fallback={<PageFallback />}>
-          <Routes>
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<Home />} />
-              <Route path="passwords" element={<Passwords />} />
-              <Route path="phishing" element={<Phishing />} />
-              <Route path="browsing" element={<Browsing />} />
-              <Route path="social" element={<Social />} />
-              <Route path="devices" element={<Devices />} />
-              <Route path="tools" element={<Tools />} />
-              <Route path="ai" element={<Ai />} />
-              <Route path="advanced" element={<Advanced />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Route>
-          </Routes>
-        </Suspense>
-      </ErrorBoundary>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

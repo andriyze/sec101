@@ -14,6 +14,8 @@ const mimeTypes = {
     '.json': 'application/json; charset=utf-8',
     '.png': 'image/png',
     '.svg': 'image/svg+xml',
+    '.txt': 'text/plain; charset=utf-8',
+    '.xml': 'application/xml; charset=utf-8',
     '.webp': 'image/webp',
 };
 
@@ -47,9 +49,15 @@ const resolveAssetPath = (pathname) => {
         return join(root, 'index.html');
     }
 
-    if (existsSync(candidate) && statSync(candidate).isFile()) {
-        return candidate;
+    if (existsSync(candidate)) {
+        if (statSync(candidate).isFile()) return candidate;
+        // a prerendered route: dist/<route>/index.html
+        const prerendered = join(candidate, 'index.html');
+        if (existsSync(prerendered)) return prerendered;
     }
+
+    // Unknown files (a stray .png, .js, .txt) are a real 404; only extensionless app routes fall back.
+    if (extname(normalized)) return null;
 
     return join(root, 'index.html');
 };
@@ -57,6 +65,11 @@ const resolveAssetPath = (pathname) => {
 const server = createServer((request, response) => {
     try {
         const filePath = resolveAssetPath(request.url || '/');
+        if (!filePath) {
+            response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+            response.end('Not found');
+            return;
+        }
         const extension = extname(filePath);
 
         response.setHeader('Content-Type', mimeTypes[extension] || 'application/octet-stream');
