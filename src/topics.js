@@ -5,6 +5,7 @@ export const TOPICS = [
     { id: 'social', path: '/social', labelKey: 'nav.social' },
     { id: 'devices', path: '/devices', labelKey: 'nav.devices' },
     { id: 'tools', path: '/tools', labelKey: 'nav.tools' },
+    { id: 'ai', path: '/ai', labelKey: 'nav.ai' },
     { id: 'advanced', path: '/advanced', labelKey: 'nav.advanced' },
 ];
 

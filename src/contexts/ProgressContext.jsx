@@ -11,6 +11,7 @@ const createDefaultProgress = () => ({
         social: { completed: false },
         devices: { completed: false },
         tools: { completed: false },
+        ai: { completed: false },
         advanced: { completed: false },
     },
 });

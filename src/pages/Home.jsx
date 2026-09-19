@@ -68,6 +68,13 @@ const Home = () => {
       time: t('home.cards.tools.time'),
     },
     {
+      path: '/ai',
+      icon: '🤖',
+      label: t('nav.ai'),
+      desc: t('home.cards.ai.desc'),
+      time: t('home.cards.ai.time'),
+    },
+    {
       path: '/advanced',
       icon: '🎓',
       label: t('nav.advanced'),

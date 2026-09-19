@@ -10,6 +10,7 @@ const Browsing = lazy(() => import('./pages/Browsing'));
 const Social = lazy(() => import('./pages/Social'));
 const Devices = lazy(() => import('./pages/Devices'));
 const Tools = lazy(() => import('./pages/Tools'));
+const Ai = lazy(() => import('./pages/Ai'));
 const Advanced = lazy(() => import('./pages/Advanced'));
 
 const PageFallback = () => (
@@ -32,6 +33,7 @@ function App() {
               <Route path="social" element={<Social />} />
               <Route path="devices" element={<Devices />} />
               <Route path="tools" element={<Tools />} />
+              <Route path="ai" element={<Ai />} />
               <Route path="advanced" element={<Advanced />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>

@@ -3663,6 +3663,27 @@ a.tool-list-item:focus-visible {
   color: #00ff9d;
 }
 
+/* AI & Assistants page */
+.ai-part-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.ai-part-divider::before,
+.ai-part-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
+}
+
 /* Advanced Visualizations Mobile Responsive */
 @media (max-width: 768px) {
   .protocols-lane {

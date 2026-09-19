@@ -48,6 +48,7 @@ const MainLayout = () => {
         { path: '/social', label: t('nav.social'), icon: ChevronRight, topicId: 'social' },
         { path: '/devices', label: t('nav.devices'), icon: ChevronRight, topicId: 'devices' },
         { path: '/tools', label: t('nav.tools'), icon: ChevronRight, topicId: 'tools' },
+        { path: '/ai', label: t('nav.ai'), icon: ChevronRight, topicId: 'ai' },
         { path: '/advanced', label: t('nav.advanced'), icon: ChevronRight, topicId: 'advanced' },
     ];
 
