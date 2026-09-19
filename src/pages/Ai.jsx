@@ -19,6 +19,7 @@ import { AI_CHECKLIST_STORAGE_KEY, AI_AGENT_CHECKLIST_STORAGE_KEY } from '../sto
 import { tArray } from '../i18n/safeTranslate'
 import AiModesViz from '../components/visualizations/AiModesViz'
 import PromptDataFlowViz from '../components/visualizations/PromptDataFlowViz'
+import PromptInjectionViz from '../components/visualizations/PromptInjectionViz'
 
 const SectionTitle = ({ icon, color, children }) => (
   <div className="section-title" style={{ marginBottom: '0.5rem' }}>
@@ -129,6 +130,7 @@ const Ai = () => {
         <p className="section-subtitle" style={{ marginBottom: '1.2rem' }}>
           {t('ai.injection.intro')}
         </p>
+        <PromptInjectionViz />
         <h4 style={{ margin: '0 0 0.75rem' }}>{t('ai.injection.trifecta_title')}</h4>
         <EmojiCards items={tArray(t, 'ai.injection.trifecta')} />
         <div className="alert alert-warning" style={{ marginTop: '1.5rem' }}>
