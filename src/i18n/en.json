@@ -1140,6 +1140,17 @@
           "answer": 0,
           "correct": "HTTPS encrypts the connection, but doesn't guarantee the site is legitimate—phishing sites can have HTTPS too.",
           "explainer": "Always check the actual domain name, not just the padlock icon."
+        },
+        {
+          "prompt": "A chat app encrypts messages only between your phone and its server, not end-to-end. Who can read them?",
+          "options": [
+            "Only you and the person you're writing to",
+            "The app's company on its server, but not people on your Wi‑Fi",
+            "Anyone on the same Wi‑Fi network"
+          ],
+          "answer": 1,
+          "correct": "Right: regular encryption is a sealed bag. Nobody can read it in transit, but the post office (the server) can open it.",
+          "explainer": "Without end-to-end encryption the server can read your messages. Only E2E keeps them between you and the recipient."
         }
       ]
     }
