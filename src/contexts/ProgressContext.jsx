@@ -64,9 +64,10 @@ export function ProgressProvider({ children }) {
         });
     }, []);
 
-    const getNextTopic = useCallback(() => {
+    // skipTopicId: the topic being viewed, so "next" never names the page you are on.
+    const getNextTopic = useCallback((skipTopicId) => {
         for (const topic of TOPIC_ORDER) {
-            if (!progress.topics[topic]?.completed) {
+            if (topic !== skipTopicId && !progress.topics[topic]?.completed) {
                 return topic;
             }
         }

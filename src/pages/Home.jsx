@@ -23,6 +23,9 @@ const Home = () => {
 
   const hasStarted = completedCount > 0
   const nextTopic = getNextTopic()
+  const allComplete = hasStarted && !nextTopic
+  const scrollToTopics = () =>
+    document.getElementById('topics')?.scrollIntoView({ behavior: 'smooth' })
 
   const topics = [
     {
@@ -104,17 +107,18 @@ const Home = () => {
           style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}
         >
           <button
-            onClick={() => navigate(hasStarted && nextTopic ? `/${nextTopic}` : '/phishing')}
+            onClick={allComplete ? scrollToTopics : () => navigate(`/${nextTopic}`)}
             className="btn btn-primary"
             style={{ fontSize: '1.1rem', padding: '0.95rem 2.4rem' }}
           >
-            {hasStarted ? t('progress.continue_learning') : t('progress.start')}
+            {allComplete
+              ? t('progress.review')
+              : hasStarted
+                ? t('progress.continue_learning')
+                : t('progress.start')}
           </button>
           {!hasStarted && (
-            <button
-              onClick={() => document.getElementById('topics')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn btn-glass"
-            >
+            <button onClick={scrollToTopics} className="btn btn-glass">
               <Sparkles size={18} /> {t('home.cta.quickstart')}
             </button>
           )}
