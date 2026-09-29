@@ -1,53 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '../components/Card';
 import { Smartphone, Laptop, ShieldCheck } from 'lucide-react';
 import Quiz from '../components/Quiz';
 import TopicCompletionCard from '../components/TopicCompletionCard';
-import { DEVICES_CHECKLIST_STORAGE_KEY, STORAGE_RESET_EVENT } from '../storageKeys';
+import PersistedChecklist from '../components/PersistedChecklist';
+import { DEVICES_CHECKLIST_STORAGE_KEY } from '../storageKeys';
 import { tArray } from '../i18n/safeTranslate';
 
 const Devices = () => {
     const { t } = useTranslation();
     const checklistItems = tArray(t, 'devices.checklist_items');
-    const emptyChecklistState = () => Array(checklistItems.length).fill(false);
-    const normalizeChecklistState = (value) =>
-        Array.from({ length: checklistItems.length }, (_, i) => Boolean(value?.[i]));
-
-    const [completed, setCompleted] = useState(() => {
-        if (typeof window === 'undefined') return emptyChecklistState();
-        const cached = window.localStorage.getItem(DEVICES_CHECKLIST_STORAGE_KEY);
-        if (cached) {
-            try {
-                const parsed = JSON.parse(cached);
-                return Array.isArray(parsed) ? normalizeChecklistState(parsed) : emptyChecklistState();
-            } catch {
-                return emptyChecklistState();
-            }
-        }
-        return emptyChecklistState();
-    });
-
-    const toggleItem = (index) => {
-        setCompleted((prev) => {
-            const next = [...prev];
-            next[index] = !next[index];
-            return next;
-        });
-    };
-
-    useEffect(() => {
-        window.localStorage.setItem(DEVICES_CHECKLIST_STORAGE_KEY, JSON.stringify(completed));
-    }, [completed]);
-
-    useEffect(() => {
-        const handleStorageReset = () => {
-            setCompleted(Array(checklistItems.length).fill(false));
-        };
-
-        window.addEventListener(STORAGE_RESET_EVENT, handleStorageReset);
-        return () => window.removeEventListener(STORAGE_RESET_EVENT, handleStorageReset);
-    }, [checklistItems.length]);
 
     return (
         <div className="animate-fade-in">
@@ -64,19 +27,7 @@ const Devices = () => {
                 <div className="section-title" style={{ marginBottom: '1rem' }}>
                     <ShieldCheck size={24} color="#00ff9d" /> <h3 style={{ margin: 0 }}>{t('devices.mobile_checklist')}</h3>
                 </div>
-                <div className="checklist">
-                    {checklistItems.map((item, i) => (
-                        <button
-                            key={i}
-                            className={`checklist-item ${completed[i] ? 'completed' : ''}`}
-                            onClick={() => toggleItem(i)}
-                            aria-pressed={completed[i]}
-                        >
-                            <span className="circle">{completed[i] ? '✓' : ''}</span>
-                            <span style={{ fontWeight: 600 }}>{item}</span>
-                        </button>
-                    ))}
-                </div>
+                <PersistedChecklist items={checklistItems} storageKey={DEVICES_CHECKLIST_STORAGE_KEY} />
             </section>
 
             <section className="section">

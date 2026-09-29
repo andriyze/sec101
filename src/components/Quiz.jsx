@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { QUIZ_UPDATED_EVENT } from '../storageKeys'
+import { writeStorage } from '../safeStorage'
 import { isBetterScore, readStoredScore, shuffleIndices } from './quizUtils'
 
-const QuizSession = ({ title, questions, storageKey, onComplete }) => {
+const QuizSession = ({ title, questions, storageKey }) => {
   const { t } = useTranslation()
   const [order, setOrder] = useState(() => shuffleIndices(questions.length))
   const [optionOrders, setOptionOrders] = useState(() =>
@@ -69,10 +70,9 @@ const QuizSession = ({ title, questions, storageKey, onComplete }) => {
     if (showResult) return
     setShowResult(true)
     const payload = { score, total: order.length }
-    const percent = (score / order.length) * 100
     if (storageKey && typeof window !== 'undefined') {
       if (isBetterScore(payload, bestScore)) {
-        window.localStorage.setItem(storageKey, JSON.stringify(payload))
+        writeStorage(storageKey, JSON.stringify(payload))
         setBestScore(payload)
       }
 
@@ -81,9 +81,6 @@ const QuizSession = ({ title, questions, storageKey, onComplete }) => {
           detail: { storageKey },
         })
       )
-    }
-    if (percent >= 70 && onComplete) {
-      onComplete()
     }
   }
 
@@ -198,7 +195,7 @@ const QuizSession = ({ title, questions, storageKey, onComplete }) => {
   )
 }
 
-const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
+const Quiz = ({ title, questions = [], storageKey }) => {
   const { i18n } = useTranslation()
   const safeQuestions = Array.isArray(questions) ? questions : []
 
@@ -208,7 +205,6 @@ const Quiz = ({ title, questions = [], storageKey, onComplete }) => {
       title={title}
       questions={safeQuestions}
       storageKey={storageKey}
-      onComplete={onComplete}
     />
   )
 }

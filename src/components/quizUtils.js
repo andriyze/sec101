@@ -1,3 +1,5 @@
+import { readStorage } from '../safeStorage';
+
 export const shuffleIndices = (length, random = Math.random) => {
     const order = Array.from({ length }, (_, i) => i);
     for (let i = order.length - 1; i > 0; i -= 1) {
@@ -7,9 +9,9 @@ export const shuffleIndices = (length, random = Math.random) => {
     return order;
 };
 
-export const readStoredScore = (storageKey, storage = globalThis.window?.localStorage) => {
-    if (!storageKey || !storage) return null;
-    const raw = storage.getItem(storageKey);
+export const readStoredScore = (storageKey, storage) => {
+    if (!storageKey) return null;
+    const raw = storage ? storage.getItem(storageKey) : readStorage(storageKey);
     if (!raw) return null;
     try {
         const parsed = JSON.parse(raw);

@@ -5,6 +5,7 @@ import { Menu, X, Shield, ChevronRight, CheckCircle, Circle, RotateCcw, Github }
 import clsx from 'clsx';
 import { useProgress } from '../hooks/useProgress';
 import { QUIZ_UPDATED_EVENT, RESETTABLE_STORAGE_KEYS, STORAGE_RESET_EVENT } from '../storageKeys';
+import { removeStorage } from '../safeStorage';
 
 const MainLayout = () => {
     const { t, i18n } = useTranslation();
@@ -32,9 +33,7 @@ const MainLayout = () => {
 
     const confirmResetProgress = () => {
         resetProgress();
-        RESETTABLE_STORAGE_KEYS.forEach((key) => {
-            window.localStorage.removeItem(key);
-        });
+        RESETTABLE_STORAGE_KEYS.forEach(removeStorage);
         window.dispatchEvent(new CustomEvent(QUIZ_UPDATED_EVENT));
         window.dispatchEvent(new CustomEvent(STORAGE_RESET_EVENT));
         setShowResetConfirm(false);

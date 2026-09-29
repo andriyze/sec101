@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowRight, CheckCircle, Circle, PartyPopper } from 'lucide-react';
 import { useProgress } from '../hooks/useProgress';
 import { QUIZ_UPDATED_EVENT } from '../storageKeys';
+import { readStoredScore, scorePercent } from './quizUtils';
 import { TOPIC_LABEL_KEYS } from '../topics';
 
 const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
@@ -15,24 +16,7 @@ const TopicCompletionCard = ({ topicId, quizStorageKey }) => {
 
     useEffect(() => {
         const checkScore = () => {
-            if (typeof window === 'undefined' || !quizStorageKey) {
-                setQuizScore(0);
-                return;
-            }
-
-            const stored = localStorage.getItem(quizStorageKey);
-            if (!stored) {
-                setQuizScore(0);
-                return;
-            }
-
-            try {
-                const data = JSON.parse(stored);
-                const percent = data.total > 0 ? Math.round((data.score / data.total) * 100) : 0;
-                setQuizScore(percent);
-            } catch {
-                setQuizScore(0);
-            }
+            setQuizScore(Math.round(scorePercent(readStoredScore(quizStorageKey))));
         };
 
         const handleQuizUpdated = (event) => {
