@@ -36,7 +36,7 @@ const TrackerBlockingViz = () => {
     // Derive blocked and currentSite from step
     // Steps 0-2: unblocked (sites 0, 1, 2)
     // Steps 3-5: blocked (sites 0, 1, 2)
-    const blocked = prefersReducedMotion ? true : currentStep >= 3;
+    const blocked = currentStep >= 3;
     const currentSite = currentStep % 3;
 
     // Detailed tracker data per site - using i18n for data types
@@ -78,11 +78,11 @@ const TrackerBlockingViz = () => {
 
     // Build tracker data based on current step (accumulate for unblocked states)
     const trackerData = useMemo(() => {
-        if (blocked || prefersReducedMotion) return [];
+        if (blocked) return [];
         // Show accumulated sites up to current site index
         return sites.slice(0, currentSite + 1).map(s => s.name);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSite, blocked, prefersReducedMotion]);
+    }, [currentSite, blocked]);
 
     const trackerVariants = {
         initial: { scale: 0, opacity: 0 },

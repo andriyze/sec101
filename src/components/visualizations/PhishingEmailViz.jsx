@@ -38,7 +38,9 @@ const PhishingEmailViz = () => {
         totalSteps: 5,
         interval: 2500,
         loop: true,
-        autoPlay: false
+        autoPlay: false,
+        // Find mode has no play controls, so scrolling back into view must not restart the tour.
+        autoPlayOnView: mode === 'tour'
     });
 
     const isFindMode = mode === 'find';
@@ -133,7 +135,8 @@ const PhishingEmailViz = () => {
                 ...(isFound || keepBackground ? {} : { background: 'transparent' }),
                 ...style,
             },
-            'aria-label': t(`visualizations.phishing.flags.${redFlags[index].id}`),
+            // No aria-label: the button's own text (sender, subject, link, attachment) is the
+            // puzzle; labelling it with the flag would read out the answer.
             'aria-pressed': isFound,
             onClick: () => markFound(index),
         };

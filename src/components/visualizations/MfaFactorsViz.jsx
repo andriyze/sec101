@@ -54,9 +54,7 @@ const MfaFactorsViz = () => {
         ['knowledge', 'possession', 'inherence'],
         ['knowledge', 'possession'],
     ];
-    const activeFactors = prefersReducedMotion
-        ? ['knowledge', 'possession']
-        : factorStates[currentStep];
+    const activeFactors = factorStates[currentStep];
 
     const activeCount = activeFactors.length;
     const isStrong = activeCount >= 2;
