@@ -118,7 +118,7 @@
       "title": "If you only do one thing today",
       "actions": [
         "Turn on the password manager you already have, then upgrade to Bitwarden or Proton Pass when ready.",
-        "Enable MFA on email, bank, Instagram/TikTok/Discord/Telegram (avoid SMS; use an app).",
+        "Enable MFA on email, bank, Instagram/TikTok/Discord (an authenticator app beats SMS), and set a Two-Step Verification password on Telegram.",
         "Download and store backup codes offline (print or password manager secure note)."
       ]
     },
@@ -159,7 +159,7 @@
         "steps": [
           "1. Download the Bitwarden app from the App Store or Play Store.",
           "2. Log in with your account.",
-          "3. CRITICAL: Go to Phone Settings -> Passwords (or Auto-fill Service) -> Select Bitwarden.",
+          "3. CRITICAL: Turn on AutoFill. iPhone: Settings -> General -> AutoFill & Passwords -> Bitwarden. Android: Settings -> search \"Autofill service\" -> Bitwarden.",
           "4. Now Bitwarden can automatically type passwords into your apps."
         ]
       }
@@ -243,7 +243,7 @@
       "methods": {
         "sms": {
           "title": "SMS (Text Messages)",
-          "desc": "AVOID. Vulnerable to SIM swapping attacks where hackers steal your phone number."
+          "desc": "AVOID IF POSSIBLE. Vulnerable to SIM swapping attacks where hackers steal your phone number. Still much better than no 2FA at all."
         },
         "apps": {
           "title": "Authenticator Apps",
@@ -270,7 +270,7 @@
       "quick_actions": {
         "title": "Fast wins",
         "items": [
-          "Email, bank, and cloud storage should always have MFA with an app or hardware key.",
+          "Email, bank, and cloud storage should always have MFA. Use the strongest option each one offers: a passkey, hardware key, authenticator app, or your bank’s own app confirmation.",
           "Avoid SMS unless no other option. If forced to use SMS, set a PIN with your carrier to reduce SIM-swap risk.",
           "Store backup codes offline and label them by service."
         ]
@@ -332,7 +332,7 @@
       "setup": "To setup on Google: Go to g.co/passkeys and click 'Use passkeys'.",
       "notes": [
         "Passkeys work best when you’re signed into the same account on phone + laptop (Apple ID, Google, or Microsoft).",
-        "On shared computers, stick to passwords + MFA instead of passkeys.",
+        "On a shared computer, don’t save a passkey. Sign in with the passkey on your phone instead: pick the phone / QR code option and scan the code.",
         "Passkey portability is improving but not universal. Some platforms now support export (e.g., to Bitwarden), but check before relying on it."
       ]
     },
@@ -426,7 +426,7 @@
           ],
           "answer": 2,
           "correct": "Tor is for anonymity, not speed or convenience. Avoid logging into personal accounts.",
-          "explainer": "Tor routes traffic through multiple relays, which is slow but hides your identity."
+          "explainer": "Tor routes traffic through multiple relays, which is slow but hides your IP address from the sites you visit."
         },
         {
           "prompt": "What can tracker blockers still miss?",
@@ -468,7 +468,7 @@
         "title": "Brave setup (2 min)",
         "steps": [
           "Settings -> Privacy & security: enable aggressive tracker/ad blocking.",
-          "Settings -> Privacy: enable \"Clear browsing data on exit\" for cookies.",
+          "Optional: Settings -> Privacy: \"Clear browsing data on exit\" for cookies. More private, but you will be signed out of every site each time.",
           "Disable Google services (autofill, web services you don’t need)."
         ]
       },
@@ -477,7 +477,7 @@
         "steps": [
           "Settings -> Privacy: choose \"Strict\".",
           "Enable HTTPS-Only mode in all windows.",
-          "about:config -> set telemetry to false (toolkit.telemetry.enabled)."
+          "Settings -> Privacy & Security -> Firefox Data Collection and Use: turn the options off."
         ]
       },
       "tor": {
@@ -485,7 +485,7 @@
         "steps": [
           "Use for sensitive browsing only; avoid logging into personal accounts.",
           "Set Security Level to \"Safer\" or \"Safest\": it switches off risky page features.",
-          "Do not resize the window or install extensions."
+          "Do not install extensions: they make your browser stand out from other Tor users."
         ]
       }
     },
@@ -555,7 +555,7 @@
       "title": "Encrypted Messaging",
       "e2e_explanation": {
         "title": "What is End-to-End Encryption (E2EE)?",
-        "desc": "Imagine sending a letter in a locked steel box. You have the key, and only the recipient has the key. The mailman (the app server) delivers the box but cannot open it. That is E2EE. Standard messaging is like a postcard—anyone handling it can read it."
+        "desc": "Imagine sending a letter in a locked steel box. You have the key, and only the recipient has the key. The mailman (the app server) delivers the box but cannot open it. That is E2EE. Standard messaging is like a sealed bag: nobody can read it on the way, but the post office (the app server) can open it."
       },
       "signal": {
         "title": "Signal — the safe default",
@@ -1102,7 +1102,7 @@
         "Good tools help, but settings and recovery habits matter just as much.",
         "Never share recovery phrases or backup codes. Treat them like cash.",
         "If your device is lost/stolen and was unlocked, or you suspect someone knows your PIN, change your passwords immediately. If it was locked with a strong PIN, encryption protects your data.",
-        "Look for 'https://' in the URL—this means the connection is encrypted. But note: this only protects the connection, not the site's legitimacy. Phishing sites can have HTTPS too."
+        "HTTPS means the connection is encrypted, and browsers mark sites without it as \"Not secure\" (many no longer show 'https://' or a padlock at all). It protects only the connection, not the site's legitimacy: phishing sites use HTTPS too, so check the domain name."
       ]
     },
     "quiz": {
@@ -1280,7 +1280,7 @@
       "trifecta_note": "All three together let a stranger steal data through your agent. Remove any one and this kind of theft fails. Other tricks are still possible, which is why the permissions and the confirmation step still matter.",
       "defenses_title": "What good agents and careful users do",
       "defenses": [
-        "Treat fetched content as data, never as instructions. Good agents show it quarantined and say when it looked like a command.",
+        "Treat fetched content as data, never as instructions. Some agents quarantine it and flag command-like text; that helps, but detection misses things, so the three habits below still matter.",
         "Least privilege: a summariser does not need your inbox. Connect the smallest set of tools for the job.",
         "A human confirms every send, pay, share or delete. If the agent cannot ask, it should not have that tool.",
         "Watch the action log and revoke access the moment something looks off."
@@ -1794,7 +1794,7 @@
       },
       "inherence": {
         "title": "What you ARE",
-        "examples": "Fingerprint, Face ID, voice"
+        "examples": "Fingerprint, Face ID, iris scan"
       },
       "weak": "password alone is easy to steal",
       "strong": "much harder to break",
@@ -2592,7 +2592,7 @@
         },
         {
           "title": "Content stays content",
-          "text": "The agent treats fetched text as data. It notices the command-like line, flags it, and does not act on it."
+          "text": "The agent treats fetched text as data and does not act on the command-like line. It flags it too, but spotting can fail, so the next two steps matter more."
         },
         {
           "title": "No inbox for a summariser",
