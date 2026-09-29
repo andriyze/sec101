@@ -6,7 +6,7 @@ Interactive security fundamentals course for non-technical users. Covers passwor
 
 - Step-by-step tutorials with quizzes
 - Progress tracking (saved locally)
-- English/Ukrainian language support
+- English and Ukrainian: Ukrainian when the device lists Ukrainian among its languages or uses Kyiv time, English otherwise; the language toggle choice is remembered
 
 ## Run Locally
 

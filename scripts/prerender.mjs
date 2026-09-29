@@ -8,7 +8,7 @@ import { StaticRouter } from 'react-router';
 import { MotionConfig } from 'framer-motion';
 import { ProgressProvider } from '../src/contexts/ProgressContext.jsx';
 import i18n, { loadLanguage } from '../src/i18n/i18n.js';
-import ua from '../src/i18n/ua.json';
+import en from '../src/i18n/en.json';
 import { AppRoutes } from '../src/App.jsx';
 
 const SITE = 'https://sec101.a3sec.net';
@@ -17,11 +17,11 @@ const template = readFileSync(join(dist, 'index.html'), 'utf8');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 const routes = [
-    { path: '/', title: ua.app.title, desc: ua.app.subtitle },
+    { path: '/', title: en.app.title, desc: en.app.subtitle },
     ...['phishing', 'passwords', 'browsing', 'social', 'devices', 'tools', 'ai', 'advanced'].map((id) => ({
         path: `/${id}`,
-        title: `${ua.nav[id]} · SEC101`,
-        desc: ua[id]?.subtitle || ua.app.subtitle,
+        title: `${en.nav[id]} · SEC101`,
+        desc: en[id]?.subtitle || en.app.subtitle,
     })),
 ];
 
@@ -40,8 +40,10 @@ async function renderToString(element) {
     });
 }
 
-await loadLanguage('ua');
-await i18n.changeLanguage('ua');
+// English is the default; the browser switches to Ukrainian on load when the device lists
+// Ukrainian or uses Kyiv time.
+await loadLanguage('en');
+await i18n.changeLanguage('en');
 for (const route of routes) {
     const element = React.createElement(
         MotionConfig, { reducedMotion: 'user' },
