@@ -359,6 +359,7 @@ a:hover {
 
 /* Sidebar & Navigation */
 .sidebar {
+  width: 280px;
   background: rgba(10, 10, 15, 0.6);
   backdrop-filter: blur(20px);
   border-right: 1px solid var(--border-light);

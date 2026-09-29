@@ -8,6 +8,10 @@ import { QUIZ_UPDATED_EVENT, RESETTABLE_STORAGE_KEYS, STORAGE_RESET_EVENT } from
 import { removeStorage } from '../safeStorage';
 import { switchLanguage } from '../i18n/i18n';
 
+// Must match the sidebar breakpoint in index.css (`@media (max-width: 1024px)`).
+const MOBILE_QUERY = '(max-width: 1024px)';
+const isMobileViewport = () => window.matchMedia(MOBILE_QUERY).matches;
+
 const MainLayout = () => {
     const { t, i18n } = useTranslation();
     const location = useLocation();
@@ -15,11 +19,13 @@ const MainLayout = () => {
     const mainRef = useRef(null);
     const dialogRef = useRef(null);
     const cancelButtonRef = useRef(null);
+    // null only while prerendering, where the width is unknown: the sidebar then gets neither
+    // class and the CSS shows it on wide screens and hides it on narrow ones.
     const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
-        typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+        typeof window !== 'undefined' ? !isMobileViewport() : null
     );
     const [isMobile, setIsMobile] = useState(() =>
-        typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+        typeof window !== 'undefined' ? isMobileViewport() : false
     );
     const [showResetConfirm, setShowResetConfirm] = useState(false);
 
@@ -52,20 +58,20 @@ const MainLayout = () => {
     ];
 
     useEffect(() => {
-        const handleResize = () => {
-            const mobile = window.innerWidth < 1024;
-            setIsMobile(mobile);
-            if (!mobile) {
-                setIsSidebarOpen(true);
-            }
+        // Only crossing the breakpoint changes the layout, so a closed desktop sidebar stays
+        // closed while the window is resized.
+        const query = window.matchMedia(MOBILE_QUERY);
+        const handleChange = () => {
+            setIsMobile(query.matches);
+            setIsSidebarOpen(!query.matches);
         };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        query.addEventListener('change', handleChange);
+        return () => query.removeEventListener('change', handleChange);
     }, []);
 
-    const currentNav = navItems.find((item) => item.path === location.pathname);
+    // The static server also serves /phishing/ for /phishing.
+    const pathname = location.pathname.replace(/(.)\/+$/, '$1');
+    const currentNav = navItems.find((item) => item.path === pathname);
     const currentPageLabel = currentNav && !currentNav.isHome ? currentNav.label : null;
 
     useEffect(() => {
@@ -123,15 +129,19 @@ const MainLayout = () => {
         <div className="app-shell">
             <a className="skip-link" href="#main-content">{t('nav.skip_to_content')}</a>
             {/* Sidebar */}
-            <aside className={clsx("sidebar", isSidebarOpen ? "open" : "closed")} aria-label="Primary">
+            <aside
+                className={clsx("sidebar", isSidebarOpen === true && "open", isSidebarOpen === false && "closed")}
+                aria-label="Primary"
+                inert={isSidebarOpen === false}
+            >
                 <div className="sidebar-header">
-                    {isSidebarOpen && <span style={{ fontWeight: 'bold', fontSize: '1.2rem', letterSpacing: '1px' }}>SEC101</span>}
+                    {isSidebarOpen !== false && <span style={{ fontWeight: 'bold', fontSize: '1.2rem', letterSpacing: '1px' }}>SEC101</span>}
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className="icon-btn"
-                        aria-label={isSidebarOpen ? t('nav.close_menu', { defaultValue: 'Close menu' }) : t('nav.open_menu', { defaultValue: 'Open menu' })}
+                        aria-label={isSidebarOpen !== false ? t('nav.close_menu', { defaultValue: 'Close menu' }) : t('nav.open_menu', { defaultValue: 'Open menu' })}
                     >
-                        {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+                        {isSidebarOpen !== false ? <X size={20} /> : <Menu size={20} />}
                     </button>
                 </div>
 
