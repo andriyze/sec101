@@ -10,6 +10,7 @@
   --secondary: #7000ff;
   --secondary-glow: rgba(112, 0, 255, 0.3);
   --accent: #ff0055;
+  --danger: #ff6b6b; /* warnings: bad passwords, scam patterns */
 
   --text-main: #ffffff;
   --text-muted: #a0a0b0;
