@@ -2,9 +2,6 @@
   "app": {
     "title": "SEC101 · Everyday Security",
     "subtitle": "A simple guide to personal information security",
-    "start": "Start Presentation",
-    "role_student": "Student",
-    "role_parent": "Parent",
     "error_title": "Something went wrong",
     "error_desc": "The app hit an unexpected error. Reloading the page usually fixes it.",
     "error_reload": "Reload page"
@@ -129,7 +126,6 @@
       "desc": "Humans are bad at creating random passwords. Computers are great at it. A password manager generates and stores unique, complex passwords for every account."
     },
     "managers": {
-      "title": "Password Managers",
       "bitwarden": {
         "desc": "Best default for most users: open-source clients, strong free tier, and broad device support."
       },
@@ -238,12 +234,6 @@
       "intro": "MFA adds a second lock to your account. A stolen password is much less useful when the attacker also needs your phone, app, or security key.",
       "time": "5 minutes per account",
       "backup": "Always save recovery/backup codes",
-      "factors": {
-        "title": "The 3 Factors of Authentication",
-        "knowledge": "1. What you KNOW (Password)",
-        "possession": "2. What you HAVE (Phone, YubiKey)",
-        "inherence": "3. What you ARE (Fingerprint, FaceID)"
-      },
       "methods": {
         "sms": {
           "title": "SMS (Text Messages)",
@@ -355,7 +345,6 @@
     }
   },
   "browsing": {
-    "title": "Safe Browsing",
     "subtitle": "Take back your privacy. Block trackers and ads.",
     "extensions": {
       "title": "Essential Extensions",
@@ -553,7 +542,6 @@
     }
   },
   "social": {
-    "title": "Social Media & Messaging",
     "subtitle": "Secure your communications and protect your data on public networks.",
     "messaging": {
       "title": "Encrypted Messaging",
@@ -562,7 +550,6 @@
         "desc": "Imagine sending a letter in a locked steel box. You have the key, and only the recipient has the key. The mailman (the app server) delivers the box but cannot open it. That is E2EE. Standard messaging is like a sealed bag: nobody can read it on the way, but the post office (the app server) can open it."
       },
       "signal": {
-        "title": "Signal — the safe default",
         "desc": "Best default for private conversations: end-to-end encrypted, open source, nonprofit, and designed to keep server-side metadata minimal."
       },
       "whatsapp": {
@@ -697,7 +684,6 @@
     }
   },
   "devices": {
-    "title": "Device Security",
     "subtitle": "Secure your mobile devices and desktop computers.",
     "mobile_checklist": "Mobile Security Checklist",
     "checklist_items": [
@@ -872,7 +858,6 @@
       ]
     },
     "sample": {
-      "title": "Example phishing email (what to notice)",
       "from": "From: \"Support\" <security@paypa1-billing.com>",
       "subject": "Subject: URGENT - Account Suspended",
       "body": "Hi, your account will be closed in 12 hours. Download the attached invoice or log in here.",
@@ -1160,7 +1145,6 @@
     }
   },
   "ai": {
-    "title": "AI & Assistants",
     "subtitle": "Chatbots, agents and the plugs that connect them to your data: what to share, what to verify, and what an agent can do in your name.",
     "intro": "You do not need to understand the technology to use it safely. Part 1 is for everyone. Part 2 is an optional look under the hood so the risks make sense.",
     "part1": "Part 1 · Using chatbots safely",
@@ -1724,9 +1708,7 @@
     "quiz_wrong_fallback": "Not quite. Review the tips above.",
     "quiz_retake": "Retake quiz",
     "cancel": "Cancel",
-    "created_by": "Created with 🔒 by ",
-    "recommended": "Recommended",
-    "alternative": "Alternative"
+    "recommended": "Recommended"
   },
   "controls": {
     "previous": "Previous step",
