@@ -14,41 +14,52 @@ echo "🔍 Running pre-commit checks..."
 # ============================================
 echo "🔐 Checking for sensitive data..."
 
-# Get staged files
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+# Staged paths, one per line. Husky runs hooks with `sh` (dash on Debian/Ubuntu), so this
+# file sticks to POSIX sh: no arrays, no [[ ]].
+STAGED_FILES=$(git -c core.quotePath=false diff --cached --name-only --diff-filter=ACM)
 
-# Patterns to detect secrets (extend as needed)
-# Only match actual secrets, not educational text about security concepts
-SECRET_PATTERNS=(
-    "-----BEGIN .* KEY-----"
-    "sk-[a-zA-Z0-9]{20,}"
-    "ghp_[a-zA-Z0-9]{36}"
-    "gho_[a-zA-Z0-9]{36}"
-    "AKIA[0-9A-Z]{16}"
-)
+# Patterns to detect secrets, one per line (extend as needed).
+# Only match actual secrets, not educational text about security concepts.
+SECRET_PATTERNS='-----BEGIN [A-Z ]*PRIVATE KEY
+sk-[a-zA-Z0-9]{20,}
+ghp_[a-zA-Z0-9]{36}
+gho_[a-zA-Z0-9]{36}
+AKIA[0-9A-Z]{16}'
 
-# Skip checking the hook files themselves
+# Split the lists on newlines only, and keep the patterns from being expanded as globs.
+set -f
+IFS='
+'
+
 for file in $STAGED_FILES; do
-    if [ -f "$file" ] && [[ "$file" != .husky/* ]]; then
-        for pattern in "${SECRET_PATTERNS[@]}"; do
-            if grep -qiE "$pattern" "$file" 2>/dev/null; then
-                echo "❌ BLOCKED: Potential secret found in $file"
-                echo "   Pattern matched: $pattern"
-                echo "   Please remove sensitive data before committing."
-                exit 1
-            fi
-        done
-    fi
+    # Skip checking the hook files themselves
+    case "$file" in .husky/*) continue ;; esac
+    for pattern in $SECRET_PATTERNS; do
+        # Scan the staged blob, not the working tree. `--` stops a pattern that starts
+        # with "-" from being read as a grep option.
+        if git show ":$file" 2>/dev/null | grep -qE -- "$pattern"; then
+            echo "❌ BLOCKED: Potential secret found in $file"
+            echo "   Pattern matched: $pattern"
+            echo "   Please remove sensitive data before committing."
+            exit 1
+        fi
+    done
 done
 
 # Check for .env files being committed (allow .env.example)
 for file in $STAGED_FILES; do
-    if echo "$file" | grep -qE "^\.env(\.[^e]|$)" 2>/dev/null; then
-        echo "❌ BLOCKED: Attempting to commit .env file: $file"
-        echo "   Environment files should not be committed."
-        exit 1
-    fi
+    case "$file" in
+        .env.example | */.env.example) ;;
+        .env | .env.* | */.env | */.env.*)
+            echo "❌ BLOCKED: Attempting to commit .env file: $file"
+            echo "   Environment files should not be committed."
+            exit 1
+            ;;
+    esac
 done
+
+unset IFS
+set +f
 
 echo "✅ No secrets detected"
 

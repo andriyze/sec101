@@ -7,6 +7,8 @@
 
 commit_msg_file=$1
 commit_msg=$(cat "$commit_msg_file")
+# The format applies to the subject: the first line that is neither blank nor a git comment.
+subject=$(grep -v '^#' "$commit_msg_file" | grep -m 1 -v '^[[:space:]]*$')
 
 # Conventional Commits pattern
 # Format: type(optional scope): description
@@ -20,11 +22,11 @@ revert_pattern="^Revert "
 # Allow Claude Code generated commits
 claude_pattern="Generated with \[Claude Code\]"
 
-if echo "$commit_msg" | grep -qE "$pattern"; then
+if echo "$subject" | grep -qE "$pattern"; then
     exit 0
-elif echo "$commit_msg" | grep -qE "$merge_pattern"; then
+elif echo "$subject" | grep -qE "$merge_pattern"; then
     exit 0
-elif echo "$commit_msg" | grep -qE "$revert_pattern"; then
+elif echo "$subject" | grep -qE "$revert_pattern"; then
     exit 0
 elif echo "$commit_msg" | grep -qE "$claude_pattern"; then
     exit 0
