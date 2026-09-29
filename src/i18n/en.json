@@ -22,7 +22,9 @@
     "open_menu": "Open menu",
     "close_menu": "Close menu",
     "language_toggle": "Toggle language",
-    "skip_to_content": "Skip to content"
+    "skip_to_content": "Skip to content",
+    "main_navigation": "Main navigation",
+    "view_on_github": "View on GitHub"
   },
   "home": {
     "badges": {
@@ -135,9 +137,11 @@
         "desc": "Alternative if you're already in the Proton ecosystem."
       },
       "google": {
+        "title": "Google Password Manager",
         "desc": "Good first rung on Android/Chrome. Using the built-in manager is far better than password reuse."
       },
       "apple": {
+        "title": "Apple Passwords",
         "desc": "Built into iPhone, iPad, and Mac — a good first rung if you're all-Apple. Works on Windows via the iCloud Passwords extension."
       }
     },

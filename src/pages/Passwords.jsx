@@ -89,11 +89,15 @@ const Passwords = () => {
             linkText={t('common.get') + ' Proton Pass'}
           />
           <Card
-            title="Google Password Manager"
+            title={t('passwords.managers.google.title')}
             icon="🔑"
             description={t('passwords.managers.google.desc')}
           />
-          <Card title="Apple Keychain" icon="🍎" description={t('passwords.managers.apple.desc')} />
+          <Card
+            title={t('passwords.managers.apple.title')}
+            icon="🍎"
+            description={t('passwords.managers.apple.desc')}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-6" style={{ marginTop: '1.5rem' }}>

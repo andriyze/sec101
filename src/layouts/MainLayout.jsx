@@ -131,7 +131,7 @@ const MainLayout = () => {
             {/* Sidebar */}
             <aside
                 className={clsx("sidebar", isSidebarOpen === true && "open", isSidebarOpen === false && "closed")}
-                aria-label="Primary"
+                aria-label={t('nav.main_navigation')}
                 inert={isSidebarOpen === false}
             >
                 <div className="sidebar-header">
@@ -253,8 +253,8 @@ const MainLayout = () => {
                                 textDecoration: 'none',
                                 transition: 'color 0.2s'
                             }}
-                            title="View on GitHub"
-                            aria-label="View on GitHub"
+                            title={t('nav.view_on_github')}
+                            aria-label={t('nav.view_on_github')}
                         >
                             <Github size={16} />
                             <span>GitHub</span>
