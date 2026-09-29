@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { useProgress } from '../hooks/useProgress';
 import { QUIZ_UPDATED_EVENT, RESETTABLE_STORAGE_KEYS, STORAGE_RESET_EVENT } from '../storageKeys';
 import { removeStorage } from '../safeStorage';
+import { switchLanguage } from '../i18n/i18n';
 
 const MainLayout = () => {
     const { t, i18n } = useTranslation();
@@ -23,8 +24,7 @@ const MainLayout = () => {
     const [showResetConfirm, setShowResetConfirm] = useState(false);
 
     const toggleLanguage = () => {
-        const newLang = i18n.language === 'en' ? 'ua' : 'en';
-        i18n.changeLanguage(newLang);
+        switchLanguage(i18n.language === 'en' ? 'ua' : 'en');
     };
 
     const handleResetProgress = () => {

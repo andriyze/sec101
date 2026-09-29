@@ -7,7 +7,7 @@ import React from 'react';
 import { StaticRouter } from 'react-router';
 import { MotionConfig } from 'framer-motion';
 import { ProgressProvider } from '../src/contexts/ProgressContext.jsx';
-import i18n from '../src/i18n/i18n.js';
+import i18n, { loadLanguage } from '../src/i18n/i18n.js';
 import ua from '../src/i18n/ua.json';
 import { AppRoutes } from '../src/App.jsx';
 
@@ -40,6 +40,7 @@ async function renderToString(element) {
     });
 }
 
+await loadLanguage('ua');
 await i18n.changeLanguage('ua');
 for (const route of routes) {
     const element = React.createElement(

@@ -1,17 +1,36 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import ErrorBoundary from './components/ErrorBoundary';
+import { lazyPage } from './lazyPage';
 
-const Home = lazy(() => import('./pages/Home'));
-const Passwords = lazy(() => import('./pages/Passwords'));
-const Phishing = lazy(() => import('./pages/Phishing'));
-const Browsing = lazy(() => import('./pages/Browsing'));
-const Social = lazy(() => import('./pages/Social'));
-const Devices = lazy(() => import('./pages/Devices'));
-const Tools = lazy(() => import('./pages/Tools'));
-const Ai = lazy(() => import('./pages/Ai'));
-const Advanced = lazy(() => import('./pages/Advanced'));
+const Home = lazyPage(() => import('./pages/Home'));
+const Passwords = lazyPage(() => import('./pages/Passwords'));
+const Phishing = lazyPage(() => import('./pages/Phishing'));
+const Browsing = lazyPage(() => import('./pages/Browsing'));
+const Social = lazyPage(() => import('./pages/Social'));
+const Devices = lazyPage(() => import('./pages/Devices'));
+const Tools = lazyPage(() => import('./pages/Tools'));
+const Ai = lazyPage(() => import('./pages/Ai'));
+const Advanced = lazyPage(() => import('./pages/Advanced'));
+
+const TOPIC_PAGES = {
+  passwords: Passwords,
+  phishing: Phishing,
+  browsing: Browsing,
+  social: Social,
+  devices: Devices,
+  tools: Tools,
+  ai: Ai,
+  advanced: Advanced,
+};
+
+/** Loads the page chunk for a URL path; unknown paths redirect home, so they load Home. */
+// eslint-disable-next-line react-refresh/only-export-components
+export const preloadRoute = (pathname) => {
+  const id = pathname.replace(/^\/+|\/+$/g, '');
+  return (Object.hasOwn(TOPIC_PAGES, id) ? TOPIC_PAGES[id] : Home).preload();
+};
 
 const PageFallback = () => (
   <div className="page-loading" role="status" aria-live="polite">
