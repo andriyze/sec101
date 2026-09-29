@@ -96,18 +96,18 @@ const ProtocolsViz = () => {
       whyItMatters={t('visualizations.protocols.why_matters')}
     >
       <div className="protocols-viz-wrapper">
-        <div className="protocols-toggle" role="tablist">
+        <div className="protocols-toggle">
           <button
-            role="tab"
-            aria-selected={web}
+            type="button"
+            aria-pressed={web}
             className={`protocols-toggle-btn ${web ? 'active' : ''}`}
             onClick={() => handleComparisonChange('http')}
           >
             {t('visualizations.protocols.toggle_web')}
           </button>
           <button
-            role="tab"
-            aria-selected={!web}
+            type="button"
+            aria-pressed={!web}
             className={`protocols-toggle-btn ${!web ? 'active' : ''}`}
             onClick={() => handleComparisonChange('tcp')}
           >
@@ -208,7 +208,7 @@ const ProtocolsViz = () => {
                   </span>
                 </div>
                 <Endpoint icon={Globe} label={t('visualizations.protocols.website')} side="receiver">
-                  <span className="protocols-received" aria-label={t('visualizations.protocols.received')}>
+                  <span className="protocols-received" role="group" aria-label={t('visualizations.protocols.received')}>
                     {[1, 2, 3].map(num => (
                       <span key={num} className={`protocols-slot ${tcpDelivered ? 'filled' : ''}`}>
                         {tcpDelivered ? num : ''}
@@ -246,7 +246,7 @@ const ProtocolsViz = () => {
                   </span>
                 </div>
                 <Endpoint icon={Globe} label={t('visualizations.protocols.website')} side="receiver">
-                  <span className="protocols-received" aria-label={t('visualizations.protocols.received')}>
+                  <span className="protocols-received" role="group" aria-label={t('visualizations.protocols.received')}>
                     {[1, 2, 3].map(num => {
                       const missing = udpLoss && num === 2
                       const filled = udpFocus && !missing

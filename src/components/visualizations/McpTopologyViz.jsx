@@ -12,7 +12,13 @@ import { tArray } from '../../i18n/safeTranslate'
 const SERVERS = [
   { id: 'files', icon: FolderOpen, tools: ['read_file', 'write_file'] },
   { id: 'calendar', icon: Calendar, tools: ['list_events', 'create_event'] },
-  { id: 'a3sec', icon: Globe, tools: ['mortgage_quote', 'tax_estimate', 'average_mortgage_rates'], target: true },
+  // Same list the live demo's "List tools" returns from www.a3sec.net/api/mcp.
+  {
+    id: 'a3sec',
+    icon: Globe,
+    tools: ['about_andriy', 'mortgage_quote', 'tax_estimate', 'compare_us_canada', 'retirement_projection', 'average_mortgage_rates'],
+    target: true,
+  },
 ]
 
 const McpTopologyViz = () => {

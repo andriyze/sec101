@@ -60,6 +60,11 @@ const McpLiveDemo = () => {
           parsed = null
         }
         setQuote({ text, parsed })
+        // MCP reports a failed tool run as a normal result with isError set, not a JSON-RPC error.
+        if (json.result?.isError) {
+          setStatus('tool_error')
+          return
+        }
       }
       setStatus('done')
     } catch {
@@ -96,6 +101,12 @@ const McpLiveDemo = () => {
       <div className="mcp-live-block" role="status" aria-live="polite">
         {status === 'loading' && <span className="mcp-live-status">{k('loading')}</span>}
         {status === 'error' && <span className="mcp-live-status error">{k('error')}</span>}
+        {status === 'tool_error' && (
+          <>
+            <span className="mcp-live-status error">{k('tool_error')}</span>
+            <pre className="mcp-live-pre">{quote.text}</pre>
+          </>
+        )}
         {status === 'done' && tools && (
           <>
             <span className="mcp-live-label">{k('tools_label')}</span>

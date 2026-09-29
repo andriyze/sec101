@@ -67,18 +67,18 @@ const PromptInjectionViz = () => {
   return (
     <VizContainer ref={vizRef} title={k('title')}>
       <div className="pi-wrapper">
-        <div className="protocols-toggle" role="tablist">
+        <div className="protocols-toggle">
           <button
-            role="tab"
-            aria-selected={!guarded}
+            type="button"
+            aria-pressed={!guarded}
             className={`protocols-toggle-btn ${!guarded ? 'active' : ''}`}
             onClick={() => switchMode('naive')}
           >
             <ShieldAlert size={14} aria-hidden="true" /> {k('mode_naive')}
           </button>
           <button
-            role="tab"
-            aria-selected={guarded}
+            type="button"
+            aria-pressed={guarded}
             className={`protocols-toggle-btn ${guarded ? 'active' : ''}`}
             onClick={() => switchMode('guarded')}
           >
@@ -124,7 +124,7 @@ const PromptInjectionViz = () => {
           </AnimatePresence>
         </div>
 
-        <div className="pi-trifecta" aria-label={k('trifecta_label')}>
+        <div className="pi-trifecta" role="group" aria-label={k('trifecta_label')}>
           {ingredients.map(item => {
             const Icon = item.icon
             const involved = currentStep >= item.from

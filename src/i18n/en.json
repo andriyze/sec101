@@ -1246,6 +1246,7 @@
         "loading": "Calling the server…",
         "error": "The server could not be reached. Try again in a moment.",
         "result_label": "Response",
+        "tool_error": "The server answered, but the tool reported an error:",
         "tools_label": "Tools the server offers",
         "request_label": "Request sent (JSON-RPC over HTTPS)",
         "monthly_total": "Total monthly payment",
@@ -2319,7 +2320,7 @@
         },
         {
           "title": "Telnet? Turned away.",
-          "text": "Door 23 is an obsolete remote-control entrance with no lock. It’s not on this firewall’s list, so it’s blocked. Every firewall has its own list."
+          "text": "Door 23 is an obsolete remote-control entrance with no lock. This firewall’s list marks it blocked, so it’s turned away. Every firewall has its own list."
         },
         {
           "title": "On duty around the clock",
