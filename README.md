@@ -30,7 +30,7 @@ bun run build
 bun run start
 ```
 
-Build outputs static files to `dist/`; `bun run start` serves them with cache headers.
+Build outputs static files to `dist/`; `bun run start` serves them with cache headers and brotli/gzip compression.
 
 ## License
 

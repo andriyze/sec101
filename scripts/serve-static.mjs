@@ -1,6 +1,7 @@
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, resolve, sep } from 'node:path';
+import { brotliCompressSync, constants as zlibConstants, gzipSync } from 'node:zlib';
 
 const root = resolve(process.argv[2] || 'dist');
 const port = Number(process.env.PORT || 4173);
@@ -33,6 +34,35 @@ const securityHeaders = {
     'Referrer-Policy': 'strict-origin-when-cross-origin',
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
     'Cross-Origin-Opener-Policy': 'same-origin',
+};
+
+const compressibleExtensions = new Set(['.css', '.html', '.js', '.json', '.svg', '.txt', '.xml']);
+
+const pickEncoding = (acceptEncoding = '') => {
+    if (/\bbr\b/.test(acceptEncoding)) return 'br';
+    if (/\bgzip\b/.test(acceptEncoding)) return 'gzip';
+    return null;
+};
+
+// Built files only change on deploy, so each one is compressed once, at the highest level, and
+// kept; the mtime check covers a rebuild while the server is running.
+const compressedCache = new Map();
+const compressFile = (filePath, encoding) => {
+    const { mtimeMs } = statSync(filePath);
+    const key = `${encoding}:${filePath}`;
+    const cached = compressedCache.get(key);
+    if (cached?.mtimeMs === mtimeMs) return cached.body;
+    const raw = readFileSync(filePath);
+    const body = encoding === 'br'
+        ? brotliCompressSync(raw, {
+            params: {
+                [zlibConstants.BROTLI_PARAM_QUALITY]: zlibConstants.BROTLI_MAX_QUALITY,
+                [zlibConstants.BROTLI_PARAM_SIZE_HINT]: raw.length,
+            },
+        })
+        : gzipSync(raw, { level: 9 });
+    compressedCache.set(key, { mtimeMs, body });
+    return body;
 };
 
 const resolveAssetPath = (pathname) => {
@@ -83,6 +113,18 @@ const server = createServer((request, response) => {
             // The shell must revalidate on every load so a fresh deploy's
             // hashed asset URLs are picked up immediately.
             response.setHeader('Cache-Control', 'no-cache');
+        }
+
+        if (compressibleExtensions.has(extension)) {
+            response.setHeader('Vary', 'Accept-Encoding');
+            const encoding = pickEncoding(request.headers['accept-encoding']);
+            if (encoding) {
+                const body = compressFile(filePath, encoding);
+                response.setHeader('Content-Encoding', encoding);
+                response.setHeader('Content-Length', body.length);
+                response.end(body);
+                return;
+            }
         }
 
         createReadStream(filePath)
